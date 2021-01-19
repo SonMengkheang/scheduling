@@ -1,0 +1,3 @@
+{
+    "mongoURL": "mongodb+srv://posSystem:posSystemModernize@posmodernize.9ru9y.mongodb.net/posSystem?retryWrites=true&w=majority"
+}
