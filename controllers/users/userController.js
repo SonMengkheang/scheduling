@@ -1,17 +1,17 @@
-const Test = require("../models/Test");
+const User = require("../../models/users/User");
 module.exports = {
   index: async (req, res, next) => {
     try {
-      const test = await Test.find({});
-      res.status(200).json(test);
+      const user = await User.find({});
+      res.status(200).json(user);
     } catch (err) {
       next(err);
     }
   },
   createNewTest: async(req, res, next) => {
     try {
-      const newTest = Test(req.body);
-      const result = newTest;
+      const newUser = User(req.body);
+      const result = newUser;
       result.save();
       res.status(201).json(result);
     } catch (err) {

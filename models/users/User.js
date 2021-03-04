@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const testSchema = new Schema({
+const userSchema = new Schema({
   teacherID: {
     type: String,
     unique: true,
@@ -25,7 +25,8 @@ const testSchema = new Schema({
     unique: true,
   }],
   role: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Role"
   },
   password: {
     type: String,
@@ -39,5 +40,5 @@ const testSchema = new Schema({
   },
 });
 
-const Test = mongoose.model("Test", testSchema);
-module.exports = Test;
+const User = mongoose.model("User", userSchema);
+module.exports = User;
