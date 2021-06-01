@@ -9,15 +9,14 @@ const subjectSchema = new Schema({
   subjectName: {
     type: String
   },
-  department: {
-    type: mongoose.Schema.Types.ObjectId;
-    ref: "Department"
+  duration : {
+    type: Number
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  credit : {
+    type: Number
+  }
+}, { timestamps: true }
+)
 
 const Subject = mongoose.model("Subject", subjectSchema);
 module.exports = Subject;

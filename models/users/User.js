@@ -34,11 +34,44 @@ const userSchema = new Schema({
   department: [{
     type: String,
   }],
-  date: {
-    type: Date,
-    default: Date.now,
+  subject : [{
+    type : mongoose.Schema.Types.ObjectId,
+    ref : "Subject"
+  }],
+  freeTime: {
+    monday : [{
+      time : {
+        type : Date
+      }
+    }],
+    tuesday : [{
+      time : {
+        type : Date
+      }
+    }],
+    wednesday : [{
+      time : {
+        type : Date
+      }
+    }],
+    thursday : [{
+      time : {
+        type : Date
+      }
+    }],
+    friday : [{
+      time : {
+        type : Date
+      }
+    }],
+    saturday : [{
+      time : {
+        type : Date
+      }
+    }],
   },
-});
+},{ timestamps : true }
+);
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
