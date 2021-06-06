@@ -1,0 +1,36 @@
+/*
+input mixin customization
+*/
+
+@mixin form-control-placeholder($color, $opacity){
+  .ant-input::-moz-placeholder{
+    color: $color;
+    @include opacity(1);
+  }
+  .ant-input:-moz-placeholder{
+    color: $color;
+    @include opacity(1);
+  }
+  .ant-input::-webkit-input-placeholder{
+    color: $color;
+    @include opacity(1);
+  }
+  .ant-input:-ms-input-placeholder{
+    color: $color;
+    @include opacity(1);
+  }
+}
+
+@mixin placeholder() {
+  &::-moz-placeholder {@content; } // Firefox
+  &:-ms-input-placeholder {@content; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  {@content; } // Safari and Chrome
+}
+
+@mixin transition-input-focus-color() {
+  -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}

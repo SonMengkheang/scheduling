@@ -1,0 +1,55 @@
+/*
+responsive breakpoint mixin customization
+*/
+
+//Responsive Breakpoints for non-sale layout
+$breakpoints: (
+        xxs: 420px,
+        xs: 576px,
+        sm: 768px,
+        md: 992px,
+        lg: 1200px,
+        xl: 1440px
+);
+
+@function top-shadow($depth) {
+  $primary-offset: nth($shadowOffsetsTop, $depth) * 1px;
+  $blur: nth($shadowBlursTop, $depth) * 4px;
+  $color: rgba(black, nth($shadowOpacitiesTop, $depth));
+
+  @return 0 $primary-offset $blur $color;
+}
+
+@function bottom-shadow($depth) {
+  $primary-offset: nth($shadowOffsetsBottom, $depth) * 1px;
+  $blur: nth($shadowBlursBottom, $depth) * 5px;
+  $color: rgba(black, nth($shadowOpacitiesBottom, $depth));
+  @return 0 $primary-offset $blur $color;
+}
+
+@mixin depth($depth) {
+  @if $depth < 1 {
+    box-shadow: none;
+  } @else if $depth > 5 {
+    @warn "Invalid $depth `#{$depth}` for mixin `card`.";
+  } @else {
+    box-shadow: bottom-shadow($depth), top-shadow($depth);
+  }
+}
+
+@mixin respond-below($breakpoint) {
+
+  // If the breakpoint exists in the map.
+  @if map-has-key($breakpoints, $breakpoint) {
+    // Get the breakpoint value.
+    $breakpoint-value: map-get($breakpoints, $breakpoint); // Write the media query.
+    @media (max-width: ($breakpoint-value - 1)) {
+      @content;
+    }
+    // If the breakpoint doesn't exist in the map.
+  } @else {
+    // Log a warning.
+    @warn "Invalid breakpoint: #{$breakpoint}.";
+  }
+}
+

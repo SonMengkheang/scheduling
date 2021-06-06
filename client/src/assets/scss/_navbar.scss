@@ -1,0 +1,347 @@
+/*
+navbar to use with mixin mixin customization
+*/
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.navbar {
+  background: $white;
+  height: $navbar-height-xs;
+  padding: 0.5rem 0;
+  line-height: $line-height-base;
+  color: $black;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  @include depth(1);
+
+  #notificationDropdown {
+    width: 260px;
+    padding: 1.5rem !important;
+    height: 280px;
+    right: 15px;
+  }
+
+  #iconMenuDropdown {
+    width: 240px;
+    padding: 1.5rem !important;
+    height: 280px;
+  }
+
+  .icon-menu-item {
+    width: 90px;
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 1.7rem;
+    color: rgba($dark, 0.8);
+
+    i {
+      font-size: 28px;
+      line-height: 42px;
+    }
+
+    span {
+      text-align: center;
+      padding: 0 10px;
+      line-height: 14px;
+    }
+
+    &:hover,
+    &:focus {
+      color: darken($blue, 0.9);
+    }
+  }
+
+  // .menu-button-mobile {
+  //   color: $secondary-color;
+  //   text-align: center;
+  //   margin-left: $main-margin-xs;
+  //   svg {
+  //     height: 12px;
+  //     fill: $primary-color;
+  //   }
+
+  //   @include respond-below(sm) {
+  //     width: 20px;
+  //   }
+  // }
+
+  // .menu-button {
+  //   color: $secondary-color;
+  //   width: $main-menu-width;
+  //   text-align: center;
+
+  //   svg {
+  //     height: 12px;
+  //   }
+
+  //   .main {
+  //     fill: $primary-color;
+  //     transition: fill $menu-collapse-time;
+  //     width: 10px;
+  //   }
+
+  //   .sub {
+  //     fill: $primary-color;
+  //     transition: fill $menu-collapse-time;
+  //   }
+
+  //   &:hover {
+  //     color: darken($blue, 0.9);
+  //   }
+
+  //   @include respond-below(xl) {
+  //     width: $main-menu-width-lg;
+  //   }
+
+  //   @include respond-below(lg) {
+  //     width: $main-menu-width-md;
+  //   }
+
+  //   @include respond-below(sm) {
+  //     width: 60px;
+  //   }
+
+  // }
+
+  .navbar-left {
+    flex-basis: 40%;
+  }
+
+  .navbar-right {
+    //flex-basis: 40%;
+    text-align: right;
+
+    .header-icons {
+      margin-right: 1rem;
+      //text-align: center;
+      //display: inline-block !important;
+      //vertical-align: middle !important;
+      margin-top: 10px;
+
+      .notification-item {
+        position: relative !important;
+        display: inline-block !important;
+      }
+
+      @include respond-below(xs) {
+        margin-right: 0;
+      }
+    }
+
+    // .user {
+
+    //   @include respond-below(xl) {
+    //     margin-right: $main-margin-lg;
+    //   }
+
+    //   @include respond-below(lg) {
+    //     margin-right: $main-margin-md;
+    //   }
+
+    //   @include respond-below(sm) {
+    //     margin-right: $main-margin-xs;
+    //   }
+    // }
+  }
+
+  // .navbar-logo {
+  //   width: 110px;
+  //   height: 35px;
+  //   // position: absolute;
+  //   // left: 0;
+  //   // right: 0;
+  //   // margin: 0 auto;
+  //   margin-left: 20px;
+  //   transition: color 0.3s;
+
+  //   .logo {
+
+  //     width: 100%;
+  //     height: 100%;
+  //   }
+
+  //   .logo-mobile {
+  //     width: 100%;
+  //     height: 100%;
+  //     background-position: center center;
+  //     background-size: contain;
+  //   }
+
+  //   @include respond-below(sm) {
+  //     width: 80px;
+  //   }
+
+  //   @include respond-below(xxs) {
+  //     width: 20px;
+  //   }
+  // }
+
+  .header-icon {
+    font-size: 16px;
+    color: $gray-600;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    vertical-align: initial;
+
+    @include respond-below(xs) {
+      padding-left: 0.3rem;
+      padding-right: 0.3rem;
+    }
+
+    &:hover {
+      color: darken($blue, 0.6);
+    }
+
+    &.notificationButton {
+      .count {
+        font-size: 9px;
+        color: darken($blue, 0.6);
+        border: 1px solid darken($blue, 0.6);
+        border-radius: 10px;
+        position: absolute;
+        width: 18px;
+        height: 15px;
+        text-align: center;
+        font-weight: 700;
+        top: 2px;
+        right: 2px;
+        line-height: 14px;
+
+        @include respond-below(xs) {
+          right: -1px;
+        }
+      }
+    }
+  }
+
+  .user {
+    color: lighten($primary-color, 30%);
+    position: relative;
+
+    img {
+      margin-left: 10px;
+      border-radius: 30px;
+      width: 40px;
+    }
+
+    // @include respond-below(md) {
+    //   .name {
+    //     display: none;
+    //   }
+    // }
+
+    // @include respond-below(sm) {
+    //   img {
+    //     width: 30px;
+    //   }
+
+    //   margin-left: initial;
+
+    //   &:after {
+    //     font-size: 11px;
+    //     width: 14px;
+    //     height: 14px;
+    //     bottom: -3px;
+    //     right: -3px;
+    //   }
+    // }
+  }
+
+  @include respond-below(xl) {
+    height: $navbar-height-xs;
+  }
+
+  @include respond-below(lg) {
+    height: $navbar-height-xs;
+    // padding: 1rem 0 1rem 0;
+  }
+
+  @include respond-below(sm) {
+    height: $navbar-height-xs;
+    // padding: 10px 0;
+  }
+}
+
+.sub-hidden .menu-button,
+.menu-sub-hidden .menu-button {
+  .sub {
+    fill: $secondary-color !important;
+  }
+}
+
+.main-hidden .menu-button,
+.menu-hidden .menu-button {
+  .main,
+  .sub {
+    fill: $secondary-color;
+  }
+}
+
+@media (max-width: 1300px) {
+  .company-logo {
+    width: 154px !important;
+    height: 46px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .company-logo {
+    width: 145px !important;
+    height: 43px !important;
+  }
+}
+
+@media (min-width: 767px) {
+  .d-md-none {
+    display: none !important;
+  }
+  .d-block {
+    display: block !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .d-md-block {
+    display: block !important;
+  }
+  .d-none {
+    display: none !important;
+  }
+  .d-block {
+    display: block !important;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .d-sm-block {
+    display: block !important;
+  }
+  .d-block {
+    display: block !important;
+  }
+
+}
+
+@media  (max-width: 420px) {
+
+  .d-xs-block {
+    display: block !important;
+  }
+  .d-xs-none {
+    display: none !important;
+  }
+}
+
+
+
+
+
+

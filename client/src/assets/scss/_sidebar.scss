@@ -1,0 +1,604 @@
+/*
+sidebar to use with mixin mixin customization
+*/
+
+// .sidebar {
+//   // right: 0;
+//   // left: initial;
+
+//   .main-menu {
+//     // left: initial;
+//     // right: 0;
+
+//     ul li {
+//       position: relative;
+
+//       &.active:after {
+//         content: " ";
+//         left: initial;
+//         right: 0;
+
+//         @include respond-below(sm) {
+//           right: 2px;
+//         }
+//       }
+//     }
+//   }
+
+//   .sub-menu {
+//     left: initial;
+//     right: $main-menu-width;
+//     box-shadow: unset !important;
+//     // border-right: 1px solid $black;
+//     @include depth(2);
+
+//     ul {
+//       li {
+//         margin-left: initial;
+//         margin-right: 30px;
+
+//         i {
+//           margin-right: initial;
+//           margin-left: 10px;
+//         }
+
+//         &.active:after {
+//           left: initial;
+//           right: -16px;
+//         }
+//       }
+//     }
+
+//     // @include respond-below(xl) {
+//     //   left: initial;
+//     //   right: $main-menu-width-lg;
+//     // }
+
+//     // @include respond-below(lg) {
+//     //   left: initial;
+//     //   right: $main-menu-width-md;
+//     // }
+
+//     // @include respond-below(sm) {
+//     //   left: initial;
+//     //   right: $main-menu-width-xs;
+//     // }
+//   }
+// }
+
+.sidebar {
+  width: 100%;
+  // position: fixed;
+  top: 0;
+  // padding-top: $navbar-height-xs;
+  // z-index: 4;
+  // height: calc(100% - #{$navbar-height-xs});
+  // transition: border-radius $menu-collapse-time;
+
+  .scrollbar-container {
+    margin-right: 0;
+    padding-right: 0;
+  }
+
+  .main-menu {
+    width: $main-menu-width;
+    margin-top: $navbar-height-xs;
+    background: $white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    left: 0;
+
+    .scroll {
+      padding-right: unset;
+      margin-right: unset;
+      height: 100%;
+
+      .ps__thumb-y {
+        right: 0;
+      }
+      
+    }
+
+    &.main-hidden {
+      transform: translateX(-$main-menu-width);
+    }
+
+    ul li {
+      // position: relative;
+
+      // span {
+      //   text-align: center;
+      //   padding: 0 10px;
+      //   line-height: 14px;
+      // }
+
+      a {
+        height: $main-menu-item-height-md;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 11px;
+        font-style: normal;
+        font-weight: 400;
+        text-align: center;
+        border-bottom: 1px solid $white;
+        color: $brown-color;
+        // transition: color $menu-collapse-time;
+        // transition: background $menu-collapse-time;
+
+        &:hover,
+        &:focus {
+          color: darken($primary-color, 0.6);
+        }
+      }
+
+      i {
+        font-size: 32px;
+        line-height: 42px;
+      }
+
+      &.active a {
+        color: darken($primary-color, 0.6);
+      }
+
+      // &.active:after {
+      //   content: " ";
+      //   background: darken($primary-color, 0.6);
+      //   border-radius: 10px;
+      //   position: absolute;
+      //   width: 6px;
+      //   height: 90px;
+      //   top: 50%;
+      //   transform: translateY(-50%);
+      //   right: 0;
+      // }
+
+      &:last-of-type {
+        a {
+          border-bottom: initial;
+        }
+      }
+    }
+
+    @include respond-below(xl) {
+      width: $main-menu-width-lg;
+      height: calc(100% - #{$navbar-height-xs});
+    }
+
+    @include respond-below(lg) {
+      width: $main-menu-width-md;
+      height: calc(100% - #{$navbar-height-md});
+    }
+
+    @include respond-below(sm) {
+      width: $main-menu-width-xs;
+      height: calc(100% - #{$navbar-height-xs});
+
+      ul li i {
+        font-size: 28px;
+        line-height: 38px;
+      }
+
+      ul li a {
+        height: $main-menu-item-height-mobile;
+      }
+
+      ul li.active:after {
+        width: 3px;
+        height: 60px;
+      }
+    }
+  }
+
+  .sub-menu {
+    background: unset;
+    top: 0;
+    position: fixed;
+    z-index: 100 !important;
+    height: $navbar-height-xs;
+    justify-content: center;
+    align-items: center;
+
+    .scroll {
+      margin-right: unset;
+      padding-right: unset;
+      height: 100%;
+
+      .ps__thumb-y {
+        right: 0;
+      }
+
+      .scrollbar-container {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+    }
+
+    ul {
+      display: none;
+      justify-content: center;
+      align-items: center;
+
+      li {
+        margin-bottom: 0;
+        margin-left: 20px;
+        position: relative;
+        display: flex;
+
+        a {
+          font-size: 14px;
+          display: block;
+          padding: 8px 0;
+          color: $brown-color;
+        }
+
+        i {
+          font-size: 1.3em;
+          margin-right: 10px;
+          color: $secondary-color;
+          vertical-align: middle;
+          display: inline-block;
+        }
+
+        &.active i,
+        &.active a {
+          color: darken($primary-color, 0.6);
+        }
+
+        &.active:after {
+          content: " ";
+          background: darken($primary-color, 0.6);
+          border-radius: 10px;
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          top: 50%;
+          transform: translateY(-50%);
+          left: -16px;
+        }
+
+        span {
+          vertical-align: middle;
+          padding-top: 3px;
+          display: inline-block;
+        }
+      }
+    }
+
+    @include respond-below(xl) {
+      height: $navbar-height-xs;
+    }
+
+    @include respond-below(lg) {
+      height: $navbar-height-xs;
+    }
+
+    @include respond-below(sm) {
+      height: $navbar-height-xs;
+    }
+  }
+
+  @include respond-below(xl) {
+    // padding-top: $navbar-height-lg;
+    height: calc(100% - #{$navbar-height-lg});
+  }
+
+  @include respond-below(lg) {
+    // padding-top: $navbar-height-md;
+    height: calc(100% - #{$navbar-height-md});
+  }
+
+  @include respond-below(sm) {
+    // padding-top: $navbar-height-xs;
+    height: calc(100% - #{$navbar-height-xs});
+    @include depth(1);
+  }
+}
+
+/* 15.Main*/
+main {
+  margin-left: $main-menu-width + $main-margin-s;
+  margin-top: $navbar-height-xs;
+  margin-right: $main-margin-s;
+  margin-bottom: $main-margin - 20;
+  transition: margin-left $menu-collapse-time;
+  // z-index: -10;
+
+  &.sub-hidden {
+    margin-left: $main-menu-width + $main-margin;
+  }
+
+  &.main-hidden {
+    margin-left: $main-margin;
+  }
+
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @include respond-below(xl) {
+    margin-left: $main-menu-width+$main-margin-s;
+    margin-top: $navbar-height-xs+$main-margin-s;
+    margin-right: $main-margin-s;
+    margin-bottom: $main-margin - 20;
+  }
+
+  @include respond-below(lg) {
+    margin-left: $main-menu-width+$main-margin-s;
+    margin-top: $navbar-height-xs+$main-margin-s;
+    margin-right: $main-margin-s;
+    margin-bottom: $main-margin - 20;
+  }
+
+  @include respond-below(sm) {
+    margin-left: $main-menu-width+$main-margin-s;
+    margin-top: $navbar-height-xs+$main-margin-s;
+    margin-right: $main-margin-s;
+    margin-bottom: $main-margin - 20;
+  }
+
+  @include respond-below(xs) {
+    margin-bottom: 0;
+  }
+}
+
+//Menu Config Main
+
+.sub-hidden main,
+.menu-sub-hidden main,
+.menu-hidden main {
+  margin-left: $main-menu-width + $main-margin-s;
+}
+
+.main-hidden main,
+.menu-hidden main {
+  margin-left: $main-margin;
+}
+
+@include respond-below(xl) {
+  .sub-hidden main,
+  .menu-sub-hidden main,
+  .menu-hidden main {
+    margin-left: $main-menu-width-lg + $main-margin-lg;
+  }
+
+  .main-hidden main,
+  .menu-hidden main {
+    margin-left: $main-margin-lg;
+  }
+}
+
+@include respond-below(lg) {
+  .sub-hidden main,
+  .menu-sub-hidden main,
+  .menu-hidden main {
+    margin-left: $main-menu-width-md + $main-margin-md;
+  }
+
+  .main-hidden main,
+  .menu-hidden main {
+    margin-left: $main-margin-md;
+  }
+}
+
+.sub-hidden .sub-menu,
+.menu-sub-hidden .sub-menu,
+.menu-hidden .sub-menu {
+  transform: translateX(-$sub-menu-width);
+
+  @include respond-below(xl) {
+    transform: translateX(-$sub-menu-width-lg);
+  }
+
+  @include respond-below(lg) {
+    transform: translateX(-$sub-menu-width-md);
+  }
+
+  @include respond-below(sm) {
+    transform: translateX(-$sub-menu-width-xs);
+  }
+}
+
+.main-hidden .main-menu,
+.menu-hidden .main-menu {
+  transform: translateX(-$main-menu-width);
+
+  @include respond-below(xl) {
+    transform: translateX(-$main-menu-width-lg);
+  }
+
+  @include respond-below(lg) {
+    transform: translateX(-$main-menu-width-md);
+  }
+
+  @include respond-below(sm) {
+    transform: translateX(-$main-menu-width-xs);
+  }
+}
+
+.main-hidden.sub-hidden .sub-menu,
+.menu-hidden .sub-menu {
+  transform: translateX(-$sub-menu-width - $main-menu-width);
+
+  @include respond-below(xl) {
+    transform: translateX(-$sub-menu-width-lg - $main-menu-width-lg);
+  }
+
+  @include respond-below(lg) {
+    transform: translateX(-$sub-menu-width-md - $main-menu-width-md);
+  }
+
+  @include respond-below(sm) {
+    transform: translateX(-$sub-menu-width-xs - $main-menu-width-xs);
+  }
+}
+
+//Mobile
+.menu-mobile {
+  .main-menu {
+    transform: translateX(-$main-menu-width-xs);
+  }
+
+  .sub-menu {
+    transform: translateX(-$sub-menu-width-xs - $main-menu-width-xs - 50);
+  }
+}
+
+//Show Temporary
+.main-show-temporary {
+  .main-menu {
+    transform: translateX(0);
+  }
+
+  .sub-menu {
+    transform: translateX(-$sub-menu-width);
+  }
+
+  @include respond-below(xl) {
+    .main-menu {
+      transform: translateX(0);
+    }
+
+    .sub-menu {
+      transform: translateX(-$sub-menu-width-lg);
+    }
+  }
+
+  @include respond-below(lg) {
+    .main-menu {
+      transform: translateX(0);
+    }
+
+    .sub-menu {
+      transform: translateX(-$sub-menu-width-md);
+    }
+  }
+
+  @include respond-below(sm) {
+    .sub-menu {
+      transform: translateX(-$sub-menu-width-xs);
+    }
+  }
+}
+
+.sub-show-temporary,
+.menu-mobile.sub-show-temporary {
+  .sub-menu {
+    transform: translateX(0);
+  }
+}
+
+
+
+
+
+
+// New Side Bar
+
+.new-side-bar {
+  width: 100%;
+  // position: fixed;
+  top: 0;
+  // bottom: 0;
+  // z-index: 4000 !important;
+
+  .new-main-menu {
+    width: $main-menu-width;
+    margin-top: $navbar-height-xs;
+    background: $white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    left: 0;
+    // position: relative;
+    // z-index: 30000 !important;
+    
+    .ant-menu-item {
+      position: relative;
+      height: unset !important;
+      margin: unset !important;
+      padding: 16px !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      color: $brown-color;
+      // border-bottom: 0.5px solid darken(#868585, 0.05);
+
+      &:hover,
+      &:focus {
+        color: darken($primary-color, 0.6);
+      }
+
+      a {
+        color: $brown-color;
+        &:hover,
+        &:focus {
+          color: darken($primary-color, 0.6);
+        }
+      }
+    }
+
+    .ant-menu-item-selected,
+    .ant-menu-item-selected a {
+      color: darken($primary-color, 0.6);
+      background-color: $white;
+    }
+  }
+
+  .new-sub-menu {
+    background: unset;
+    top: 0;
+    position: fixed;
+    z-index: 3 !important;
+    height: $navbar-height-xs;
+    justify-content: center;
+    align-items: center;
+
+    .scroll {
+      margin-right: unset;
+      padding-right: unset;
+      height: 100%;
+
+      .ps__thumb-y {
+        right: 0;
+      }
+
+      .scrollbar-container {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+    }
+
+    .ant-menu {
+      height: $navbar-height-xs;
+      border-right: unset !important;
+    }
+
+    .ant-menu-item {
+      height: $navbar-height-xs;
+      margin: 0;
+
+      a {
+        &:hover,
+        &:focus {
+          color: darken($primary-color, 0.6) !important;
+        }
+      }
+    }
+
+    .ant-row {
+      height: $navbar-height-xs;
+    }
+
+    .ant-menu-item-selected {
+      background-color: $white;
+
+      a {
+        color: darken($primary-color, 0.6) !important;
+      }
+
+    }
+    
+  }
+
+}
