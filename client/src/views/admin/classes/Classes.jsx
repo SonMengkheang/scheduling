@@ -6,11 +6,11 @@ import IntlMessage from '../../../helpers/IntlMessages'
 import MainHeader from '../../../components/MainHeader'
 import { FiPlusCircle } from 'react-icons/fi'
 
-const Subject = () => {
+const Classes = () => {
 
     const history = useHistory()
     const [searchValue, setSearchValue] = useState("")
-    const [subjects, setSubjects] = useState([])
+    const [classes, setClasses] = useState([])
 
     const searchTem = () => {
         return <Row>
@@ -32,25 +32,26 @@ const Subject = () => {
             <Button
                 size="large"
                 className="btn-border-primary"
-                onClick={() => { history.push('subject/create') }}
+                onClick={() => { history.push('class/create') }}
             >
                 <Row align="middle">
                     <FiPlusCircle className="mr-5" />
-                    <IntlMessage id="subject" />
+                    <IntlMessage id="class" />
                 </Row>
             </Button>
         </Row>
     }
 
     const tableData = () => {
-        return subjects.map((res, index) => {
+        return classes.map((res, index) => {
             return {
                 key: res._id,
                 no: index+1,
-                subjectCode: res.subjectCode,
-                subjectName: res.subjectName,
-                duration: res.duration,
-                credit: res.credit,
+                classesCode: res.classesCode,
+                classesName: res.classesName,
+                department: res.department,
+                generation: res.generation,
+                shift: res.shift,
             }
         })
     }
@@ -65,26 +66,32 @@ const Subject = () => {
         },
         {
             title: <IntlMessage id="code" />,
-            dataIndex: "subjectCode",
-            key: "subjectCode",
+            dataIndex: "classesCode",
+            key: "classesCode",
             align: "center",
         },
         {
             title: <IntlMessage id="name" />,
-            dataIndex: "subjectName",
-            key: "subjectName",
+            dataIndex: "classesName",
+            key: "classesName",
             align: "center",
         },
         {
-            title: <IntlMessage id="duration" />,
-            dataIndex: "duration",
-            key: "duration",
+            title: <IntlMessage id="department" />,
+            dataIndex: "department",
+            key: "year",
             align: "center",
         },
         {
-            title: <IntlMessage id="credit" />,
-            dataIndex: "credit",
-            key: "credit",
+            title: <IntlMessage id="generation" />,
+            dataIndex: "generation",
+            key: "generation",
+            align: "center",
+        },
+        {
+            title: <IntlMessage id="shift" />,
+            dataIndex: "shift",
+            key: "shift",
             align: "center",
         },
         {
@@ -97,7 +104,7 @@ const Subject = () => {
 
     return (
         <Fragment>
-            <IntlMessage id="subject">
+            <IntlMessage id="class">
                 {
                     msg => (
                         <Helmet>
@@ -109,7 +116,7 @@ const Subject = () => {
 
             <MainHeader search={searchTem()} button={buttonTem()} hasButton={true} />
 
-            <span className="c-black mb-10"><IntlMessage id="total" />: {subjects.length}</span>
+            <span className="c-black mb-10"><IntlMessage id="total" />: {classes.length}</span>
 
             <Table dataSource={tableData()} columns={columns} />
 
@@ -117,4 +124,4 @@ const Subject = () => {
     )
 }
 
-export default Subject
+export default Classes

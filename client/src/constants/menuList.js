@@ -10,9 +10,11 @@ import {
     FaSchool,
     FaChartPie,
     FaBookOpen,
+    FaUsersCog,
+    FaUserCircle,
 } from "react-icons/fa"
-import { GrCurrency } from 'react-icons/gr'
-import { BiSupport } from "react-icons/bi"
+import { SiGoogleclassroom } from 'react-icons/si'
+import { GoSettings } from "react-icons/go"
 import IntlMessage from '../helpers/IntlMessages'
 
 const data = [
@@ -74,16 +76,31 @@ const data = [
         ]
     },
     {
-        id: "year",
+        id: "generation",
         icon: <FaChartPie size="25px" />,
-        label: <IntlMessage id="year" />,
+        label: <IntlMessage id="generation" />,
         subs: [
             {
                 to: [
-                    "/admin/year",
-                    "/admin/year/create",
-                    "/admin/year/edit",
-                    "/admin/year/view",
+                    "/admin/generation",
+                    "/admin/generation/create",
+                    "/admin/generation/edit",
+                    "/admin/generation/view",
+                ]
+            },
+        ]
+    },
+    {
+        id: "classes",
+        icon: <SiGoogleclassroom size="25px" />,
+        label: <IntlMessage id="class" />,
+        subs: [
+            {
+                to: [
+                    "/admin/class",
+                    "/admin/class/create",
+                    "/admin/class/edit",
+                    "/admin/class/view",
                 ]
             },
         ]
@@ -116,63 +133,34 @@ const data = [
                     "/admin/user/view",
                 ]
             },
-            // {
-            //     id: "store",
-            //     icon: <GoSettings size="15px" />,
-            //     label: <IntlMessage id="store" />,
-            //     to: ["/app/setting/store_info"]
-            // },
-            // {
-            //     id: "warehouse",
-            //     icon: <GoSettings size="15px" />,
-            //     label: <IntlMessage id="warehouse" />,
-            //     to: ["/app/setting/warehouse_info"]
-            // },
-            // {
-            //     id: "general",
-            //     icon: <GoSettings size="15px" />,
-            //     label: <IntlMessage id="general" />,
-            //     to: ["/app/setting/general"]
-            // },
-            // {
-            //     id: "role",
-            //     icon: <FaUsersCog size="15px" />,
-            //     label: <IntlMessage id="role" />,
-            //     to: [
-            //         "/app/setting/role",
-            //         "/app/setting/role/create",
-            //         "/app/setting/role/edit",
-            //         "/app/setting/role/edit/view",
-            //     ]
-            // },
-            // {
-            //     id: "counter",
-            //     icon: <RiComputerLine size="15px" />,
-            //     label: <IntlMessage id="counter" />,
-            //     to: [
-            //         "/app/setting/counter",
-            //         "/app/setting/counter/create",
-            //         "/app/setting/counter/edit",
-            //         "/app/setting/counter/view",
-            //     ]
-            // },
-            // {
-            //     id: "currency",
-            //     icon: <GrCurrency size="15px" />,
-            //     label: <IntlMessage id="currency" />,
-            //     to: [
-            //         "/app/setting/currency",
-            //         "/app/setting/currency/create",
-            //         "/app/setting/currency/edit",
-            //         "/app/setting/currency/set",
-            //     ]
-            // },
-            // {
-            //     id: "profile",
-            //     icon: <FaUserCircle size="17px" />,
-            //     label: <IntlMessage id="profile" />,
-            //     to: ["/app/setting/profile"]
-            // }
+        ]
+    },
+    {
+        id: "setting",
+        icon: <GoSettings size="25px" />,
+        label: <IntlMessage id="setting" />,
+        subs: [
+            {
+                id: "general",
+                icon: <GoSettings size="15px" />,
+                label: <IntlMessage id="general" />,
+                to: ["/admin/setting/general"]
+            },
+            {
+                id: "role",
+                icon: <FaUsersCog size="15px" />,
+                label: <IntlMessage id="role" />,
+                to: [
+                    "/admin/setting/role",
+                    "/admin/setting/role/edit/view",
+                ]
+            },
+            {
+                id: "profile",
+                icon: <FaUserCircle size="15px" />,
+                label: <IntlMessage id="profile" />,
+                to: ["/admin/setting/profile"]
+            },
         ]
     },
 ];

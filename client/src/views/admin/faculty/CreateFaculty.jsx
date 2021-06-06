@@ -9,8 +9,13 @@ const CreateFaculty = () => {
 
     const history = useHistory()
 
-    const onSubmit = value => {
-        baseAPI.post(``)
+    const onSubmit = values => {
+        baseAPI.post(`/faculties`, values)
+            .then(response => {
+                console.log("Result: ", response)
+                history.goBack()
+            })
+            .catch(err => console.log("Error: ", err))
     }
 
     const buttonTem = () => {
@@ -26,10 +31,8 @@ const CreateFaculty = () => {
 
     const preventSubmit = (event) => {
         if(event.keyCode == 13) {
-            console.log("caught ya!");
-            event.preventDefault();
-            //event.stopPropagation();
-            return false;
+            event.preventDefault()
+            return false
         }
     }
 

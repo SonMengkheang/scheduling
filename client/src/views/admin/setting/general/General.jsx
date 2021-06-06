@@ -1,11 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { Helmet } from 'react-helmet'
-import IntlMessage from '../../../helpers/IntlMessages'
+import IntlMessage from '../../../../helpers/IntlMessages'
 
-const Year = () => {
+const General = () => {
     return (
         <Fragment>
-            <IntlMessage id="year">
+            <IntlMessage id="general">
                 {
                     msg => (
                         <Helmet>
@@ -15,10 +15,10 @@ const Year = () => {
                 }
             </IntlMessage>
 
-            <span>Year</span>
+            <span>General</span>
 
         </Fragment>
     )
 }
 
-export default Year
+export default General

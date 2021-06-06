@@ -6,11 +6,11 @@ import IntlMessage from '../../../helpers/IntlMessages'
 import MainHeader from '../../../components/MainHeader'
 import { FiPlusCircle } from 'react-icons/fi'
 
-const Subject = () => {
+const Generation = () => {
 
     const history = useHistory()
     const [searchValue, setSearchValue] = useState("")
-    const [subjects, setSubjects] = useState([])
+    const [generations, setgenerations] = useState([])
 
     const searchTem = () => {
         return <Row>
@@ -32,25 +32,27 @@ const Subject = () => {
             <Button
                 size="large"
                 className="btn-border-primary"
-                onClick={() => { history.push('subject/create') }}
+                onClick={() => { history.push('generation/create') }}
             >
                 <Row align="middle">
                     <FiPlusCircle className="mr-5" />
-                    <IntlMessage id="subject" />
+                    <IntlMessage id="generation" />
                 </Row>
             </Button>
         </Row>
     }
 
     const tableData = () => {
-        return subjects.map((res, index) => {
+        return generations.map((res, index) => {
             return {
                 key: res._id,
                 no: index+1,
-                subjectCode: res.subjectCode,
-                subjectName: res.subjectName,
-                duration: res.duration,
-                credit: res.credit,
+                generation: res.generation,
+                generationName: res.generationName,
+                year: res.year,
+                startedYear: res.startedYear,
+                department: res.department,
+                subject: res.subject,
             }
         })
     }
@@ -64,27 +66,33 @@ const Subject = () => {
             align: "center",
         },
         {
-            title: <IntlMessage id="code" />,
-            dataIndex: "subjectCode",
-            key: "subjectCode",
-            align: "center",
-        },
-        {
             title: <IntlMessage id="name" />,
-            dataIndex: "subjectName",
-            key: "subjectName",
+            dataIndex: "generationName",
+            key: "generationName",
             align: "center",
         },
         {
-            title: <IntlMessage id="duration" />,
-            dataIndex: "duration",
-            key: "duration",
+            title: <IntlMessage id="generation" />,
+            dataIndex: "generation",
+            key: "generation",
             align: "center",
         },
         {
-            title: <IntlMessage id="credit" />,
-            dataIndex: "credit",
-            key: "credit",
+            title: <IntlMessage id="department" />,
+            dataIndex: "department",
+            key: "department",
+            align: "center",
+        },
+        {
+            title: <IntlMessage id="year" />,
+            dataIndex: "year",
+            key: "year",
+            align: "center",
+        },
+        {
+            title: <IntlMessage id="start_year" />,
+            dataIndex: "startedYear",
+            key: "startedYear",
             align: "center",
         },
         {
@@ -97,7 +105,7 @@ const Subject = () => {
 
     return (
         <Fragment>
-            <IntlMessage id="subject">
+            <IntlMessage id="generation">
                 {
                     msg => (
                         <Helmet>
@@ -109,7 +117,7 @@ const Subject = () => {
 
             <MainHeader search={searchTem()} button={buttonTem()} hasButton={true} />
 
-            <span className="c-black mb-10"><IntlMessage id="total" />: {subjects.length}</span>
+            <span className="c-black mb-10"><IntlMessage id="total" />: {generations.length}</span>
 
             <Table dataSource={tableData()} columns={columns} />
 
@@ -117,4 +125,4 @@ const Subject = () => {
     )
 }
 
-export default Subject
+export default Generation
