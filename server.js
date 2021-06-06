@@ -19,6 +19,7 @@ const server = express();
 connectionDB();
 //Call routes
 const routeList  = require("./routes/routeList")
+routeList(server)
 
 // middlewares
 server.use(cors());

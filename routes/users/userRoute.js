@@ -6,5 +6,9 @@ router
   .route("/")
   .get(UserController.index)
   .post(UserController.createUser)
+
+router
+  .route("/:userID")
+  .patch(UserController.updateUser)
   
 module.exports = router;

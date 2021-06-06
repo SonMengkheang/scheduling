@@ -18,6 +18,18 @@ module.exports = {
       newUser.save();
       res.status(201).json(newUser)
     } catch (err) {
+      next(err)
+    }
+  },
+
+  updateUser: async(req, res, next) => {
+    try {
+      const { userID } = req.params
+      const newUpdate = req.body
+      const updatedUser = await User.findByIdAndUpdate(userID, newUpdate)
+      updatedUser.save();
+      res.status(201).json(updatedUser)
+    } catch (err) {
       next(err);
     }
   },

@@ -7,5 +7,9 @@ router
   .get(SubjectController.index)
   .post(SubjectController.createSubject)
   
+router
+  .route("/:subjectID")
+  .patch(SubjectController.updateSubject)
+  
 module.exports = router;
 

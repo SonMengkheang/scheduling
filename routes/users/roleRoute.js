@@ -7,4 +7,9 @@ router
   .get(RoleController.index)
   .post(RoleController.createRole)
   
-module.exports = router;
+
+router
+  .route("/:roleID")
+  .patch(RoleController.updateRole)
+
+module.exports = router
