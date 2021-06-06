@@ -17,6 +17,8 @@ const config = require('config')
 const server = express();
 //Connection to Database
 connectionDB();
+//Call routes
+const routeList  = require("./routes/routeList")
 
 // middlewares
 server.use(cors());
@@ -48,11 +50,6 @@ server.use(session({
 }))
 server.use(nocache())
 
-// import routes
-const users = require("./routes/users/userRoute");
-
-// user route
-server.use("/users", users);
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
     // Set static folder

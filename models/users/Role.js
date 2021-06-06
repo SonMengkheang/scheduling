@@ -6,9 +6,6 @@ const roleSchema = new Schema({
         type: String,
         unique: true
     },
-    permissions : [{
-        type : String
-    }],
     description: {
         type: String
     }
