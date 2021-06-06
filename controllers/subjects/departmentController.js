@@ -22,4 +22,16 @@ module.exports = {
     }
   },
 
+  updateDep: async(req, res, next) => {
+    try {
+      const { depID } = req.params
+      const newUpdate = req.body
+      const updatedDep = await Department.findByIdAndUpdate(depID, newUpdate)
+      updatedDep.save();
+      res.status(201).json(updatedDep)
+    } catch (err) {
+      next(err);
+    }
+  },
+
 }

@@ -22,4 +22,16 @@ module.exports = {
     }
   },
 
+  updateFaculty: async(req, res, next) => {
+    try {
+      const { facultyID } = req.params
+      const newUpdate = req.body
+      const updatedFaculty = await Faculty.findByIdAndUpdate(facultyID, newUpdate)
+      updatedFaculty.save();
+      res.status(201).json(updatedFaculty)
+    } catch (err) {
+      next(err);
+    }
+  },
+
 }

@@ -6,6 +6,10 @@ router
   .route("/")
   .get(ClassController.index)
   .post(ClassController.createClass)
+ 
+router
+  .route("/:classID")
+  .patch(ClassController.updateClass)
   
 module.exports = router;
 

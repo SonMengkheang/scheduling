@@ -7,5 +7,9 @@ router
   .get(FacultyController.index)
   .post(FacultyController.createFaculty)
   
+router
+  .route("/:facultyID")
+  .patch(FacultyController.updateFaculty)
+
 module.exports = router;
 

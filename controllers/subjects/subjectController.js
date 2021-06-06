@@ -22,4 +22,16 @@ module.exports = {
     }
   },
 
+  updateSubject: async(req, res, next) => {
+    try {
+      const { subjectID } = req.params
+      const newUpdate = req.body
+      const updatedSub = await Subject.findByIdAndUpdate(subjectID, newUpdate)
+      updatedSub.save();
+      res.status(201).json(updatedSub)
+    } catch (err) {
+      next(err);
+    }
+  },
+
 }

@@ -22,4 +22,16 @@ module.exports = {
     }
   },
 
+  updateClass: async(req, res, next) => {
+    try {
+      const { classID } = req.params
+      const newUpdate = req.body
+      const updatedClass = await Classes.findByIdAndUpdate(classID, newUpdate)
+      updatedClass.save();
+      res.status(201).json(updatedClass)
+    } catch (err) {
+      next(err);
+    }
+  },
+
 }

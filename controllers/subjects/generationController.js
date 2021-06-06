@@ -22,4 +22,16 @@ module.exports = {
     }
   },
 
+  updateGen: async(req, res, next) => {
+    try {
+      const { generationID } = req.params
+      const newUpdate = req.body
+      const updatedGen = await Generation.findByIdAndUpdate(generationID, newUpdate)
+      updatedGen.save();
+      res.status(201).json(updatedGen)
+    } catch (err) {
+      next(err);
+    }
+  },
+
 }

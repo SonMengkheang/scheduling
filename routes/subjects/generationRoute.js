@@ -7,5 +7,9 @@ router
   .get(GenerationController.index)
   .post(GenerationController.createGeneration)
   
+router
+  .route("/:generationID")
+  .patch(GenerationController.updateGen)
+
 module.exports = router;
 

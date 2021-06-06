@@ -7,5 +7,10 @@ router
   .get(DepartmentController.index)
   .post(DepartmentController.createDepartment)
   
+
+router
+  .route("/:depID")
+  .patch(DepartmentController.updateDep)
+
 module.exports = router;
 
