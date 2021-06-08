@@ -12,12 +12,9 @@ const facultySchema = new Schema({
     department :[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Department"
-    }],
-    date: {
-        type: Date,
-        default: Date.now,
-    },
-});
+    }]
+}, {timestamps : true}
+)
 
 const Faculty = mongoose.model("Faculty", facultySchema);
 module.exports = Faculty;

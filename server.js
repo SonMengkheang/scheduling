@@ -18,38 +18,21 @@ const server = express();
 //Connection to Database
 connectionDB();
 //Call routes
-const routeList  = require("./routes/routeList")
-routeList(server)
+// const routeList  = require("./routes/routeList")
+// routeList(server)
+
+const faculties = require("./routes/subjects/facultyRoute");
+server.use("/faculties", faculties)
 
 // middlewares
 server.use(cors());
-server.use(bodyParser.json());
+server.use(express.json());
 server.use('/uploads', express.static('uploads'));
 server.use(
-    bodyParser.urlencoded({
+    express.urlencoded({
         extended: false
     })
 );
-server.use(cookieParser(process.env.SESSION_SECRET))
-// Session
-server.use(session({
-    name: "xss__package",
-    secret: process.env.SESSION_SECRET,
-    store: new MongoDBStore({
-        uri: config.get("mongoURL"),
-        collection: "session",
-        expires: 1000 * 60 * 60 * 24 //1 day
-    }),
-    cookie: {
-        maxAge: parseInt(process.env.SESSION_MAX_AGE),
-        httpOnly: true,
-        secure: false,
-        sameSite: true
-    },
-    resave: true,
-    saveUninitialized: true,
-}))
-server.use(nocache())
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

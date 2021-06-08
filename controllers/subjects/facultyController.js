@@ -14,9 +14,11 @@ module.exports = {
 
   createFaculty: async(req, res, next) => {
     try {
-      const newFaculty = new Faculty(req.body)
-      newFaculty.save();
-      res.status(201).json(newFaculty)
+      const newFaculty = req.body
+      const createNew = new Faculty(newFaculty)
+      console.log("newFa : ", newFaculty)
+      //await createNew.save()
+      //res.status(201).json(createNew)
     } catch (err) {
       next(err);
     }
