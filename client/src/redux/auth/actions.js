@@ -19,7 +19,7 @@ export const login = (email, password) => dispatch => {
         .post(`http://${auth.domain_name}:${auth.port}/users`, JSON.stringify({ email, password }))
         .then(res => {
             const { token, user } = res.data
-            Cookies.set("_pos_session", encryptPayload(token), cookiesConfig)
+            Cookies.set("_scheduling_session", encryptPayload(token), cookiesConfig)
             setAuthToken(token)
 
             const decode = jwt_decode(token)
@@ -36,7 +36,6 @@ export const login = (email, password) => dispatch => {
                 ...decode,
                 email: user.email,
                 role: user.role,
-                permission: user.permission,
                 token: token
             }))
         })

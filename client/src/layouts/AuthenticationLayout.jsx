@@ -6,6 +6,7 @@ import { Row, Col } from "antd"
 // import { domain_name, port } from '../constants/variable'
 import 'antd/dist/antd.css'
 import "../assets/scss/style.scss"
+import feLogo from '../assets/img/logos/FE_Logo.png'
 
 const AuthenticationLayout = props => {
 
@@ -35,7 +36,7 @@ const AuthenticationLayout = props => {
                 <Col>
                     {/* <Card className="card-layer"> */}
                         <Row className="top-logo mb-20" justify="center" align="middle">
-                            <img alt="auth-logo" width="70" height="70" />
+                            <img alt="auth-logo" width="70" height="70" src={feLogo} />
                         </Row>
                         <div>
                             {props.children }

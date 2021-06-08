@@ -31,6 +31,19 @@ module.exports = {
     "submit": "Submit",
     "update": "Update",
     "discard": "Discard",
+    "image": "Image",
+    "change_pwd": "Want to change password?",
+
+    "upload_pic": "Upload Picture",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "username": "Username",
+    "email": "Email",
+    "phone_number": "Phone Number",
+    "security": "Security",
+    "pwd": "Password",
+    "confirm_pwd": "Confirm Password",
+    "teacher_id": "Teacher ID",
 
     "create_faculty": "Create Faculty",
     "edit_faculty": "Edit Faculty",
@@ -42,6 +55,8 @@ module.exports = {
     "edit_generation": "Edit Generation",
     "create_class": "Create Class",
     "edit_class": "Edit Class",
+    "create_user": "Create User",
+    "edit_user": "Edit User",
 
     "search": "Search",
     "tool": "Tool",
