@@ -1,16 +1,39 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Row, Input, Button, Table } from 'antd'
+import { Row, Input, Button, Table, Space } from 'antd'
 import { Helmet } from 'react-helmet'
 import IntlMessage from '../../../helpers/IntlMessages'
 import MainHeader from '../../../components/MainHeader'
 import { FiPlusCircle } from 'react-icons/fi'
+import baseAPI from '../../../api/baseAPI'
+import { LoopCircleLoading } from 'react-loadingg'
+import { RiEditFill } from 'react-icons/ri'
+import { FaEye } from 'react-icons/fa'
 
 const Department = () => {
 
     const history = useHistory()
     const [searchValue, setSearchValue] = useState("")
-    const [departments, setDepartments] = useState([])
+    const [departments, setDepartments] = useState(null)
+    const [faculty, setFaculty] = useState(null)
+
+    useEffect(() => {
+        baseAPI.get('departments')
+        .then(res => {
+            setDepartments(res.data)
+        })
+        .catch(err => console.log(err))
+
+        baseAPI.get('faculties')
+        .then(res => {
+            setFaculty(res.data)
+        })
+        .catch(err => console.log(err))
+    }, [])
+
+    if (departments === null || faculty === null) {
+        return <LoopCircleLoading color="#000000" />
+    }
 
     const searchTem = () => {
         return <Row>
@@ -50,6 +73,7 @@ const Department = () => {
                 departmentCode: res.departmentCode,
                 departmentName: res.departmentName,
                 faculty: res.faculty,
+                facultyName: faculty.find(x => x._id === res.faculty) && faculty.find(x => x._id === res.faculty).facultyName
             }
         })
     }
@@ -76,8 +100,8 @@ const Department = () => {
         },
         {
             title: <IntlMessage id="faculty" />,
-            dataIndex: "faculty",
-            key: "faculty",
+            dataIndex: "facultyName",
+            key: "facultyName",
             align: "center",
         },
         {
@@ -85,6 +109,22 @@ const Department = () => {
             dataIndex: "action",
             key: "action",
             align: "center",
+            render: (_, record) => (
+                <Space size="middle">
+                    <RiEditFill size="20px" onClick={() => {
+                        history.push({
+                            pathname: `department/edit`,
+                            state: record
+                        })
+                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                    <FaEye size="20px" onClick={() => {
+                        history.push({
+                            pathname: `department/view`,
+                            state: record
+                        })
+                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                </Space>
+            )
         },
     ]
 

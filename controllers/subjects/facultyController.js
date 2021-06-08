@@ -15,10 +15,10 @@ module.exports = {
   createFaculty: async(req, res, next) => {
     try {
       const newFaculty = new Faculty(req.body)
-      newFaculty.save();
+      await newFaculty.save()
       res.status(201).json(newFaculty)
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 
@@ -27,10 +27,10 @@ module.exports = {
       const { facultyID } = req.params
       const newUpdate = req.body
       const updatedFaculty = await Faculty.findByIdAndUpdate(facultyID, newUpdate)
-      updatedFaculty.save();
+      await updatedFaculty.save()
       res.status(201).json(updatedFaculty)
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 

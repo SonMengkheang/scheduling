@@ -1,16 +1,31 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Row, Input, Button, Table } from 'antd'
+import { Row, Input, Button, Table, Space } from 'antd'
 import { Helmet } from 'react-helmet'
 import IntlMessage from '../../../helpers/IntlMessages'
 import MainHeader from '../../../components/MainHeader'
 import { FiPlusCircle } from 'react-icons/fi'
+import baseAPI from '../../../api/baseAPI'
+import { LoopCircleLoading } from 'react-loadingg'
+import { RiEditFill } from 'react-icons/ri'
+import { FaEye } from 'react-icons/fa'
 
 const Faculty = () => {
 
     const history = useHistory()
     const [searchValue, setSearchValue] = useState("")
-    const [faculty, setFaculty] = useState([])
+    const [faculty, setFaculty] = useState(null)
+
+    useEffect(() => {
+        baseAPI.get('faculties')
+        .then(res => {
+            setFaculty(res.data)
+        })
+    }, [])
+
+    if (faculty === null) {
+        return <LoopCircleLoading color="#000000" />
+    }
 
     const searchTem = () => {
         return <Row>
@@ -78,6 +93,22 @@ const Faculty = () => {
             dataIndex: "action",
             key: "action",
             align: "center",
+            render: (_, record) => (
+                <Space size="middle">
+                    <RiEditFill size="20px" onClick={() => {
+                        history.push({
+                            pathname: `faculty/edit`,
+                            state: record
+                        })
+                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                    <FaEye size="20px" onClick={() => {
+                        history.push({
+                            pathname: `faculty/view`,
+                            state: record
+                        })
+                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                </Space>
+            )
         },
     ]
 

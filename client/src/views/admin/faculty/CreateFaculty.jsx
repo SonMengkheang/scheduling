@@ -4,12 +4,14 @@ import { Form, Input, Button, Row, Col } from 'antd'
 import IntlMessage from "../../../helpers/IntlMessages"
 import HeaderPage from '../../../components/HeaderPage'
 import baseAPI from '../../../api/baseAPI'
+import { Helmet } from 'react-helmet'
 
 const CreateFaculty = () => {
 
     const history = useHistory()
 
     const onSubmit = values => {
+        console.log("Values: ", values)
         baseAPI.post(`/faculties`, values)
             .then(response => {
                 console.log("Result: ", response)
@@ -38,6 +40,16 @@ const CreateFaculty = () => {
 
     return (
         <Fragment>
+            <IntlMessage id="faculty">
+                {
+                    msg => (
+                        <Helmet>
+                            <title>{msg}</title>
+                        </Helmet>
+                    )
+                }
+            </IntlMessage>
+
             <Form
                 className="mt-30"
                 name="basic"

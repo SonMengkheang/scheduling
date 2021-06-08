@@ -1,16 +1,47 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Row, Input, Button, Table } from 'antd'
+import { Row, Input, Button, Table, Space } from 'antd'
 import { Helmet } from 'react-helmet'
 import IntlMessage from '../../../helpers/IntlMessages'
 import MainHeader from '../../../components/MainHeader'
 import { FiPlusCircle } from 'react-icons/fi'
+import baseAPI from '../../../api/baseAPI'
+import { LoopCircleLoading } from 'react-loadingg'
+import { RiEditFill } from 'react-icons/ri'
+import { FaEye } from 'react-icons/fa'
 
 const Classes = () => {
 
     const history = useHistory()
     const [searchValue, setSearchValue] = useState("")
-    const [classes, setClasses] = useState([])
+    const [classes, setClasses] = useState(null)
+    const [departments, setDepartments] = useState(null)
+    const [generations, setGenerations] = useState(null)
+
+    useEffect(() => {
+        baseAPI.get('classes')
+        .then(res => {
+            console.log(res.data)
+            setClasses(res.data)
+        })
+        .catch(err => console.log(err))
+
+        baseAPI.get('generations')
+        .then(res => {
+            setGenerations(res.data)
+        })
+        .catch(err => console.log(err))
+
+        baseAPI.get('departments')
+        .then(res => {
+            setDepartments(res.data)
+        })
+        .catch(err => console.log(err))
+    }, [])
+
+    if (classes === null || generations === null || departments === null) {
+        return <LoopCircleLoading color="#000000" />
+    }
 
     const searchTem = () => {
         return <Row>
@@ -50,7 +81,9 @@ const Classes = () => {
                 classesCode: res.classesCode,
                 classesName: res.classesName,
                 department: res.department,
+                departmentName: departments.find(x => x._id === res.department).departmentName,
                 generation: res.generation,
+                generationName: generations.find(x => x._id === res.generation).generationName,
                 shift: res.shift,
             }
         })
@@ -78,14 +111,14 @@ const Classes = () => {
         },
         {
             title: <IntlMessage id="department" />,
-            dataIndex: "department",
-            key: "year",
+            dataIndex: "departmentName",
+            key: "departmentName",
             align: "center",
         },
         {
             title: <IntlMessage id="generation" />,
-            dataIndex: "generation",
-            key: "generation",
+            dataIndex: "generationName",
+            key: "generationName",
             align: "center",
         },
         {
@@ -99,6 +132,22 @@ const Classes = () => {
             dataIndex: "action",
             key: "action",
             align: "center",
+            render: (_, record) => (
+                <Space size="middle">
+                    <RiEditFill size="20px" onClick={() => {
+                        history.push({
+                            pathname: `class/edit`,
+                            state: record
+                        })
+                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                    <FaEye size="20px" onClick={() => {
+                        history.push({
+                            pathname: `class/view`,
+                            state: record
+                        })
+                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                </Space>
+            )
         },
     ]
 

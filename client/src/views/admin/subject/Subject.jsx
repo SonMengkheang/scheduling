@@ -1,16 +1,32 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Row, Input, Button, Table } from 'antd'
+import { Row, Input, Button, Table, Space } from 'antd'
 import { Helmet } from 'react-helmet'
 import IntlMessage from '../../../helpers/IntlMessages'
 import MainHeader from '../../../components/MainHeader'
 import { FiPlusCircle } from 'react-icons/fi'
+import baseAPI from '../../../api/baseAPI'
+import { LoopCircleLoading } from 'react-loadingg'
+import { RiEditFill } from 'react-icons/ri'
+import { FaEye } from 'react-icons/fa'
 
 const Subject = () => {
 
     const history = useHistory()
     const [searchValue, setSearchValue] = useState("")
-    const [subjects, setSubjects] = useState([])
+    const [subjects, setSubjects] = useState(null)
+
+    useEffect(() => {
+        baseAPI.get('subjects')
+        .then(res => {
+            setSubjects(res.data)
+        })
+        .catch(err => console.log(err))
+    }, [])
+
+    if (subjects === null) {
+        return <LoopCircleLoading color="#000000" />
+    }
 
     const searchTem = () => {
         return <Row>
@@ -51,6 +67,8 @@ const Subject = () => {
                 subjectName: res.subjectName,
                 duration: res.duration,
                 credit: res.credit,
+                hasLab: res.hasLab,
+                labDuration: res.labDuration,
             }
         })
     }
@@ -80,6 +98,18 @@ const Subject = () => {
             dataIndex: "duration",
             key: "duration",
             align: "center",
+            render: (_, record) => (
+                <span>{record.duration}<IntlMessage id="mn" /></span>
+            )
+        },
+        {
+            title: <IntlMessage id="duration" />,
+            dataIndex: "labDuration",
+            key: "labDuration",
+            align: "center",
+            render: (_, record) => (
+                record.hasLab ? <span>{record.labDuration}<IntlMessage id="mn" /></span> : <span>N/A</span>
+            )
         },
         {
             title: <IntlMessage id="credit" />,
@@ -92,6 +122,22 @@ const Subject = () => {
             dataIndex: "action",
             key: "action",
             align: "center",
+            render: (_, record) => (
+                <Space size="middle">
+                    <RiEditFill size="20px" onClick={() => {
+                        history.push({
+                            pathname: `subject/edit`,
+                            state: record
+                        })
+                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                    <FaEye size="20px" onClick={() => {
+                        history.push({
+                            pathname: `subject/view`,
+                            state: record
+                        })
+                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                </Space>
+            )
         },
     ]
 

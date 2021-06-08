@@ -12,7 +12,7 @@ const userSchema = new Schema({
   lastName: {
     type: String,
   },
-  userName: {
+  username: {
     type: String,
     unique: true,
   },
@@ -32,7 +32,8 @@ const userSchema = new Schema({
     type: String,
   },
   department: [{
-    type: String,
+    type : mongoose.Schema.Types.ObjectId,
+    ref : "Department"
   }],
   subject : [{
     type : mongoose.Schema.Types.ObjectId,

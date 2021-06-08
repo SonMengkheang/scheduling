@@ -18,38 +18,52 @@ const server = express();
 //Connection to Database
 connectionDB();
 //Call routes
-const routeList  = require("./routes/routeList")
-routeList(server)
+// const routeList  = require("./routes/routeList")
+// routeList(server)
+const faculties = require("./routes/subjects/facultyRoute")
+const departments = require("./routes/subjects/departmentRoute")
+const subjects = require("./routes/subjects/subjectRoute")
+const generations = require("./routes/subjects/generationRoute")
+const classes = require("./routes/classes/classRoute")
+const users = require("./routes/users/userRoute")
 
 // middlewares
 server.use(cors());
-server.use(bodyParser.json());
+server.use(express.json());
 server.use('/uploads', express.static('uploads'));
 server.use(
-    bodyParser.urlencoded({
+    express.urlencoded({
         extended: false
     })
 );
-server.use(cookieParser(process.env.SESSION_SECRET))
+// server.use(cookieParser(process.env.SESSION_SECRET))
+
+server.use("/faculties", faculties)
+server.use("/departments", departments)
+server.use("/subjects", subjects)
+server.use("/generations", generations)
+server.use("/classes", classes)
+server.use("/users", users)
+
 // Session
-server.use(session({
-    name: "xss__package",
-    secret: process.env.SESSION_SECRET,
-    store: new MongoDBStore({
-        uri: config.get("mongoURL"),
-        collection: "session",
-        expires: 1000 * 60 * 60 * 24 //1 day
-    }),
-    cookie: {
-        maxAge: parseInt(process.env.SESSION_MAX_AGE),
-        httpOnly: true,
-        secure: false,
-        sameSite: true
-    },
-    resave: true,
-    saveUninitialized: true,
-}))
-server.use(nocache())
+// server.use(session({
+//     name: "xss__package",
+//     secret: process.env.SESSION_SECRET,
+//     store: new MongoDBStore({
+//         uri: config.get("mongoURL"),
+//         collection: "session",
+//         expires: 1000 * 60 * 60 * 24 //1 day
+//     }),
+//     cookie: {
+//         maxAge: parseInt(process.env.SESSION_MAX_AGE),
+//         httpOnly: true,
+//         secure: false,
+//         sameSite: true
+//     },
+//     resave: true,
+//     saveUninitialized: true,
+// }))
+// server.use(nocache())
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

@@ -6,7 +6,7 @@ import { domain_name, port } from "../constants/variable.js"
 const baseApi = axios.create({
     baseURL: `http://${domain_name}:${port}`,
     headers: {
-        "x-auth-token": Cookies.get("_pos_session") === undefined ? "" : decryptPayload(Cookies.get("_pos_session")),
+        // "x-auth-token": Cookies.get("_pos_session") === undefined ? "" : decryptPayload(Cookies.get("_pos_session")),
         "Content-Type": 'application/json'
     }
 })
