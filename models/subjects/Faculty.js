@@ -16,5 +16,6 @@ const facultySchema = new Schema({
 }, {timestamps : true}
 )
 
+
 const Faculty = mongoose.model("Faculty", facultySchema);
 module.exports = Faculty;

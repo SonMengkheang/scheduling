@@ -15,7 +15,7 @@ module.exports = {
   createDepartment: async(req, res, next) => {
     try {
       const newDepartment = new Department(req.body)
-      newDepartment.save();
+      await newDepartment.save();
       res.status(201).json(newDepartment)
     } catch (err) {
       next(err);
@@ -27,7 +27,7 @@ module.exports = {
       const { depID } = req.params
       const newUpdate = req.body
       const updatedDep = await Department.findByIdAndUpdate(depID, newUpdate)
-      updatedDep.save();
+      await updatedDep.save();
       res.status(201).json(updatedDep)
     } catch (err) {
       next(err);

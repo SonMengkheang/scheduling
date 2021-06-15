@@ -14,13 +14,11 @@ module.exports = {
 
   createFaculty: async(req, res, next) => {
     try {
-      const newFaculty = req.body
-      const createNew = new Faculty(newFaculty)
-      console.log("newFa : ", newFaculty)
-      //await createNew.save()
-      //res.status(201).json(createNew)
+      const newFaculty = new Faculty(req.body)
+      await newFaculty.save()
+      res.status(201).json(newFaculty)
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 
@@ -29,10 +27,10 @@ module.exports = {
       const { facultyID } = req.params
       const newUpdate = req.body
       const updatedFaculty = await Faculty.findByIdAndUpdate(facultyID, newUpdate)
-      updatedFaculty.save();
+      await updatedFaculty.save()
       res.status(201).json(updatedFaculty)
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 

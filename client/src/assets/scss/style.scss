@@ -1,0 +1,12 @@
+@import "basic/antd_global";
+@import "variable";
+@import "basic/base";
+@import "basic/util-styles";
+
+//mixins
+@import "mixins/mixins";
+
+//component
+@import "auth-form";
+@import "navbar";
+@import "sidebar";

@@ -1,0 +1,12 @@
+[
+    { 
+        "_id": "60bf846443e6bc299cc29d60",
+        "roleName": "Admin",
+        "description": "for admin"
+    },
+    { 
+        "_id": "60bf846443e6bc299cc29d61",
+        "roleName": "Lecturer",
+        "description": "for lecturer"
+    }
+]

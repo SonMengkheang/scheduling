@@ -2,18 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const classSchema = new Schema({
-    classCode: {
+    classesCode: {
         type: String,
         unique: true
     },
-    className: {
+    classesName: {
         type: String
     },
     department: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Department"
     },
-    department: {
+    generation: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Generation"
     },

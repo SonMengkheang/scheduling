@@ -1,0 +1,22 @@
+[
+    {
+        "teacherID" : "FE0000001",
+        "firstName" : "Mr.",
+        "lastName" : "A",
+        "username" : "Mr. A",
+        "email" : "mr_A@admin.com",
+        "phoneNumber" : "099993962",
+        "role" : "60bf846443e6bc299cc29d60",
+        "password" : "mr.A@123"
+    },
+    {
+        "teacherID" : "FE0000002",
+        "firstName" : "Mr.",
+        "lastName" : "B",
+        "username" : "Mr. B",
+        "email" : "mr_B@lecturer.com",
+        "phoneNumber" : "099993963",
+        "role" : "60bf846443e6bc299cc29d61",
+        "password" : "mr.B@123"
+    }
+]

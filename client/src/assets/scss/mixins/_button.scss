@@ -1,0 +1,122 @@
+/*
+button mixin customization
+*/
+
+@mixin btn-styles ($btn-color, $btn-state-color) {
+
+    background-color: $btn-color;
+    &:hover,
+    &:focus,
+    &:active,
+    &.active,
+    &:active:focus,
+    &:active:hover,
+    &.active:focus,
+    &.active:hover {
+        background-color: $btn-state-color !important;
+        color: $white !important;
+        box-shadow: $none !important;
+    }
+
+    &.disabled,
+    &:disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active {
+          background-color: $btn-color;
+          border-color: $btn-color;
+        }
+    }
+
+    //btn-neutral style
+    @if $btn-color == $white {
+       color: $primary-color;
+
+       &.btn-danger {
+          color: $danger-color;
+          &:hover,
+          &:focus,
+          &:active,
+          &:active:focus{
+            color: $danger-states-color !important;
+            border-color: $danger-states-color;
+          }
+       }
+
+       &.btn-info{
+          color: $info-color !important;
+
+          &:hover,
+          &:focus,
+          &:active,
+          &:active:focus{
+            color: $info-states-color !important;
+          }
+       }
+
+       &.btn-warning{
+          color: $warning-color !important;
+
+          &:hover,
+          &:focus,
+          &:active,
+          &:active:focus{
+            color: $warning-states-color !important;
+            border-color: $warning-states-color !important;
+          }
+       }
+
+       &.btn-success{
+          color: $success-color !important;
+
+          &:hover,
+          &:focus,
+          &:active,
+          &:active:focus{
+            color: $success-states-color !important;
+            border-color: $success-states-color !important;
+          }
+       }
+
+        &.btn-default{
+          color: $default-color !important;
+
+          &:hover,
+          &:focus,
+          &:active,
+          &:active:focus{
+            color: $default-states-color !important;
+            border-color: $default-states-color !important;
+          }
+        }
+
+        &.active,
+        &:active,
+        &:active:focus,
+        &:active:hover,
+        &.active:focus,
+        &.active:hover {
+          background-color: $white !important;
+          color: $primary-states-color !important;
+          box-shadow: $none !important;
+        }
+
+        &:hover,
+        &:focus{
+          color: $primary-states-color !important;
+
+          &:not(.nav-link){
+            box-shadow: none;
+          }
+        }
+
+    } @else {
+      color: $white;
+    }
+}
+

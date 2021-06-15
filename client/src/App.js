@@ -1,64 +1,58 @@
-import  React from 'react';
-import QRCode from 'qrcode.react';
-import { useBarcode } from '@createnextapp/react-barcode';
+import React, { Fragment, lazy, useEffect } from "react"
+import { history } from "./helpers/history"
+import jwtDecode from "jwt-decode"
+import Cookies from "js-cookie"
+
+import {Router, Route, Switch} from "react-router-dom"
+
+import store  from "./redux/store"
+import setAuthToken from "./helpers/setAuthToken"
+
+import { setCurrentUser, setCurrentUserProfile} from "./redux/auth/actions"
+import { decryptPayload } from "./helpers/cryptography"
+import {LOGOUT} from "./redux/actions"
+import { Role } from "./helpers/role"
+import baseAPI from "./api/baseAPI";
+
+const ViewAuthenticator = lazy(() => import("./views/auth"))
+const ViewAdmin = lazy(() => import("./views/admin"))
 
 const App = () => {
 
-  const { inputRef } = useBarcode({
-    value: '123245657891012',
-    options: {
-      format: "CODE128",
-    }
-  }); 
-  const downloadQR = () => {
-    const canvas = document.getElementById("QRCode");
-    const pngUrl = canvas
-      .toDataURL("image/png")
-      .replace("image/png", "image/octet-stream");
-    let downloadLink = document.createElement("a");
-    downloadLink.href = pngUrl;
-    downloadLink.download = "QRCode.png";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-  }
+    // useEffect(() => {
 
-  const downloadBar = () => {
-    const canvas = document.getElementById("BarCode");
-    const pngUrl = canvas
-      .toDataURL("image/png")
-      .replace("image/png", "image/octet-stream");
-    let downloadLink = document.createElement("a");
-    downloadLink.href = pngUrl;
-    downloadLink.download = "BarCode.png";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-  }
+    //     if(typeof Cookies.get("_pos_session") !== "undefined") {
+    //         const token = decryptPayload(Cookies.get("_pos_session"))
+    //         setAuthToken(token)
+    //         const decoded = jwtDecode(token)
 
-  return (
-    <div>
-      <QRCode
-        id="QRCode"
-        value="QRCode"
-        size={290}
-        level={"H"}
-        includeMargin={true}
-      />
-      <button onClick={downloadQR}>
-        Download QR Code
-      </button>
+    //         //Set user and isLoggedIn
+    //         store.dispatch(setCurrentUser(decoded))
+    //         store.dispatch(setCurrentUserProfile())
 
-      <canvas
-        id="BarCode"
-        includeMargin={true}  
-        ref ={inputRef}
-      />
-      <button onClick={downloadBar}>
-        Download Bar Code
-      </button>
-    </div>
-  )
+    //         //checking  for expire token
+    //         const currentTime = Date.now() / 1000 //to get Milliseconds
+    //         if(decoded.exp < currentTime) {
+    //             store.dispatch({ type: LOGOUT })
+    //             baseAPI.delete(`/sells/parkSale/`)
+    //             history.push("/people/user/login")
+    //         }
+    //     } else {
+    //         history.push("/people/user/login")
+    //     }
+
+    // }, [Cookies.get("_pos_session")])
+
+    return(
+      <Fragment>
+          <Router history={history}>
+              <Switch>
+                  <Route path="/login" render={ props => <ViewAuthenticator { ...props } />}/>
+                  <Route path="/admin" render={ props => <ViewAdmin { ...props } />}/>
+              </Switch>
+          </Router>
+      </Fragment>
+    )
 }
 
 export default App

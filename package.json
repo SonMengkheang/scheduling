@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
+    "seeds": "node seed.js -i",
+    "removeSeeds": "node seed.js -d",
     "client": "npm run start --prefix client",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
@@ -13,9 +15,11 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "accesscontrol": "^2.2.1",
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.2",
+    "colors": "^1.4.0",
     "concurrently": "^5.3.0",
     "config": "^3.3.3",
     "connect-mongo": "^3.2.0",

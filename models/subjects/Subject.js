@@ -14,7 +14,13 @@ const subjectSchema = new Schema({
   },
   credit : {
     type: Number
-  }
+  },
+  hasLab: {
+    type: Boolean
+  },
+  labDuration : {
+    type: Number
+  },
 }, { timestamps: true }
 )
 
