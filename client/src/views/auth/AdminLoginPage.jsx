@@ -21,12 +21,12 @@ const AdminLoginPage = () => {
     //verify role after login
     if(currentUser.isLoggedIn) {
         const { role } = currentUser.user
-        if(typeof role !== "undefined" && (role === "Admin" || role === "Manager" || role === "Stock Manager" || role === "Super Admin")) {
-            return <Redirect to="/app/dashboard" />
+        if(role === "Admin") {
+            return <Redirect to="/admin/faculty" />
         }
     }
 
-    if(typeof Cookies.get("_pos_session") !== "undefined") {
+    if(typeof Cookies.get("_scheduling_session") !== "undefined") {
         return <div>Loading...</div>
     }
 
