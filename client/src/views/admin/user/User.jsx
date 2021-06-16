@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Row, Input, Button, Table, Space } from 'antd'
+import { Row, Input, Button, Table, Space, Image } from 'antd'
+import { domain_name, port } from '../../../constants/variable'
 import { Helmet } from 'react-helmet'
 import IntlMessage from '../../../helpers/IntlMessages'
 import MainHeader from '../../../components/MainHeader'
@@ -9,7 +10,6 @@ import baseAPI from '../../../api/baseAPI'
 import { LoopCircleLoading } from 'react-loadingg'
 import { RiEditFill } from 'react-icons/ri'
 import { FaEye } from 'react-icons/fa'
-import { role } from '../../../lang/locals/en-us'
 
 const User = () => {
 
@@ -146,6 +146,13 @@ const User = () => {
             dataIndex: "userImage",
             key: "userImage",
             align: "center",
+            render: (_, record) => (
+                <Image
+                    width={50}
+                    height={50}
+                    src={`http://${domain_name}:${port}/${record.userImage}`}
+                />
+            )
         },
         {
             title: <IntlMessage id="action" />,

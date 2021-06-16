@@ -15,6 +15,7 @@ const CreateUser = () => {
     const { Option } = Select
     const [fileList, updateFileList] = useState([])
     const [departments, setDepartments] = useState(null)
+    const [classes, setClasses] = useState(null)
     const [subjects, setSubjects] = useState(null)
     const [roles, setRoles] = useState([])
     const [imageUrls, setImageUrls] = useState(null)
@@ -32,6 +33,12 @@ const CreateUser = () => {
         })
         .catch(err => console.log(err))
 
+        baseAPI.get('classes')
+        .then(res => {
+            setClasses(res.data)
+        })
+        .catch(err => console.log(err))
+
         baseAPI.get('roles')
         .then(res => {
             setRoles(res.data)
@@ -39,7 +46,7 @@ const CreateUser = () => {
         .catch(err => console.log(err))
     }, [])
 
-    if (departments === null || subjects === null || roles === null) {
+    if (departments === null || subjects === null || roles === null || classes === null) {
         return <LoopCircleLoading color="#000000" />
     }
 
@@ -290,6 +297,19 @@ const CreateUser = () => {
                         </Form.Item>
                     </Col>
                 </Row>
+                <Row justify="space-between" className="mb-20">
+                    <Col span={11}>
+                        <Form.Item
+                            label={<IntlMessage id="class" />}
+                            name="classes"
+                            // rules={[{ required: true, message: 'Please input department!' }]}
+                        >
+                            <Select mode="multiple" allowClear placeholder="Select Class">
+                                { classesOption() }
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
             </Card>
         </Row>
     }
@@ -298,6 +318,14 @@ const CreateUser = () => {
         return departments.map(res => {
             return <Option key={res._id} value={res._id}>
                 {res.departmentName}
+            </Option>
+        })
+    }
+
+    const classesOption = () => {
+        return classes.map(res => {
+            return <Option key={res._id} value={res._id}>
+                {res.classesName}
             </Option>
         })
     }

@@ -1,15 +1,15 @@
 import React from "react"
-import { Redirect } from "react-router-dom"
+import { Redirect, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { login } from "../../redux/auth/actions"
 import { Form, Input, Button, Row } from "antd"
 import { Mail, Eye } from "react-feather"
 import Cookies from "js-cookie"
 
-
 const AdminLoginPage = () => {
 
     const currentUser = useSelector(state => state.auth)
+    const history = useHistory()
     const dispatch = useDispatch()
 
     const onSubmit = values => {
@@ -22,7 +22,11 @@ const AdminLoginPage = () => {
     if(currentUser.isLoggedIn) {
         const { role } = currentUser.user
         if(role === "Admin") {
-            return <Redirect to="/admin/faculty" />
+            return (
+                <div>
+                    <Redirect to="/admin/faculty" />
+                </div>
+            )
         }
     }
 

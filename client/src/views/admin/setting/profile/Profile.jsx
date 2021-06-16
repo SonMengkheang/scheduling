@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Form, Input, Button, Row, Upload, Select, Col, Switch, Card, Avatar } from 'antd'
+import { Form, Input, Button, Row, Upload, Col, Switch, Card, Avatar, message } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
 import baseAPI from '../../../../api/baseAPI'
 import ImgCrop from 'antd-img-crop'
@@ -9,12 +9,16 @@ import IntlMessage from "../../../../helpers/IntlMessages"
 import HeaderPage from '../../../../components/HeaderPage'
 import { LoopCircleLoading } from 'react-loadingg'
 import { Helmet } from 'react-helmet'
+import { useDispatch } from 'react-redux'
+import { logoutUser } from '../../../../redux/auth/actions'
+import axios from 'axios'
+import Cookies from "js-cookie"
+import { decryptPayload } from "../../../../helpers/cryptography"
 
 const Profile = () => {
 
     const history = useHistory()
-    const location = useLocation()
-    const { Option } = Select
+    const dispatch = useDispatch()
     const [fileList, updateFileList] = useState([])
     const [ownProfile, setOwnProfile] = useState(null)
     const [departments, setDepartments] = useState(null)
@@ -22,9 +26,15 @@ const Profile = () => {
     const [roles, setRoles] = useState([])
     const [imageUrls, setImageUrls] = useState(null)
     const [changePwd, setChangePwd] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    const instance = axios.create({
+        baseURL: 'http://localhost:5000',
+        headers: {'x-auth-token': decryptPayload(Cookies.get("_scheduling_session"))}
+    })
 
     useEffect(() => {
-        baseAPI.get('users/profile')
+        baseAPI.get('/users/profile')
         .then(res => {
             setOwnProfile(res.data)
         })
@@ -48,6 +58,10 @@ const Profile = () => {
         })
         .catch(err => console.log(err))
     }, [])
+
+    useEffect(() => {
+        console.log(errorMessage)
+    }, [errorMessage])
 
     if (ownProfile === null || departments === null || subjects === null || roles === null) {
         return <LoopCircleLoading color="#000000" />
@@ -85,25 +99,36 @@ const Profile = () => {
         formData.append("userImage", fileList[0])
 
         if (changePwd === true) {
-            if (value.password === value.confirmPassword) {
+            if (value.newpassword === value.confirmPassword) {
                 if (fileList.length === 0) {
-                    baseAPI.patch(`/users/profile`, value)
+                    baseAPI.patch(`/users/profile/update`, value)
                         .then(response => {
                             console.log(response)
-                            history.goBack()
+                            dispatch(logoutUser())
+                            history.go(0)
                         })
                         .catch(error => {
-                            console.log(error)
+                            setErrorMessage(error.response.data.error.message)
+                            console.log(error.response.data.error.message)
+                            message.error({
+                                content: error.response.data.error.message,
+                                className: 'custom-class',
+                                style: {
+                                    // marginTop: '20vh',
+                                    fontSize: '20px'
+                                },
+                            })
                         })
                 } else {
                     baseAPI.post(`/users/setImg`, formData)
                         .then((response) => {
                             value.userImage = response.data
-                            baseAPI.patch(`/users/profile`, value)
+                            baseAPI.patch(`/users/profile/update`, value)
                                 .then(response => {
-                                    alert("The file is successfully uploaded")
                                     console.log(response)
-                                    history.goBack()
+                                    dispatch(logoutUser())
+                                    // history.push("/people/user/login")
+                                    history.go(0)
                                 })
                                 .catch(error => {
                                     console.log(error)
@@ -111,31 +136,37 @@ const Profile = () => {
                         })
                         .catch((error) => {
                             console.log(error)
+                            setErrorMessage(error)
                         })
                 }
             } else {
-                alert("Password not match")
-                console.log("Password not match");
+                message.error({
+                    content: "Password not match",
+                    className: 'custom-class',
+                    style: {
+                        fontSize: '20px'
+                    },
+                })
             }
         } else {
             if (fileList.length === 0) {
-                baseAPI.patch(`/users/profile`, value)
+                baseAPI.patch(`/users/profile/update`, value)
                     .then(response => {
                         console.log(response)
-                        history.goBack()
+                        history.go(0)
                     })
                     .catch(error => {
                         console.log(error)
+                        setErrorMessage(error)
                     })
             } else {
                 baseAPI.post(`/users/setImg`, formData)
                     .then((response) => {
                         value.userImage = response.data
-                        baseAPI.patch(`/users/profile`, value)
+                        baseAPI.patch(`/users/profile/update`, value)
                             .then(response => {
-                                alert("The file is successfully uploaded")
                                 console.log(response)
-                                history.goBack()
+                                history.go(0)
                             })
                             .catch(error => {
                                 console.log(error)
@@ -143,6 +174,7 @@ const Profile = () => {
                     })
                     .catch((error) => {
                         console.log(error)
+                        setErrorMessage(error)
                     })
             }
         }
@@ -151,9 +183,6 @@ const Profile = () => {
 
     const buttonTem = () => {
         return <Row justify="end">
-            <Button className="btn-border-danger mr-10" size="large" onClick={() => { history.goBack() }}>
-                <IntlMessage id="discard" />
-            </Button>
             <Button className="btn-border-primary" size="large" htmlType="submit">
                 <IntlMessage id="update" />
             </Button>
@@ -178,60 +207,52 @@ const Profile = () => {
                         </Upload>
                     </ImgCrop>]}
                 >
+                    {/* <Row justify="center" align="middle">
+                        {imageUrls !== null ? <Avatar size={128} src={imageUrls} /> : <Avatar size={128} src={`http://${user.domain_name}:${user.port}/${ownProfile.userImage}`} />}
+                    </Row> */}
                     <Row justify="center" align="middle">
-                        {imageUrls !== null ? <Avatar size={128} src={imageUrls} /> : <Avatar size={128} src={`http://${user.domain_name}:${user.port}/${location.state.userImage}`} />}
+                        {imageUrls !== null ? <Avatar size={128} src={imageUrls} /> : <Avatar size={128} src={`http://${user.domain_name}:${user.port}/${ownProfile.userImage}`} />}
+                    </Row>
+                    <Row className="mt-10" justify="center">
+                        <span className="fw-bold fs-20">{ownProfile.firstName} {ownProfile.lastName} ({ownProfile.role})</span>
+                    </Row>
+                    <Row className="mt-10" justify="center">
+                        <span className="c-black fs-16">{ownProfile.email}</span>
+                    </Row>
+                    <Row className="mt-10" justify="center">
+                        <span className="c-black fs-16">{ownProfile.phoneNumber}</span>
                     </Row>
                 </Card>
             </Form.Item>
         </Row>
     }
 
-    const rolePart = () => {
-        return <Row justify="center">
-            <Card
-                style={{ width: "95%" }}
-                title={<span className="c-primary fw-bold fs-18"><IntlMessage id="role" /></span>}
-            >
-                <Row>
-                    <Form.Item
-                        style={{ width: "100%" }}
-                        name="role"
-                        label={<IntlMessage id="role" />}
-                        // rules={[{ required: true, message: 'Please select your role!' }]}
-                    >
-                        <Select placeholder="Please select a role">
-                            {roleOption()}
-                        </Select>
-                    </Form.Item>
-                </Row>
-            </Card>
-        </Row>
-    }
-
     const securityPart = () => {
-        return <div>
-            <Row justify="center" className="mb-20 mt-20">
-                <div style={{ width: "95%" }}>
-                    <Switch onChange={val => setChangePwd(val)} />
-                    <span className="ml-10"><IntlMessage id="change_pwd" /></span>
-                </div>
-            </Row>
-            {changePwd === true ? <Row justify="center" className="mt-20">
-                <Card
-                    title={<span className="c-primary fw-bold fs-18"><IntlMessage id="security" /></span>}
-                    style={{ width: "95%" }}
-                >
-                    <Row>
+        return changePwd === false ? <></> :
+        <Row justify="center">
+            <Card style={{ width: "98%" }}>
+                <Row justify="space-between" align="middle">
+                    <Col justify="center" align="middle" span={7}>
+                        <Form.Item
+                            style={{ width: "100%" }}
+                            label={<IntlMessage id="old_pwd" />}
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your old password!' }]}
+                        >
+                            <Input.Password className="input-box-style" placeholder="Enter Old Password" />
+                        </Form.Item>
+                    </Col>
+                    <Col span={7}>
                         <Form.Item
                             style={{ width: "100%" }}
                             label={<IntlMessage id="pwd" />}
-                            name="password"
+                            name="newpassword"
                             rules={[{ required: true, message: 'Please input your password!' }]}
                         >
                             <Input.Password className="input-box-style" placeholder="Enter Password" />
                         </Form.Item>
-                    </Row>
-                    <Row>
+                    </Col>
+                    <Col span={7}>
                         <Form.Item
                             style={{ width: "100%" }}
                             label={<IntlMessage id="confirm_pwd" />}
@@ -240,10 +261,10 @@ const Profile = () => {
                         >
                             <Input.Password className="input-box-style" placeholder="Enter Confirm Password" />
                         </Form.Item>
-                    </Row>
-                </Card>
-            </Row> : <></>}
-        </div>
+                    </Col>
+                </Row>
+            </Card>
+        </Row>
     }
 
     const profilePart = () => {
@@ -284,17 +305,6 @@ const Profile = () => {
                     </Col>
                     <Col span={11}>
                         <Form.Item
-                            label={<IntlMessage id="email" />}
-                            name="email"
-                            rules={[{ required: true, message: 'Please input email!' }]}
-                        >
-                            <Input className="input-box-style" placeholder="Enter Email" />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row justify="space-between" className="mb-20">
-                    <Col span={11}>
-                        <Form.Item
                             label={<IntlMessage id="phone_number" />}
                             name="phoneNumber"
                             rules={[{ required: true, message: 'Please input phonenumber!' }]}
@@ -302,70 +312,13 @@ const Profile = () => {
                             <Input className="input-box-style" placeholder="Enter Phone Number" />
                         </Form.Item>
                     </Col>
-                    <Col span={11}>
-                        <Form.Item
-                            label={<IntlMessage id="teacher_id" />}
-                            name="teacherID"
-                            rules={[{ required: true, message: 'Please input teacher id!' }]}
-                        >
-                            <Input className="input-box-style" placeholder="Enter Teacher ID" />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row justify="space-between" className="mb-20">
-                    <Col span={11}>
-                        <Form.Item
-                            label={<IntlMessage id="department" />}
-                            name="department"
-                            // rules={[{ required: true, message: 'Please input department!' }]}
-                        >
-                            <Select mode="multiple" allowClear placeholder="Select Department">
-                                { departmentOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={11}>
-                        <Form.Item
-                            label={<IntlMessage id="subject" />}
-                            name="subject"
-                            // rules={[{ required: true, message: 'Please input subject!' }]}
-                        >
-                            <Select mode="multiple" allowClear placeholder="Select subject">
-                                { subjectOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
                 </Row>
             </Card>
         </Row>
     }
 
-    const departmentOption = () => {
-        return departments.map(res => {
-            return <Option key={res._id} value={res._id}>
-                {res.departmentName}
-            </Option>
-        })
-    }
-
-    const subjectOption = () => {
-        return subjects.map(res => {
-            return <Option key={res._id} value={res._id}>
-                {res.subjectName}
-            </Option>
-        })
-    }
-
-    const roleOption = () => {
-        return roles.map(res => {
-            return <Option key={res._id} value={res._id}>
-                {res.roleName}
-            </Option>
-        })
-    }
-
     return (
-        <Fragment className="container">
+        <Fragment>
             <IntlMessage id="user">
                 {
                     msg => (
@@ -385,30 +338,32 @@ const Profile = () => {
                 onKeyPress={event => preventSubmit(event)}
                 onKeyUp={event => preventSubmit(event)}
                 initialValues={{
-                    'teacherID': location.state.teacherID,
-                    'firstName': location.state.firstName,
-                    'lastName': location.state.lastName,
-                    'username': location.state.username,
-                    'email': location.state.email,
-                    'phoneNumber': location.state.phoneNumber,
-                    'role': location.state.role,
-                    'userImage': location.state.userImage,
-                    'department': location.state.department,
-                    'subject': location.state.subject,
+                    'teacherID': ownProfile.teacherID,
+                    'firstName': ownProfile.firstName,
+                    'lastName': ownProfile.lastName,
+                    'username': ownProfile.username,
+                    'email': ownProfile.email,
+                    'phoneNumber': ownProfile.phoneNumber,
+                    'userImage': ownProfile.userImage,
                 }}
             >
-                <HeaderPage id="edit_user" button={buttonTem()} />
+                <HeaderPage id="profile" button={buttonTem()} />
 
                 <Row justify="center" className="mt-20">
                     <Col span={9}>
                         { photoPart() }
-                        { rolePart() }
-                        { securityPart() }
+                        <Row className="mb-20" justify="center">
+                            <div style={{width: "95%"}}>
+                                <Switch onChange={val => setChangePwd(val)} />
+                                <span className="ml-10"><IntlMessage id="change_pwd" /></span>
+                            </div>
+                        </Row>
                     </Col>
                     <Col span={15}>
                         { profilePart() }
                     </Col>
                 </Row>
+                { securityPart() }
             </Form>
             <div className="pt-20"></div>
         </Fragment>

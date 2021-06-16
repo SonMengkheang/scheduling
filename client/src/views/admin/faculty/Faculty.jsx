@@ -9,6 +9,7 @@ import baseAPI from '../../../api/baseAPI'
 import { LoopCircleLoading } from 'react-loadingg'
 import { RiEditFill } from 'react-icons/ri'
 import { FaEye } from 'react-icons/fa'
+import Cookies from "js-cookie"
 
 const Faculty = () => {
 
@@ -111,6 +112,8 @@ const Faculty = () => {
             )
         },
     ]
+
+    // console.log("Cookie: ", Cookies.get("_scheduling_session"))
 
     return (
         <Fragment>

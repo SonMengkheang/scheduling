@@ -10,14 +10,14 @@ import {
     LOGOUT,
     SET_CURRENT_PROFILE,
 } from "../actions"
-import * as auth from '../../constants/variable.js'
 import cookiesConfig from "../../helpers/cookiesConfig"
 
 export const login = (email, password) => dispatch => {
 
     baseAPI
-        .post(`http://${auth.domain_name}:${auth.port}/users`, JSON.stringify({ email, password }))
+        .post(`/users`, JSON.stringify({ email, password }))
         .then(res => {
+            console.log("res: ", res.data)
             const { token, user } = res.data
             Cookies.set("_scheduling_session", encryptPayload(token), cookiesConfig)
             setAuthToken(token)
@@ -41,6 +41,7 @@ export const login = (email, password) => dispatch => {
         })
         .catch(err => {
             //if login error, print error message
+            console.log(err)
             dispatch({type: GET_ERRORS,})
         })
 
@@ -62,7 +63,7 @@ export const setUserLoading = () => {
 
 export const setCurrentUserProfile = () => dispatch => {
     baseAPI
-        .get(`http://${auth.domain_name}:${auth.port}/users/profile`)
+        .get(`/users/profile`)
         .then(res => {
             dispatch({
                 type: SET_CURRENT_PROFILE,
