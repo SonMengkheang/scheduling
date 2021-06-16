@@ -32,7 +32,7 @@ export const auth = (state = initialState, action) => {
             }
         case AUTH_ERROR:
         case LOGOUT:
-            Cookies.remove("_pos_session", cookiesConfig)  //remove token from cookies
+            Cookies.remove("_scheduling_session", cookiesConfig)  //remove token from cookies
             return {
                 ...state,
                 isLoggedIn: false,

@@ -16,6 +16,9 @@ const userSchema = new Schema({
     type: String,
     unique: true,
   },
+  userImage: {
+    type: String,
+  },
   email: {
     type: String,
     unique: true,
@@ -34,6 +37,10 @@ const userSchema = new Schema({
   department: [{
     type : mongoose.Schema.Types.ObjectId,
     ref : "Department"
+  }],
+  classes: [{
+    type : mongoose.Schema.Types.ObjectId,
+    ref : "Classes"
   }],
   subject : [{
     type : mongoose.Schema.Types.ObjectId,

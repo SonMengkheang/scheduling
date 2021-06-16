@@ -32,6 +32,7 @@ module.exports = {
     "update": "Update",
     "discard": "Discard",
     "image": "Image",
+    "description": "Description",
     "change_pwd": "Want to change password?",
 
     "upload_pic": "Upload Picture",
@@ -43,6 +44,7 @@ module.exports = {
     "security": "Security",
     "pwd": "Password",
     "confirm_pwd": "Confirm Password",
+    "old_pwd": "Old Password",
     "teacher_id": "Teacher ID",
 
     "create_faculty": "Create Faculty",

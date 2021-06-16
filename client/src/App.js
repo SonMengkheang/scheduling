@@ -21,7 +21,13 @@ const ViewAdmin = lazy(() => import("./views/admin"))
 
 const App = () => {
 
+    console.log("Cookie: ", Cookies.get("_scheduling_session"))
+
     useEffect(() => {
+
+        // if(Cookies.get("_scheduling_session") === undefined) {
+        //     history.go(0)
+        // }
 
         if(typeof Cookies.get("_scheduling_session") !== "undefined") {
             const token = decryptPayload(Cookies.get("_scheduling_session"))
