@@ -48,34 +48,34 @@ const userSchema = new Schema({
   }],
   freeTime: {
     monday : [{
-      time : {
+      time : [{
         type : Date
-      }
+      }]
     }],
     tuesday : [{
-      time : {
+      time : [{
         type : Date
-      }
+      }]
     }],
     wednesday : [{
-      time : {
+      time : [{
         type : Date
-      }
+      }]
     }],
     thursday : [{
-      time : {
+      time : [{
         type : Date
-      }
+      }]
     }],
     friday : [{
-      time : {
+      time : [{
         type : Date
-      }
+      }]
     }],
     saturday : [{
-      time : {
+      time : [{
         type : Date
-      }
+      }]
     }],
   },
 },{ timestamps : true }

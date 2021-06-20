@@ -18,6 +18,7 @@ import { PrivateRoute } from "./routes/PrivateRoute"
 const ViewMain = lazy(() => import("./views"))
 const ViewAuthenticator = lazy(() => import("./views/auth"))
 const ViewAdmin = lazy(() => import("./views/admin"))
+const ViewUser = lazy(() => import("./views/user"))
 
 const App = () => {
 
@@ -57,6 +58,7 @@ const App = () => {
                     <Route exact path="/" render={ props => <ViewMain /> } />
                     <Route path="/login" render={ props => <ViewAuthenticator { ...props } />}/>
                     <PrivateRoute path="/admin" roles={[Role.Admin]} component={ ViewAdmin } />
+                    <PrivateRoute path="/user" roles={[Role.Lecturer]} component={ ViewUser } />
                     {/* <Route path="/admin" render={ props => <ViewAdmin { ...props } />}/> */}
                 </Switch>
             </Router>
