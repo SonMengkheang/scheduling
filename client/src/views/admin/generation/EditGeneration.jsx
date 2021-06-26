@@ -36,7 +36,7 @@ const EditGeneration = () => {
 
     const onSubmit = values => {
         console.log("Values: ", values)
-        baseAPI.post(`/generations`, values)
+        baseAPI.patch(`/generations/${location.state.key}`, values)
             .then(response => {
                 console.log("Result: ", response)
                 history.goBack()
@@ -103,7 +103,7 @@ const EditGeneration = () => {
                     "year": location.state.year,
                     "generation": location.state.generation,
                     "department": location.state.department,
-                    // "startedYear": location.state.startedYear,
+                    "startedYear": moment(location.state.startedYear),
                     "subject": location.state.subject,
                 }}
             >

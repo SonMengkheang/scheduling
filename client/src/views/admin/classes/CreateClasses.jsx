@@ -12,7 +12,10 @@ const CreateClasses = () => {
     const history = useHistory()
     const { Option } = Select
     const [departments, setDepartments] = useState(null)
+    const [departId, setDepartId] = useState(null)
     const [generations, setGenerations] = useState(null)
+    const [genId, setGenId] = useState(null)
+    const [generationByDepart, setGenerationByDepart] = useState(null)
 
     useEffect(() => {
         baseAPI.get('generations')
@@ -24,11 +27,27 @@ const CreateClasses = () => {
         baseAPI.get('departments')
         .then(res => {
             setDepartments(res.data)
+            setDepartId(res.data[0]._id)
         })
         .catch(err => console.log(err))
     }, [])
 
-    if (departments === null || generations === null) {
+    useEffect(() => {
+        console.log("1")
+        if (generations !== null && generations.length > 0 && departId !== null) {
+            let arr = []
+            generations.map(res => {
+                if (res.department === departId) {
+                    arr.push(res)
+                }
+            })
+            console.log("arr: ", arr)
+            setGenerationByDepart(arr)
+            setGenId(arr[0]._id)
+        }
+    }, [departId, generations])
+
+    if (departments === null || generations === null || departId === null || generationByDepart === null) {
         return <LoopCircleLoading color="#000000" />
     }
 
@@ -69,7 +88,7 @@ const CreateClasses = () => {
     }
 
     const generationOption = () => {
-        return generations.map(res => {
+        return generationByDepart.map(res => {
             return <Option key={res._id} value={res._id}>
                 {res.generationName}
             </Option>
@@ -78,7 +97,7 @@ const CreateClasses = () => {
 
     return (
         <Fragment>
-            <IntlMessage id="generation">
+            <IntlMessage id="class">
                 {
                     msg => (
                         <Helmet>
@@ -128,9 +147,10 @@ const CreateClasses = () => {
                         <Form.Item
                             label={<IntlMessage id="department" />}
                             name="department"
+                            initialValue={departId}
                             rules={[{ required: true, message: 'Please select department!' }]}
                         >
-                            <Select placeholder="Select Department">
+                            <Select value={departId} placeholder="Select Department" onChange={val => setDepartId(val)}>
                                 { departmentOption() }
                             </Select>
                         </Form.Item>
@@ -142,9 +162,11 @@ const CreateClasses = () => {
                         <Form.Item
                             label={<IntlMessage id="generation" />}
                             name="generation"
+                            // initialValue={genId}
+                            values={genId}
                             rules={[{ required: true, message: 'Please select generation!' }]}
                         >
-                            <Select placeholder="Select Generation">
+                            <Select value={genId} placeholder="Select Generation" onChange={val => setGenId(val)}>
                                 { generationOption() }
                             </Select>
                         </Form.Item>

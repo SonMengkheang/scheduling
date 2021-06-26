@@ -75,5 +75,10 @@ module.exports = {
     "friday": "Friday",
     "saturday": "Saturday",
     "edit": "Edit",
+    "generate": "Generate",
+    "semester": "Semester",
+    "semester_start": "Semester Start Date",
+    "final_exam": "Final Exam Date",
+    "english_class": "English Class",
 
 }

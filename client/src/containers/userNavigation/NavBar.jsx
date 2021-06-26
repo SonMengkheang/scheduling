@@ -16,7 +16,7 @@ import DownOutlined from "@ant-design/icons/lib/icons/DownOutlined";
 import baseUrl from '../../api/baseAPI'
 import kh from '../../assets/img/flags/kh.svg'
 import us from '../../assets/img/flags/us.svg'
-import Logo from '../../assets/img/logos/RUPP_logo.png'
+import Logo from '../../assets/img/logos/FE_Logo.png'
 
 const NavBar = () => {
 

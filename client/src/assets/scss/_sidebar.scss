@@ -2,78 +2,9 @@
 sidebar to use with mixin mixin customization
 */
 
-// .sidebar {
-//   // right: 0;
-//   // left: initial;
-
-//   .main-menu {
-//     // left: initial;
-//     // right: 0;
-
-//     ul li {
-//       position: relative;
-
-//       &.active:after {
-//         content: " ";
-//         left: initial;
-//         right: 0;
-
-//         @include respond-below(sm) {
-//           right: 2px;
-//         }
-//       }
-//     }
-//   }
-
-//   .sub-menu {
-//     left: initial;
-//     right: $main-menu-width;
-//     box-shadow: unset !important;
-//     // border-right: 1px solid $black;
-//     @include depth(2);
-
-//     ul {
-//       li {
-//         margin-left: initial;
-//         margin-right: 30px;
-
-//         i {
-//           margin-right: initial;
-//           margin-left: 10px;
-//         }
-
-//         &.active:after {
-//           left: initial;
-//           right: -16px;
-//         }
-//       }
-//     }
-
-//     // @include respond-below(xl) {
-//     //   left: initial;
-//     //   right: $main-menu-width-lg;
-//     // }
-
-//     // @include respond-below(lg) {
-//     //   left: initial;
-//     //   right: $main-menu-width-md;
-//     // }
-
-//     // @include respond-below(sm) {
-//     //   left: initial;
-//     //   right: $main-menu-width-xs;
-//     // }
-//   }
-// }
-
 .sidebar {
   width: 100%;
-  // position: fixed;
   top: 0;
-  // padding-top: $navbar-height-xs;
-  // z-index: 4;
-  // height: calc(100% - #{$navbar-height-xs});
-  // transition: border-radius $menu-collapse-time;
 
   .scrollbar-container {
     margin-right: 0;
@@ -104,14 +35,6 @@ sidebar to use with mixin mixin customization
     }
 
     ul li {
-      // position: relative;
-
-      // span {
-      //   text-align: center;
-      //   padding: 0 10px;
-      //   line-height: 14px;
-      // }
-
       a {
         height: $main-menu-item-height-md;
         display: flex;
@@ -123,9 +46,7 @@ sidebar to use with mixin mixin customization
         font-weight: 400;
         text-align: center;
         border-bottom: 1px solid $white;
-        color: $brown-color;
-        // transition: color $menu-collapse-time;
-        // transition: background $menu-collapse-time;
+        color: $black;
 
         &:hover,
         &:focus {
@@ -230,7 +151,7 @@ sidebar to use with mixin mixin customization
           font-size: 14px;
           display: block;
           padding: 8px 0;
-          color: $brown-color;
+          color: $black;
         }
 
         i {
@@ -521,7 +442,7 @@ main {
       padding: 16px !important;
       font-size: 12px !important;
       font-weight: 700 !important;
-      color: $brown-color;
+      color: $black;
       // border-bottom: 0.5px solid darken(#868585, 0.05);
 
       &:hover,
@@ -530,7 +451,7 @@ main {
       }
 
       a {
-        color: $brown-color;
+        color: $black;
         &:hover,
         &:focus {
           color: darken($primary-color, 0.6);
