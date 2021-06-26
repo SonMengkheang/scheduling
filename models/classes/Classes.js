@@ -17,6 +17,10 @@ const classSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Generation"
     },
+    users: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
     shift : {
         type: String
     }

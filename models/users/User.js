@@ -50,7 +50,10 @@ const userSchema = new Schema({
     monday : [{
       time : {
         type : Date
-      }
+      },
+      status : {
+        type : Boolean
+      } 
     }],
     tuesday : [{
       time : {
