@@ -80,5 +80,6 @@ module.exports = {
     "semester_start": "Semester Start Date",
     "final_exam": "Final Exam Date",
     "english_class": "English Class",
+    "lecturer": "Lecturer",
 
 }

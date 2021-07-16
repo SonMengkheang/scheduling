@@ -84,6 +84,7 @@ const Classes = () => {
                 departmentName: departments.find(x => x._id === res.department).departmentName,
                 generation: res.generation,
                 generationName: generations.find(x => x._id === res.generation).generationName,
+                user: res.user,
                 shift: res.shift,
             }
         })

@@ -11,5 +11,5 @@ router
   .route("/:classID")
   .patch(ClassController.updateClass)
   
-module.exports = router;
+module.exports = router
 

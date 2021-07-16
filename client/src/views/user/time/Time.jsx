@@ -35,9 +35,9 @@ const Time = () => {
         </Row>
     }
 
-    
+    // let mondayy = moment(curUser.freeTime.monday[0].startTime)
 
-    console.log("Val: ", curUser.freeTime.monday)
+    // console.log("Val: ", mondayy.getHour())
     
     const renderData = [
         {
@@ -60,7 +60,7 @@ const Time = () => {
                 if (record.monday.length > 0) {
                     return record.monday.map(res => {
                         return <Row className="mb-10" justify="center">
-                            <span>{moment(res.time[0]).format("HH:mm A")} - {moment(res.time[1]).format("HH:mm A")}</span>
+                            <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
                         </Row>
                     })
                 }
@@ -74,9 +74,15 @@ const Time = () => {
             render: (_, record) => {
                 if (record.tuesday.length > 0) {
                     return record.tuesday.map(res => {
-                        return <Row className="mb-10" justify="center">
-                            <span>{moment(res.time[0]).format("HH:mm A")} - {moment(res.time[1]).format("HH:mm A")}</span>
-                        </Row>
+                        if (res.startTime === null && res.endTime === null) {
+                            return <Row className="mb-10" justify="center">
+                                <span>N/A</span>
+                            </Row>
+                        } else {
+                            return <Row className="mb-10" justify="center">
+                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                            </Row>
+                        }
                     })
                 }
             }
@@ -89,9 +95,15 @@ const Time = () => {
             render: (_, record) => {
                 if (record.wednesday.length > 0) {
                     return record.wednesday.map(res => {
-                        return <Row className="mb-10" justify="center">
-                            <span>{moment(res.time[0]).format("HH:mm A")} - {moment(res.time[1]).format("HH:mm A")}</span>
-                        </Row>
+                        if (res.startTime === null && res.endTime === null) {
+                            return <Row className="mb-10" justify="center">
+                                <span>N/A</span>
+                            </Row>
+                        } else {
+                            return <Row className="mb-10" justify="center">
+                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                            </Row>
+                        }
                     })
                 }
             }
@@ -104,9 +116,15 @@ const Time = () => {
             render: (_, record) => {
                 if (record.thursday.length > 0) {
                     return record.thursday.map(res => {
-                        return <Row className="mb-10" justify="center">
-                            <span>{moment(res.time[0]).format("HH:mm A")} - {moment(res.time[1]).format("HH:mm A")}</span>
-                        </Row>
+                        if (res.startTime === null && res.endTime === null) {
+                            return <Row className="mb-10" justify="center">
+                                <span>N/A</span>
+                            </Row>
+                        } else {
+                            return <Row className="mb-10" justify="center">
+                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                            </Row>
+                        }
                     })
                 }
             }
@@ -119,9 +137,15 @@ const Time = () => {
             render: (_, record) => {
                 if (record.friday.length > 0) {
                     return record.friday.map(res => {
-                        return <Row className="mb-10" justify="center">
-                            <span>{moment(res.time[0]).format("HH:mm A")} - {moment(res.time[1]).format("HH:mm A")}</span>
-                        </Row>
+                        if (res.startTime === null && res.endTime === null) {
+                            return <Row className="mb-10" justify="center">
+                                <span>N/A</span>
+                            </Row>
+                        } else {
+                            return <Row className="mb-10" justify="center">
+                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                            </Row>
+                        }
                     })
                 }
             }
@@ -134,9 +158,15 @@ const Time = () => {
             render: (_, record) => {
                 if (record.saturday.length > 0) {
                     return record.saturday.map(res => {
-                        return <Row className="mb-10" justify="center">
-                            <span>{moment(res.time[0]).format("HH:mm A")} - {moment(res.time[1]).format("HH:mm A")}</span>
-                        </Row>
+                        if (res.startTime === null && res.endTime === null) {
+                            return <Row className="mb-10" justify="center">
+                                <span>N/A</span>
+                            </Row>
+                        } else {
+                            return <Row className="mb-10" justify="center">
+                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                            </Row>
+                        }
                     })
                 }
             }

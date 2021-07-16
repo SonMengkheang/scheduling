@@ -48,36 +48,78 @@ const userSchema = new Schema({
   }],
   freeTime: {
     monday : [{
-      time : [{
+      startTime : {
         type : Date
-      }]
+      },
+      endTime : {
+        type : Date
+      },
+      status : {
+        type : Boolean,
+        default : false
+      }
     }],
     tuesday : [{
-      time : [{
+      startTime : {
         type : Date
-      }]
+      },
+      endTime : {
+        type : Date
+      },
+      status : {
+        type : Boolean,
+        default : false
+      }
     }],
     wednesday : [{
-      time : [{
+      startTime : {
         type : Date
-      }]
+      },
+      endTime : {
+        type : Date
+      },
+      status : {
+        type : Boolean,
+        default : false
+      }
     }],
     thursday : [{
-      time : [{
+      startTime : {
         type : Date
-      }]
+      },
+      endTime : {
+        type : Date
+      },
+      status : {
+        type : Boolean,
+        default : false
+      }
     }],
     friday : [{
-      time : [{
+      startTime : {
         type : Date
-      }]
+      },
+      endTime : {
+        type : Date
+      },
+      status : {
+        type : Boolean,
+        default : false
+      }
     }],
     saturday : [{
-      time : [{
+      startTime : {
         type : Date
-      }]
+      },
+      endTime : {
+        type : Date
+      },
+      status : {
+        type : Boolean,
+        default : false
+      }
     }],
-  },
+  }
 },{ timestamps : true }
 );
 

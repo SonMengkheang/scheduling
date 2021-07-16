@@ -10,6 +10,7 @@ router
 
 router
   .route("/:userID")
+  .get(UserController.allowIfLoggedin, UserController.getUserById)
   .patch(UserController.allowIfLoggedin, UserController.updateUser)
 
 router

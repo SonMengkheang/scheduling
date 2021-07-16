@@ -14,19 +14,20 @@
 
 
 //1.color Properties
-.c-white    { color: $white !important; }
-.c-black    { color: $black !important; }
-.c-gray     { color: $gray-600 !important; }
-.c-blue     { color: $blue !important; }
-.c-red      { color: $red !important; }
-.c-green    { color: $green !important; }
-.c-yellow    { color: $yellow !important; }
-.c-color    { color: $warning-color !important;}
-.c-light    {color: $light !important; }
-.c-orange   {color: $orange}
-.c-volcano-7 {color: $volcano-7 !important;}
-.c-modernize {color: $modernize-color !important}
-.c-primary {color: $primary-color !important}
+.c-white      { color: $white !important; }
+.c-black      { color: $black !important; }
+.c-gray       { color: $gray-600 !important; }
+.c-blue       { color: $blue !important; }
+.c-red        { color: $red !important; }
+.c-green      { color: $green !important; }
+.c-yellow     { color: $yellow !important; }
+.c-color      { color: $warning-color !important;}
+.c-light      {color: $light !important; }
+.c-orange     {color: $orange}
+.c-volcano-7  {color: $volcano-7 !important;}
+.c-modernize  {color: $modernize-color !important}
+.c-primary    {color: $primary-color !important}
+.c-require    {color: $require !important}
 
 //2.background color
 .bg-white   { background-color: $white !important;}
@@ -238,6 +239,13 @@
 .border-right-none {border-right: unset !important;}
 .border-top-none {border-top: unset !important;}
 .border-top-solid-black-1 {border-top: solid black 1px !important;}
+.border-bottom-solid-black-1 {border-bottom: solid black 1px !important;}
+
+.border-all {border: solid black 1px !important}
+.border-left {border-left: solid black 1px !important}
+.border-right {border-right: solid black 1px !important}
+.border-top {border-top: solid black 1px !important}
+.border-bottom {border-bottom: solid black 1px !important}
 
 //input box
 .input-box-style {
