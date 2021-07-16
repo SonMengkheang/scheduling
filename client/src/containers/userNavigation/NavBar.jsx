@@ -53,31 +53,15 @@ const NavBar = () => {
     const dropDownMenuItem = (
         <Menu>
             <Menu.Item key="0">
-                <Link to="/app/setting/profile">
+                <Link to="/user/profile">
                     <Row align="middle">
                         <BsPeopleCircle className="mr-10" />
                         <span>Profile</span>
                     </Row>
                 </Link>
             </Menu.Item>
-            <Menu.Item key="1">
-                <Link to="/app/setting/general">
-                    <Row align="middle">
-                        <GoSettings className="mr-10" />
-                        <span>General</span>
-                    </Row>
-                </Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-                <Link to="/app/support">
-                    <Row align="middle">
-                        <BiSupport className="mr-10" />
-                        <span>Support</span>
-                    </Row>
-                </Link>
-            </Menu.Item>
             <Menu.Divider/>
-            <Menu.Item key="4">
+            <Menu.Item key="2">
                 <Link to="/login" onClick={() => dispatch(logoutUser())}>
                     <RiLogoutCircleLine className="mr-10" />
                     Logout

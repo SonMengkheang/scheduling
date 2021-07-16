@@ -21,10 +21,16 @@ const AdminLoginPage = () => {
     //verify role after login
     if(currentUser.isLoggedIn) {
         const { role } = currentUser.user
-        if(role === "Admin") {
+        if (role === "Admin") {
             return (
                 <div>
                     <Redirect to="/admin/faculty" />
+                </div>
+            )
+        } else if(role === "Lecturer") {
+            return (
+                <div>
+                    <Redirect to="/user/schedule" />
                 </div>
             )
         }

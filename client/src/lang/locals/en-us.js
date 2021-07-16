@@ -11,6 +11,9 @@ module.exports = {
     "general": "General",
     "role": "Role",
     "profile": "Profile",
+    "time": "Time",
+    "day": "Day",
+    "generate_schedule": "Generate Schedule",
 
     "duration_mn": "Duration (Minute)",
     "lab_duration_mn": "Lab Duration (Minute)",
@@ -64,5 +67,18 @@ module.exports = {
     "tool": "Tool",
     "morning": "Morning",
     "afternoon": "Afternoon",
+
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "edit": "Edit",
+    "generate": "Generate",
+    "semester": "Semester",
+    "semester_start": "Semester Start Date",
+    "final_exam": "Final Exam Date",
+    "english_class": "English Class",
 
 }

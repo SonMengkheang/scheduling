@@ -1,18 +1,18 @@
 import React, { lazy, Suspense } from "react"
-import { Route, Switch, Redirect,useRouteMatch } from "react-router-dom"
+import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom"
 import AdminLayout from "../../layouts/AdminLayout"
 
-export const Faculty = lazy(() => import("../admin/faculty/Faculty"))
-export const CreateFaculty = lazy(() => import("../admin/faculty/CreateFaculty"))
-export const EditFaculty = lazy(() => import("../admin/faculty/EditFaculty"))
+export const Faculty = lazy(() => import("./faculty/Faculty"))
+export const CreateFaculty = lazy(() => import("./faculty/CreateFaculty"))
+export const EditFaculty = lazy(() => import("./faculty/EditFaculty"))
 
-export const Department = lazy(() => import("../admin/department/Department"))
-export const CreateDepartment = lazy(() => import("../admin/department/CreateDepartment"))
-export const EditDepartment = lazy(() => import("../admin/department/EditDepartment"))
+export const Department = lazy(() => import("./department/Department"))
+export const CreateDepartment = lazy(() => import("./department/CreateDepartment"))
+export const EditDepartment = lazy(() => import("./department/EditDepartment"))
 
-export const Subject = lazy(() => import("../admin/subject/Subject"))
-export const CreateSubject = lazy(() => import("../admin/subject/CreateSubject"))
-export const EditSubject = lazy(() => import("../admin/subject/EditSubject"))
+export const Subject = lazy(() => import("./subject/Subject"))
+export const CreateSubject = lazy(() => import("./subject/CreateSubject"))
+export const EditSubject = lazy(() => import("./subject/EditSubject"))
 
 export const Generation = lazy(() => import("./generation/Generation"))
 export const CreateGeneration = lazy(() => import("./generation/CreateGeneration"))
@@ -22,18 +22,18 @@ export const Classes = lazy(() => import("./classes/Classes"))
 export const CreateClasses = lazy(() => import("./classes/CreateClasses"))
 export const EditClasses = lazy(() => import("./classes/EditClasses"))
 
-export const Schedule = lazy(() => import("../admin/schedule/Schedule"))
-export const CreateSchedule = lazy(() => import("../admin/schedule/CreateSchedule"))
-export const EditSchedule = lazy(() => import("../admin/schedule/EditSchedule"))
-export const ViewSchedule = lazy(() => import("../admin/schedule/ViewSchedule"))
+export const Schedule = lazy(() => import("./schedule/Schedule"))
+export const GenerateSchedule = lazy(() => import("./schedule/GenerateSchedule"))
+export const EditSchedule = lazy(() => import("./schedule/EditSchedule"))
+export const ViewSchedule = lazy(() => import("./schedule/ViewSchedule"))
 
-export const User = lazy(() => import("../admin/user/User"))
-export const CreateUser = lazy(() => import("../admin/user/CreateUser"))
-export const EditUser = lazy(() => import("../admin/user/EditUser"))
+export const User = lazy(() => import("./user/User"))
+export const CreateUser = lazy(() => import("./user/CreateUser"))
+export const EditUser = lazy(() => import("./user/EditUser"))
 
-export const General = lazy(() => import("../admin/setting/general/General"))
-export const Role = lazy(() => import("../admin/setting/role/Role"))
-export const Profile = lazy(() => import("../admin/setting/profile/Profile"))
+export const General = lazy(() => import("./setting/general/General"))
+export const Role = lazy(() => import("./setting/role/Role"))
+export const Profile = lazy(() => import("./setting/profile/Profile"))
 
 
 const AdminIndex = () => {
@@ -68,7 +68,7 @@ const AdminIndex = () => {
                         <Route path={`${url}/class/edit`} render={props => <EditClasses {...props} />} />
 
                         <Route exact path={`${url}/schedule`} render={props => <Schedule {...props} />} />
-                        <Route path={`${url}/schedule/create`} render={props => <CreateSchedule {...props} />} />
+                        <Route path={`${url}/schedule/generate`} render={props => <GenerateSchedule {...props} />} />
                         <Route path={`${url}/schedule/edit`} render={props => <EditSchedule {...props} />} />
                         <Route path={`${url}/schedule/view`} render={props => <ViewSchedule {...props} />} />
 
