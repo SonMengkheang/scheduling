@@ -3,11 +3,12 @@ const router = express.Router();
 const ScheduleController = require("../../controllers/schedules/schedulesController")
 
 router
-  .route("/classSchedule")
+  .route("/")
+  .get(ScheduleController.getAllSchedule)
   .post(ScheduleController.createClassSchedule)
 
 router
-  .route("/classSchedule/:classID")
+  .route("/:classID")
   .get(ScheduleController.getClassSchedule)
   .patch(ScheduleController.updateClassSchedule)
 

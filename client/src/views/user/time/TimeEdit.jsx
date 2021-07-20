@@ -13,7 +13,6 @@ import LoopCircleLoading from 'react-loadingg/lib/LoopCircleLoading'
 const TimeEdit = () => {
 
     const history = useHistory()
-    const currUser = useSelector(state => state.auth.user)
     const [curUser, setCurUser] = useState(null)
     const [monday, setMonday] = useState([
         {
@@ -58,128 +57,179 @@ const TimeEdit = () => {
         }
     ])
 
+    console.log("Cur: ", curUser)
+
     useEffect(() => {
         baseAPI.get('/users/profile')
         .then(res => {
             setCurUser(res.data)
         })
         .catch(err => console.log(err))
-
-        let m = []
-        currUser.freeTime.monday.map(res => {
-            if (res.startTime === null && res.endTime === null) {
-                m.push({
-                    startTime: null,
-                    endTime: null,
-                    status: false
-                })
-            } else {
-                m.push({
-                    startTime: moment(res.startTime),
-                    endTime: moment(res.endTime),
-                    status: res.status
-                })
-            }
-        })
-        setMonday(m)
-        
-        let t = []
-        currUser.freeTime.tuesday.map(res => {
-            if (res.startTime === null && res.endTime === null) {
-                t.push({
-                    startTime: null,
-                    endTime: null,
-                    status: false
-                })
-            } else {
-                t.push({
-                    startTime: moment(res.startTime),
-                    endTime: moment(res.endTime),
-                    status: res.status
-                })
-            }
-        })
-        setTuesday(t)
-
-        let w = []
-        currUser.freeTime.wednesday.map(res => {
-            if (res.startTime === null && res.endTime === null) {
-                w.push({
-                    startTime: null,
-                    endTime: null,
-                    status: false
-                })
-            } else {
-                w.push({
-                    startTime: moment(res.startTime),
-                    endTime: moment(res.endTime),
-                    status: res.status
-                })
-            }
-        })
-        setWednesday(w)
-
-        let th = []
-        currUser.freeTime.thursday.map(res => {
-            if (res.startTime === null && res.endTime === null) {
-                th.push({
-                    startTime: null,
-                    endTime: null,
-                    status: false
-                })
-            } else {
-                th.push({
-                    startTime: moment(res.startTime),
-                    endTime: moment(res.endTime),
-                    status: res.status
-                })
-            }
-        })
-        setThursday(th)
-
-        let f = []
-        currUser.freeTime.friday.map(res => {
-            if (res.startTime === null && res.endTime === null) {
-                f.push({
-                    startTime: null,
-                    endTime: null,
-                    status: false
-                })
-            } else {
-                f.push({
-                    startTime: moment(res.startTime),
-                    endTime: moment(res.endTime),
-                    status: res.status
-                })
-            }
-        })
-        setFriday(f)
-
-        let s = []
-        currUser.freeTime.saturday.map(res => {
-            if (res.startTime === null && res.endTime === null) {
-                s.push({
-                    startTime: null,
-                    endTime: null,
-                    status: false
-                })
-            } else {
-                s.push({
-                    startTime: moment(res.startTime),
-                    endTime: moment(res.endTime),
-                    status: res.status
-                })
-            }
-        })
-        setSaturday(s)
     }, [])
+
+    useEffect(() => {
+        if (curUser !== null) {
+            let m = []
+            if (curUser.freeTime.monday.length === 0) {
+                m.push({
+                    startTime: null,
+                    endTime: null,
+                    status: false
+                })
+            } else {
+                curUser.freeTime.monday.map(res => {
+                    if (res.startTime === null && res.endTime === null) {
+                        m.push({
+                            startTime: null,
+                            endTime: null,
+                            status: false
+                        })
+                    } else {
+                        m.push({
+                            startTime: moment(res.startTime),
+                            endTime: moment(res.endTime),
+                            status: res.status
+                        })
+                    }
+                })
+            }
+            setMonday(m)
+            
+            let t = []
+            if (curUser.freeTime.tuesday.length === 0) {
+                t.push({
+                    startTime: null,
+                    endTime: null,
+                    status: false
+                })
+            } else {
+                curUser.freeTime.tuesday.map(res => {
+                    if (res.startTime === null && res.endTime === null) {
+                        t.push({
+                            startTime: null,
+                            endTime: null,
+                            status: false
+                        })
+                    } else {
+                        t.push({
+                            startTime: moment(res.startTime),
+                            endTime: moment(res.endTime),
+                            status: res.status
+                        })
+                    }
+                })
+            }
+            setTuesday(t)
+
+            let w = []
+            if (curUser.freeTime.wednesday.length === 0) {
+                w.push({
+                    startTime: null,
+                    endTime: null,
+                    status: false
+                })
+            } else {
+                curUser.freeTime.wednesday.map(res => {
+                    if (res.startTime === null && res.endTime === null) {
+                        w.push({
+                            startTime: null,
+                            endTime: null,
+                            status: false
+                        })
+                    } else {
+                        w.push({
+                            startTime: moment(res.startTime),
+                            endTime: moment(res.endTime),
+                            status: res.status
+                        })
+                    }
+                })
+            }
+            setWednesday(w)
+
+            let th = []
+            if (curUser.freeTime.thursday.length === 0) {
+                th.push({
+                    startTime: null,
+                    endTime: null,
+                    status: false
+                })
+            } else {
+                curUser.freeTime.thursday.map(res => {
+                    if (res.startTime === null && res.endTime === null) {
+                        th.push({
+                            startTime: null,
+                            endTime: null,
+                            status: false
+                        })
+                    } else {
+                        th.push({
+                            startTime: moment(res.startTime),
+                            endTime: moment(res.endTime),
+                            status: res.status
+                        })
+                    }
+                })
+            }
+            setThursday(th)
+
+            let f = []
+            if (curUser.freeTime.friday.length === 0) {
+                f.push({
+                    startTime: null,
+                    endTime: null,
+                    status: false
+                })
+            } else {
+                curUser.freeTime.friday.map(res => {
+                    if (res.startTime === null && res.endTime === null) {
+                        f.push({
+                            startTime: null,
+                            endTime: null,
+                            status: false
+                        })
+                    } else {
+                        f.push({
+                            startTime: moment(res.startTime),
+                            endTime: moment(res.endTime),
+                            status: res.status
+                        })
+                    }
+                })
+            }
+            setFriday(f)
+
+            let s = []
+            if (curUser.freeTime.saturday.length === 0) {
+                s.push({
+                    startTime: null,
+                    endTime: null,
+                    status: false
+                })
+            } else {
+                curUser.freeTime.saturday.map(res => {
+                    if (res.startTime === null && res.endTime === null) {
+                        s.push({
+                            startTime: null,
+                            endTime: null,
+                            status: false
+                        })
+                    } else {
+                        s.push({
+                            startTime: moment(res.startTime),
+                            endTime: moment(res.endTime),
+                            status: res.status
+                        })
+                    }
+                })
+            }
+            setSaturday(s)
+        }
+    }, [curUser])
 
     if (curUser === null) {
         return <LoopCircleLoading color="#000000" />
     }
-
-    console.log("M: ", tuesday[0].startTime)
-    console.log("E: ", moment(tuesday[0].endTime).format('HH:mm:ss'))
 
     const buttonTem = () => {
         return <Row justify="end">
@@ -198,7 +248,6 @@ const TimeEdit = () => {
             return false;
         }
     }
-
 
     const onSubmit = val => {
         val.freeTime = {
@@ -305,20 +354,33 @@ const TimeEdit = () => {
 
     const newTimeList = (value, day) => {
         return value.map((res, index) => {
-            return <div className="mt-5">
-                <Row justify="space-between" align="middle">
-                    <Col span={21}>
-                        <Row>
-                            <TimePicker.RangePicker className="w-100" value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} />
-                        </Row>
-                    </Col>
-                    <Col span={2}>
-                        <MinusCircleOutlined onClick={() => onRemoveTime(index, day)} />
-                    </Col>
-                    {/* <Col span={2} /> */}
-                </Row>
-                
-            </div>
+            if (value.length === 1) {
+                return <div className="mt-5">
+                    <Row justify="space-between" align="middle">
+                        <Col span={21}>
+                            <Row>
+                                <TimePicker.RangePicker className="w-100" value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} />
+                            </Row>
+                        </Col>
+                        {/* <Col span={2}>
+                            <MinusCircleOutlined onClick={() => onRemoveTime(index, day)} />
+                        </Col> */}
+                    </Row> 
+                </div>
+            } else {
+                return <div className="mt-5">
+                    <Row justify="space-between" align="middle">
+                        <Col span={21}>
+                            <Row>
+                                <TimePicker.RangePicker className="w-100" value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} />
+                            </Row>
+                        </Col>
+                        <Col span={2}>
+                            <MinusCircleOutlined onClick={() => onRemoveTime(index, day)} />
+                        </Col>
+                    </Row>
+                </div>
+            }
         })
     }
 
@@ -489,48 +551,50 @@ const TimeEdit = () => {
         console.log("Val: ", val)
         if (day === "monday") {
             const item = monday
-            item[index].startTime = val[0]
-            item[index].endTime = val[1]
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
             let clone = [...item]
             clone[index] = item[index]
             setMonday(clone)
         } else if (day === "tuesday") {
             const item = tuesday
-            item[index].startTime = val[0]
-            item[index].endTime = val[1]
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
             let clone = [...item]
             clone[index] = item[index]
             setTuesday(clone)
         } else if (day === "wednesday") {
             const item = wednesday
-            item[index].startTime = val[0]
-            item[index].endTime = val[1]
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
             let clone = [...item]
             clone[index] = item[index]
             setWednesday(clone)
         } else if (day === "thursday") {
             const item = thursday
-            item[index].startTime = val[0]
-            item[index].endTime = val[1]
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
             let clone = [...item]
             clone[index] = item[index]
             setThursday(clone)
         } else if (day === "friday") {
             const item = friday
-            item[index].startTime = val[0]
-            item[index].endTime = val[1]
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
             let clone = [...item]
             clone[index] = item[index]
             setFriday(clone)
         } else if (day === "saturday") {
             const item = saturday
-            item[index].startTime = val[0]
-            item[index].endTime = val[1]
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
             let clone = [...item]
             clone[index] = item[index]
             setSaturday(clone)
         }
     }
+
+    console.log("Monday: ", monday)
 
     return (
         <Fragment>

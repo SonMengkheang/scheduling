@@ -14,6 +14,8 @@ module.exports = {
     "time": "Time",
     "day": "Day",
     "generate_schedule": "Generate Schedule",
+    "create_schedule": "Create Schedule",
+    "info": "Information",
 
     "duration_mn": "Duration (Minute)",
     "lab_duration_mn": "Lab Duration (Minute)",

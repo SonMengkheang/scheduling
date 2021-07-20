@@ -116,15 +116,15 @@ module.exports = {
     }
   },
 
-  getUserById: async(req, res, next) => {
-    try {
-      const { userID } = req.params
-      const user = await User.findById(userID)
-      res.status(200).json(user)
-    } catch (err) {
-      next(err)
-    }
-  },
+  // getUserById: async(req, res, next) => {
+  //   try {
+  //     const { userID } = req.params
+  //     const user = await User.findById(userID)
+  //     res.status(200).json(user)
+  //   } catch (err) {
+  //     next(err)
+  //   }
+  // },
 
   updateOwnProfile: async(req, res, next) => {
     try {

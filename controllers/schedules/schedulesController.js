@@ -1,6 +1,17 @@
 const Schedule = require('../../models/schedules/Schedule')
+const moment = require('moment')
 
 module.exports = {
+
+    getAllSchedule: async(req, res, next) => {
+        try {
+            let time = moment('2021-07-17 7:00:00')
+            console.log("Time: ", time._d.getHours())
+        } catch (err) {
+            next(err)
+        }
+    },
+
     createClassSchedule: async(req, res, next) => {
         try {
             const newSchedule = req.body

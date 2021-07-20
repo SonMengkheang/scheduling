@@ -90,19 +90,19 @@ const ScheduleTemplate = () => {
         ]
     }
 
-    const [curUser, setCurUser] = useState(null)
+    // const [curUser, setCurUser] = useState(null)
 
-    useEffect(() => {
-        baseAPI.get('/users/60bf86a149d5dc43b8b2281a')
-        .then(res => {
-            setCurUser(res.data)
-        })
-        .catch(err => console.log(err))
-    }, [])
+    // useEffect(() => {
+    //     baseAPI.get('/users/60bf86a149d5dc43b8b2281a')
+    //     .then(res => {
+    //         setCurUser(res.data)
+    //     })
+    //     .catch(err => console.log(err))
+    // }, [])
 
-    if (curUser === null) {
-        return <LoopCircleLoading color="#000000" />
-    }
+    // if (curUser === null) {
+    //     return <LoopCircleLoading color="#000000" />
+    // }
 
     const displayTime = (day, shift) => {
         if (day.length > 0) {

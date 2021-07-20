@@ -92,6 +92,15 @@ const Schedule = () => {
                     <IntlMessage id="generate_schedule" />
                 </Row>
             </Button>
+            <Button
+                size="large"
+                className="btn-border-primary ml-10"
+                onClick={() => { history.push('schedule/create') }}
+            >
+                <Row align="middle">
+                    <IntlMessage id="create_schedule" />
+                </Row>
+            </Button>
         </Row>
     }
 

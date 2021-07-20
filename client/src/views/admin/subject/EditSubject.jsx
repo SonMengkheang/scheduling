@@ -1,16 +1,31 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { Form, Input, Button, Row, Col, InputNumber, Switch } from 'antd'
+import { Form, Input, Button, Row, Col, InputNumber, Switch, Select } from 'antd'
 import IntlMessage from "../../../helpers/IntlMessages"
 import HeaderPage from '../../../components/HeaderPage'
 import baseAPI from '../../../api/baseAPI'
 import { Helmet } from 'react-helmet'
+import LoopCircleLoading from 'react-loadingg/lib/LoopCircleLoading'
 
 const CreateSubject = () => {
     
     const history = useHistory()
     const location = useLocation()
+    const { Option } = Select
     const [hasLab, setHasLab] = useState(location.state.hasLab)
+    const [users, setUsers] = useState(null)
+
+    useEffect(() => {
+        baseAPI.get('users')
+        .then(res => {
+            setUsers(res.data)
+        })
+        .catch(err => console.log(err))
+    }, [])
+
+    if (users === null) {
+        return <LoopCircleLoading color="#000000" />
+    }
 
     const onSubmit = values => {
         console.log("Values: ", values)
@@ -41,6 +56,16 @@ const CreateSubject = () => {
         }
     }
 
+    const userOption = () => {
+        return users.map(res => {
+            return <Option key={res._id} value={res._id}>
+                {res.username}
+            </Option>
+        })
+    }
+
+    console.log("User: ", location.state.user)
+
     return (
         <Fragment>
             <IntlMessage id="subject">
@@ -67,6 +92,7 @@ const CreateSubject = () => {
                     "duration": location.state.duration,
                     "credit": location.state.credit,
                     "labDuration": location.state.labDuration,
+                    "user": location.state.user,
                 }}
             >
                 <HeaderPage id="edit_subject" button={buttonTem()} />
@@ -91,6 +117,20 @@ const CreateSubject = () => {
                             rules={[{ required: true, message: 'Please input subject name!' }]}
                         >
                             <Input className="input-box-style" placeholder="Enter Subject Name" />
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Row className="mb-20">
+                    <Col span={11}>
+                        <Form.Item
+                            label={<IntlMessage id="lecturer" />}
+                            name="user"
+                            rules={[{ required: true, message: 'Please input subject name!' }]}
+                        >
+                            <Select mode="multiple" allowClear className="w-100 mt-5" placeholder="Select Lecturer" >
+                                { userOption() }
+                            </Select>
                         </Form.Item>
                     </Col>
                 </Row>

@@ -17,6 +17,16 @@ const classSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Generation"
     },
+    userSubject: [{
+        subject: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Subject"
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    }],
     user: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

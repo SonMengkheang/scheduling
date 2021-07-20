@@ -15,16 +15,23 @@ const Subject = () => {
     const history = useHistory()
     const [searchValue, setSearchValue] = useState("")
     const [subjects, setSubjects] = useState(null)
+    const [users, setUsers] = useState(null)
 
     useEffect(() => {
         baseAPI.get('subjects')
-        .then(res => {
-            setSubjects(res.data)
-        })
-        .catch(err => console.log(err))
+            .then(res => {
+                setSubjects(res.data)
+            })
+            .catch(err => console.log(err))
+
+        baseAPI.get('users')
+            .then(res => {
+                setUsers(res.data)
+            })
+            .catch(err => console.log(err))
     }, [])
 
-    if (subjects === null) {
+    if (subjects === null || users === null) {
         return <LoopCircleLoading color="#000000" />
     }
 
@@ -65,6 +72,7 @@ const Subject = () => {
                 no: index+1,
                 subjectCode: res.subjectCode,
                 subjectName: res.subjectName,
+                user: res.user,
                 duration: res.duration,
                 credit: res.credit,
                 hasLab: res.hasLab,
@@ -92,6 +100,20 @@ const Subject = () => {
             dataIndex: "subjectName",
             key: "subjectName",
             align: "center",
+        },
+        {
+            title: <IntlMessage id="lecturer" />,
+            dataIndex: "user",
+            key: "user",
+            align: "center",
+            width: "10%",
+            render: (_, record) => {
+                return record.user.map(res => {
+                    return <Row justify="center">
+                        <span>{users.find(x => x._id === res).username}</span>
+                    </Row>
+                })
+            }
         },
         {
             title: <IntlMessage id="duration" />,

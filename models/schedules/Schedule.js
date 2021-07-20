@@ -18,6 +18,9 @@ const scheduleSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Subject"
         },
+        type: {
+            type: String
+        },
         teacher : {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
@@ -36,6 +39,9 @@ const scheduleSchema = new Schema({
         subject : {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Subject"
+        },
+        type: {
+            type: String
         },
         teacher : {
             type: mongoose.Schema.Types.ObjectId,
@@ -56,6 +62,9 @@ const scheduleSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Subject"
         },
+        type: {
+            type: String
+        },
         teacher : {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
@@ -74,6 +83,9 @@ const scheduleSchema = new Schema({
         subject : {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Subject"
+        },
+        type: {
+            type: String
         },
         teacher : {
             type: mongoose.Schema.Types.ObjectId,
@@ -94,6 +106,9 @@ const scheduleSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Subject"
         },
+        type: {
+            type: String
+        },
         teacher : {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
@@ -112,6 +127,9 @@ const scheduleSchema = new Schema({
         subject : {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Subject"
+        },
+        type: {
+            type: String
         },
         teacher : {
             type: mongoose.Schema.Types.ObjectId,

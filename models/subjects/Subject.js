@@ -9,6 +9,10 @@ const subjectSchema = new Schema({
   subjectName: {
     type: String
   },
+  user: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
   duration : {
     type: Number
   },

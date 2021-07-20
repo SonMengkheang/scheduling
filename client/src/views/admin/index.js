@@ -24,6 +24,7 @@ export const EditClasses = lazy(() => import("./classes/EditClasses"))
 
 export const Schedule = lazy(() => import("./schedule/Schedule"))
 export const GenerateSchedule = lazy(() => import("./schedule/GenerateSchedule"))
+export const CreateSchedule = lazy(() => import("./schedule/CreateSchedule"))
 export const EditSchedule = lazy(() => import("./schedule/EditSchedule"))
 export const ViewSchedule = lazy(() => import("./schedule/ViewSchedule"))
 
@@ -69,6 +70,7 @@ const AdminIndex = () => {
 
                         <Route exact path={`${url}/schedule`} render={props => <Schedule {...props} />} />
                         <Route path={`${url}/schedule/generate`} render={props => <GenerateSchedule {...props} />} />
+                        <Route path={`${url}/schedule/create`} render={props => <CreateSchedule {...props} />} />
                         <Route path={`${url}/schedule/edit`} render={props => <EditSchedule {...props} />} />
                         <Route path={`${url}/schedule/view`} render={props => <ViewSchedule {...props} />} />
 
