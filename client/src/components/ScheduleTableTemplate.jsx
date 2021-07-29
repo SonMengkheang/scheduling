@@ -5,7 +5,6 @@ const ScheduleTableTemplate = props => {
 
     const schedules = props.schedules
 
-    console.log("JKJLJK: ", schedules)
 
     const displayTime = (day, shift) => {
         if (day.length > 0) {
@@ -36,9 +35,9 @@ const ScheduleTableTemplate = props => {
                                     <Row style={{height: `${eHeight}px`}} />
                                     <Row style={{height: `${height}px`}} justify="center" align="middle" className="border-top border-bottom w-100">
                                         <Col>
-                                            <Row justify="center" className="c-black"><span>{res.subjectName} ({res.duration})</span></Row>
-                                            <Row justify="center" className="c-black"><span>{res.type}</span></Row>
-                                            <Row justify="center" className="c-black"><span>{res.teacherName}</span></Row>
+                                            <Row justify="center" className="c-black fs-11"><span>{res.subjectName} ({res.duration})</span></Row>
+                                            <Row justify="center" className="c-black fs-11"><span>{res.type}</span></Row>
+                                            <Row justify="center" className="c-black fs-11"><span>{res.teacherName}</span></Row>
                                         </Col>
                                     </Row>
                                 </div>

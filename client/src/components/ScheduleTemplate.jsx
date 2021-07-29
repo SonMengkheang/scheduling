@@ -1,121 +1,66 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Row, Col } from 'antd'
+import { useHistory, useLocation } from 'react-router'
+import { Row, Col, Button } from 'antd'
 import baseAPI from '../api/baseAPI'
 import LoopCircleLoading from 'react-loadingg/lib/LoopCircleLoading'
 import moment from 'moment'
+import IntlMessages from '../helpers/IntlMessages'
 
 const ScheduleTemplate = () => {
 
-    const schedules = {
-        monday: [
-            {
-                startTime: moment('2021-07-16 7:00:00'),
-                endTime: moment('2021-07-16 8:30:00'),
-                type: "Lecture",
-                subject: "CF",
-                teacher: "Mr.A"
-            },
-            {
-                startTime: moment('2021-07-16 8:30:00'),
-                endTime: moment('2021-07-16 10:30:00'),
-                type: "Lab G1",
-                subject: "CF",
-                teacher: "Mr.A"
-            },
-            {
-                startTime: moment('2021-07-16 10:30:00'),
-                endTime: moment('2021-07-16 12:30:00'),
-                type: "Lab G2",
-                subject: "CF",
-                teacher: "Mr.A"
-            },
-        ],
-        tuesday: [
-            {
-                startTime: moment('2021-07-16 7:00:00'),
-                endTime: moment('2021-07-16 8:30:00'),
-                type: "Lecture",
-                subject: "CH: Civilization",
-                teacher: "Mr.B"
-            },
-            {
-                startTime: moment('2021-07-16 9:00:00'),
-                endTime: moment('2021-07-16 12:00:00'),
-                type: "Lecture",
-                subject: "Physics",
-                teacher: "Mr.C"
-            },
-        ],
-        wednesday: [
-            {
-                startTime: moment('2021-07-16 7:00:00'),
-                endTime: moment('2021-07-16 10:00:00'),
-                type: "Lecture",
-                subject: "Math I",
-                teacher: "Mr.D"
-            },
-            {
-                startTime: moment('2021-07-16 10:00:00'),
-                endTime: moment('2021-07-16 12:00:00'),
-                type: "Lecture",
-                subject: "CTPD",
-                teacher: "Mr.E"
-            },
-        ],
-        thursday: [
-            {
-                startTime: moment('2021-07-16 7:00:00'),
-                endTime: moment('2021-07-16 8:30:00'),
-                type: "Lecture",
-                subject: "CH: History",
-                teacher: "Mr.F"
-            },
-            {
-                startTime: moment('2021-07-16 9:00:00'),
-                endTime: moment('2021-07-16 11:00:00'),
-                type: "Lecture",
-                subject: "Acadamic Skill",
-                teacher: "Mr.G"
-            },
-        ],
-        friday: [],
-        saturday: [
-            {
-                startTime: moment('2021-07-16 7:00:00'),
-                endTime: moment('2021-07-16 11:00:00'),
-                type: "",
-                subject: "English",
-                teacher: ""
-            },
-        ]
-    }
+    const history = useHistory()
+    const location = useLocation()
+    const schedules = location.state.schedule
+    const [users, setUsers] = useState(null)
+    const [subjects, setSubjects] = useState(null)
+    const [generations, setGenerations] = useState(null)
+    const [classes, setClasses] = useState(null)
 
     // const [curUser, setCurUser] = useState(null)
 
-    // useEffect(() => {
-    //     baseAPI.get('/users/60bf86a149d5dc43b8b2281a')
-    //     .then(res => {
-    //         setCurUser(res.data)
-    //     })
-    //     .catch(err => console.log(err))
-    // }, [])
+    useEffect(() => {
+        baseAPI.get('/users')
+            .then(res => {
+                setUsers(res.data)
+            })
+            .catch(err => console.log(err))
 
-    // if (curUser === null) {
-    //     return <LoopCircleLoading color="#000000" />
-    // }
+        baseAPI.get('/subjects')
+            .then(res => {
+                setSubjects(res.data)
+            })
+            .catch(err => console.log(err))
+
+        baseAPI.get('/generations')
+            .then(res => {
+                setGenerations(res.data)
+            })
+            .catch(err => console.log(err))
+
+        baseAPI.get('/classes')
+            .then(res => {
+                setClasses(res.data)
+            })
+            .catch(err => console.log(err))
+    }, [])
+
+    console.log("Schedule: ", schedules)
+
+    if (users === null || subjects === null || generations === null || classes === null) {
+        return <LoopCircleLoading color="#000000" />
+    }
 
     const displayTime = (day, shift) => {
         if (day.length > 0) {
             let ch = shift === 'morning' ? 7 : 12
             let cm = shift = 0
-            let arr = [1, 2, 3, 4, 5, 6]
             let endLoop = shift === 'morning' ? 13 : 18
 
             return day.map(res => {
-                let startH = res.startTime._d.getHours()
-                let startM = res.startTime._d.getMinutes()
-                let endH = res.endTime._d.getHours()
-                let endM = res.endTime._d.getMinutes()
+                let startH = moment(res.startTime)._d.getHours()
+                let startM = moment(res.startTime)._d.getMinutes()
+                let endH = moment(res.endTime)._d.getHours()
+                let endM = moment(res.endTime)._d.getMinutes()
                 let emptyHeight = 0
                 console.log("H")
 
@@ -135,9 +80,12 @@ const ScheduleTemplate = () => {
                                 <Row style={{height: `${eHeight}px`}} />
                                 <Row style={{height: `${height}px`}} justify="center" align="middle" className="border-top border-bottom w-100">
                                     <Col>
-                                        <Row justify="center" className="c-black"><span>{res.subject}</span></Row>
-                                        <Row justify="center" className="c-black"><span>{res.type}</span></Row>
-                                        <Row justify="center" className="c-black"><span>{res.teacher}</span></Row>
+                                        <Row justify="center" className="c-black fs-11">
+                                            <span className="mr-5">{subjects.find(x => x._id === res.subject).subjectName}</span>
+                                            {calculateDuration(res.duration)}
+                                        </Row>
+                                        <Row justify="center" className="c-black fs-11"><span>{res.type}</span></Row>
+                                        <Row justify="center" className="c-black fs-11"><span>{users.find(x => x._id === res.teacher).username}</span></Row>
                                     </Col>
                                 </Row>
                             </div>
@@ -153,49 +101,89 @@ const ScheduleTemplate = () => {
                         }
                     }
                 }
-
-                // return arr.map(result => {
-                //     console.log("Res: ", result)
-                //     console.log("CH: ", ch)
-                //     console.log("CM: ", cm)
-                //     if (ch < endLoop) {
-                //         if (startH === ch && startM === cm) {
-                //             console.log("If")
-                //             let sumH = endH - startH
-                //             let sumM = (endM - startM) / 60
-                //             let sum = sumH + sumM
-                //             let height = sum * 50
-                //             ch = endH
-                //             cm = endM
-        
-                //             return <Row style={{height: `${height}px`}} justify="center" align="middle" className="border-all w-100">
-                //                 <Col>
-                //                     <Row justify="center" className="c-black"><span>{res.subject}</span></Row>
-                //                     <Row justify="center" className="c-black"><span>{res.type}</span></Row>
-                //                     <Row justify="center" className="c-black"><span>{res.teacher}</span></Row>
-                //                 </Col>
-                //             </Row>
-                //         } else {
-                //             console.log("Else")
-                //             if (cm === 0) {
-                //                 cm = 30
-                //             } else {
-                //                 ch += 1
-                //                 cm = 0
-                //             }
-        
-                //             // return <Row style={{height: "25px"}} justify="center" align="middle" className="border-all w-100" />
-                //         }
-                //     }
-                // })
             })
         }
+    }
+
+    const calculateDuration = val => {
+        let hours = parseInt(val / 60)
+        let minutes = val % 60
+        if (minutes !== 0) {
+            return <span>({hours}h{minutes})</span>
+        } else {
+            return <span>({hours}h)</span>
+        }
+    }
+
+    const scheduleHeader = () => {
+        return <div>
+            <Row className="w-100 mt-50 fw-bold c-black fs-18" justify="center" align="middle">
+                <span><IntlMessages id="kingdom_of_cambodia" /></span>
+            </Row>
+            <Row className="w-100 fw-bold c-black" justify="center" align="middle">
+                <span><IntlMessages id="nation_religion_king" /></span>
+            </Row>
+
+            <Row className="w-100​ mt-20 fw-bold c-black" justify="left" align="middle">
+                <IntlMessages id="education_youth_sport" />
+            </Row>
+            <Row className="w-100 fw-bold c-black" justify="left" align="middle">
+                <span>Royal University of Phnom Penh</span>
+            </Row>
+            <Row className="w-100 fw-bold c-black" justify="left" align="middle">
+                {location.state.facultyName}
+            </Row>
+        </div>
+    }
+
+    const scheduleInfo = () => {
+        return <div>
+            <Row className="w-100 mt-20 fw-bold c-black" justify="center" align="middle">
+                <span><IntlMessages id="semester" /> {location.state.semester}</span>
+            </Row>
+            <Row className="w-100 fw-bold c-black" justify="center" align="middle">
+                <span><IntlMessages id="year" /> {generations.find(x => x._id === location.state.generationId).year}: {location.state.departmentName}</span>
+            </Row>
+            <Row className="w-100 c-black" justify="center" align="middle">
+                <span>Semester start from: {moment(location.state.semesterDate.startDate).format("YYYY-MM-DD")} - {moment(location.state.semesterDate.endDate).format("YYYY-MM-DD")}</span>
+            </Row>
+            <Row className="w-100 c-black" justify="center" align="middle">
+                <span>Final Exam start from: {moment(location.state.finalExamDate.startDate).format("YYYY-MM-DD")} - {moment(location.state.finalExamDate.endDate).format("YYYY-MM-DD")}</span>
+            </Row>
+        </div>
+    }
+
+    const subjectCredit = () => {
+        let curClass = classes.find(x => x._id === location.state.classId)
+        return <Col span={10}>
+            { curClass.userSubject.map((res, index) => {
+                return <Row>
+                    <Col span={1}>
+                        <span>{index + 1}</span>
+                    </Col>
+                    <Col span={19}>
+                        <span>{subjects.find(x => x._id === res.subject).subjectName}</span>
+                    </Col>
+                    <Col span={4}>
+                        <span>{subjects.find(x => x._id === res.subject).credit}</span>
+                        {subjectCalculateTime(res.subject)}
+                    </Col>
+                </Row>
+            }) }
+        </Col>
+    }
+
+    const subjectCalculateTime = val => {
+        let subject = subjects.find(x => x._id === val)
+        let lecDuration = subject.duration / 60
+        let labDuration = subject.hasLab ? subject.labDuration / 60 : 0
+        return <span>({lecDuration}-{labDuration})</span>
     }
 
     return (
         <Fragment>
             <Row />
-            <Row className="w-100 mt-50 fw-bold c-black fs-18" justify="center" align="middle">
+            {/* <Row className="w-100 mt-50 fw-bold c-black fs-18" justify="center" align="middle">
                 <span>ព្រះរាជាណាចក្រកម្ពុជា</span>
             </Row>
             <Row className="w-100 fw-bold c-black" justify="center" align="middle">
@@ -210,9 +198,11 @@ const ScheduleTemplate = () => {
             </Row>
             <Row className="w-100 fw-bold c-black" justify="left" align="middle">
                 <span>មហាវិទ្យាល័យវិស្វកម្ម</span>
-            </Row>
+            </Row> */}
 
-            <Row className="w-100 mt-20 fw-bold c-black" justify="center" align="middle">
+            { scheduleHeader() }
+
+            {/* <Row className="w-100 mt-20 fw-bold c-black" justify="center" align="middle">
                 <span>កាលវិភាគឆមាសទី១</span>
             </Row>
             <Row className="w-100 fw-bold c-black" justify="center" align="middle">
@@ -223,18 +213,20 @@ const ScheduleTemplate = () => {
             </Row>
             <Row className="w-100 c-black" justify="center" align="middle">
                 <span>ប្រលងឆមាសថ្ងៃទី១៩ ដល់​ ថ្ងៃទី២៤ ខែកក្កដា ឆ្នាំ២០២១​</span>
-            </Row>
+            </Row> */}
+
+            { scheduleInfo() }
 
             <Row className="w-100​ mt-20 c-black" justify="left" align="middle">
                 <Col span={1} className="mr-35" />
-                <Col span={2}>
-                    <span>ចំនួននិស្សិត៖ </span>
+                <Col span={3}>
+                    <span><IntlMessages id="total_student" />: </span>
                 </Col>
                 <Col span={2}>
-                    <span>បន្ទប់រៀន៖ </span>
+                    <span><IntlMessages id="room" />: </span>
                 </Col>
-                <Col span={2}>
-                    <span>ក្រុម៖ ITE-M1</span>
+                <Col span={8}>
+                    <span><IntlMessages id="class" />: {location.state.classesName}</span>
                 </Col>
             </Row>
 
@@ -304,7 +296,8 @@ const ScheduleTemplate = () => {
             </Row>
 
             <Row className="c-black mt-20">
-                <Col span={8}>
+                { subjectCredit() }
+                {/* <Col span={8}>
                     <Row>
                         <Col span={1}>
                             <span>1</span>
@@ -382,8 +375,8 @@ const ScheduleTemplate = () => {
                             <span>4(4-0)</span>
                         </Col>
                     </Row>
-                </Col>
-                <Col span={16}>
+                </Col> */}
+                <Col span={14}>
                     <Row justify="end" className="w-100">
                         <Col span={8}>
                             <Row justify="center">
@@ -393,7 +386,7 @@ const ScheduleTemplate = () => {
                                 <span>ប្រធានការិយាល័យសិក្សា</span>
                             </Row>
                         </Col>
-                        <Col span={10}>
+                        <Col span={14}>
                             <Row justify="center">
                                 <span>រាជធានីភ្នំពេញ ថ្ងៃទី</span>
                                 <span className="ml-50">ខែ</span>

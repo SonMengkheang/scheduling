@@ -15,6 +15,7 @@ module.exports = {
     "day": "Day",
     "generate_schedule": "Generate Schedule",
     "create_schedule": "Create Schedule",
+    "view_schedule": "View Schedule",
     "info": "Information",
 
     "duration_mn": "Duration (Minute)",
@@ -82,6 +83,18 @@ module.exports = {
     "semester_start": "Semester Start Date",
     "final_exam": "Final Exam Date",
     "english_class": "English Class",
+    "english_class_date": "English Class Date",
+    "english_class_time": "English Class Time",
     "lecturer": "Lecturer",
+
+    "kingdom_of_cambodia": "Kingdom of Cambodia",
+    "nation_religion_king": "Nation, Religion, King",
+    "education_youth_sport": "Ministry of Education, Youth and Sport",
+    "total_student": "Total Student",
+    "room": "Room",
+    "print": "Print",
+    "back": "Back",
+    "class_type": "Class Type",
+    "start_time": "Start Time",
 
 }

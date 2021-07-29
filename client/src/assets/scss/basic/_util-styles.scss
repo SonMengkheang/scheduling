@@ -61,11 +61,6 @@
 
 //3. font properties && font-weight
 .fs-base    { font-size: 14px !important;}
-@for $i from 5 through 10 {
-  .fs-#{$i * 5} {
-    font-size: #{$i * 5}px !important;
-  }
-}
 
 .fw-thin        {font-weight: 100;}
 .fw-extra-light {font-weight: 200;}
@@ -77,23 +72,14 @@
 .fw-extra-bold  {font-weight: 800;}
 .fw-ultra-bold  {font-weight: 900;}
 
-.fs-10          {font-size: 10px};
-.fs-12          {font-size: 12px};
-.fs-14          {font-size: 14px};
-.fs-16          {font-size: 16px};
-.fs-18          {font-size: 18px};
-.fs-20          {font-size: 20px};
-.fs-40          {font-size: 40px}
-
-;
-.fs-22          {font-size: 22px};
-.fs-24          {font-size: 24px};
-.fs-26          {font-size: 26px};
-.fs-28          {font-size: 28px};
-.fs-30          {font-size: 30px};
-.fs-40          {font-size: 40px};
-
 .z-index-1      {z-index: 1;}
+
+// Font Size
+@for $i from 0 through 40 {
+  .fs-#{$i} {
+    font-size: #{$i}px !important;
+  }
+}
 
 //4. margin && padding
 @for $i from 0 through 20 {
@@ -138,9 +124,9 @@
   }
 }
 
-@for $i from 0 through 20 {
-  .pb-#{$i * 5} {
-    padding-bottom: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .pb-#{$i} {
+    padding-bottom: #{$i}px !important;
   }
 }
 
@@ -276,6 +262,19 @@
   &:hover {
     border-color: $primary-color !important;
   }
+}
+
+.day-button-active {
+  .ant-btn:hover, .ant-btn:focus {
+    color: $primary-color !important;
+    background-color: $white !important;
+    border-color: $primary-color !important;
+  }
+}
+
+.border-primary {
+  border-color: $blue !important;
+  color: $blue !important;
 }
 
 textarea.ant-input {

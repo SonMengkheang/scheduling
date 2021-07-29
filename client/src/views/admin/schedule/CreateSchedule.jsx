@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Form, Row, Col, Button, DatePicker, Select, Modal, TimePicker } from 'antd'
+import { Form, Row, Col, Button, DatePicker, Select, Input, TimePicker } from 'antd'
 import { Helmet } from 'react-helmet'
 import IntlMessage from '../../../helpers/IntlMessages'
 import HeaderPage from '../../../components/HeaderPage'
@@ -273,7 +273,7 @@ const CreateSchedule = () => {
                 <IntlMessage id="discard" />
             </Button>
             <Button className="btn-border-primary" size="large" htmlType="submit">
-                <IntlMessage id="generate" />
+                <IntlMessage id="submit" />
             </Button>
         </Row>
     }
@@ -286,7 +286,27 @@ const CreateSchedule = () => {
     }
 
     const onSubmit = val => {
+        
+        val.schedule = schedules
+        let semesDate = val.semesterDate
+        let finalDate = val.finalExamDate
+        val.semesterDate = {
+            startDate: semesDate[0],
+            endDate: semesDate[1]
+        }
+        val.finalExamDate = {
+            startDate: finalDate[0],
+            endDate: finalDate[1]
+        }
+        console.log("Val: ", val)
 
+        baseAPI.post('/schedules', val)
+            .then(res => {
+                console.log("Done: ", res)
+            })
+            .catch(err => console.log(err))
+
+        // console.log("Result: ", val)
     }
 
     const facultyOption = () => {
@@ -339,125 +359,266 @@ const CreateSchedule = () => {
         }
     }
 
+    const onEnglishClassChange = val => {
+        if (val === "monday") {
+            let monday = {
+                startTime: null,
+                endTime: null,
+                subject: null,
+                subjectName: null,
+                type: null,
+                teacher: null,
+                teacherName: null,
+                duration: null,
+                room: null
+            }
+            setMonday(monday)
+        } else if (val === "tuesday") {
+            let tuesday = {
+                startTime: null,
+                endTime: null,
+                subject: null,
+                subjectName: null,
+                type: null,
+                teacher: null,
+                teacherName: null,
+                duration: null,
+                room: null
+            }
+            setTuesday(tuesday)
+        } else if (val === "wednesday") {
+            let wednesday = {
+                startTime: null,
+                endTime: null,
+                subject: null,
+                subjectName: null,
+                type: null,
+                teacher: null,
+                teacherName: null,
+                duration: null,
+                room: null
+            }
+            setWednesday(wednesday)
+        } else if (val === "thursday") {
+            let thursday = {
+                startTime: null,
+                endTime: null,
+                subject: null,
+                subjectName: null,
+                type: null,
+                teacher: null,
+                teacherName: null,
+                duration: null,
+                room: null
+            }
+            setThursday(thursday)
+        } else if (val === "friday") {
+            let friday = {
+                startTime: null,
+                endTime: null,
+                subject: null,
+                subjectName: null,
+                type: null,
+                teacher: null,
+                teacherName: null,
+                duration: null,
+                room: null
+            }
+            setFriday(friday)
+        } else if (val === "saturday") {
+            let saturday = {
+                startTime: null,
+                endTime: null,
+                subject: null,
+                subjectName: null,
+                type: null,
+                teacher: null,
+                teacherName: null,
+                duration: null,
+                room: null
+            }
+            setSaturday(saturday)
+        }
+    }
+
+    const onEnglishClassTimeChange = (val, day, index) => {
+        if (day === "monday") {
+            let monday = {
+                startTime: val === null ? null : val[0],
+                endTime: val === null ? null : val[1],
+                subject: subjects.find(),
+                subjectName: "English",
+                type: null,
+                teacher: null,
+                teacherName: null,
+                duration: null,
+                room: null
+            }
+            setMonday(monday)
+        } else if (day === "tuesday") {
+            const item = tuesday
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
+            let clone = [...item]
+            clone[index] = item[index]
+            setTuesday(clone)
+        } else if (day === "wednesday") {
+            const item = wednesday
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
+            let clone = [...item]
+            clone[index] = item[index]
+            setWednesday(clone)
+        } else if (day === "thursday") {
+            const item = thursday
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
+            let clone = [...item]
+            clone[index] = item[index]
+            setThursday(clone)
+        } else if (day === "friday") {
+            const item = friday
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
+            let clone = [...item]
+            clone[index] = item[index]
+            setFriday(clone)
+        } else if (day === "saturday") {
+            const item = saturday
+            item[index].startTime = val === null ? null : val[0]
+            item[index].endTime = val === null ? null : val[1]
+            let clone = [...item]
+            clone[index] = item[index]
+            setSaturday(clone)
+        }
+    }
+
     const infoPart = () => {
         return <div>
             <Row className="mt-30" justify="space-between">
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="semester" />}
-                            name="semester"
-                        >
-                            <Select placeholder="Select Semester">
-                                <Option value={1} key={1}>1</Option>
-                                <Option value={2} key={2}>2</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="semester_start" />}
-                            name="semesterStartDate"
-                        >
-                            <RangePicker className="w-100" />
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="final_exam" />}
-                            name="finalExamDate"
-                        >
-                            <RangePicker className="w-100" />
-                        </Form.Item>
-                    </Col>
-                </Row>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="semester" />}
+                        name="semester"
+                    >
+                        <Select placeholder="Select Semester">
+                            <Option value={1} key={1}>1</Option>
+                            <Option value={2} key={2}>2</Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="semester_start" />}
+                        name="semesterDate"
+                    >
+                        <RangePicker className="w-100" />
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="final_exam" />}
+                        name="finalExamDate"
+                    >
+                        <RangePicker className="w-100" />
+                    </Form.Item>
+                </Col>
+            </Row>
 
-                <Row className="mt-30" justify="space-between">
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="faculty" />}
-                            name="faculty"
-                            initialValue={facId}
-                        >
-                            <Select placeholder="Select Faculty" value={facId} onChange={val => setFacId(val)}>
-                                { facultyOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="department" />}
-                            name="department"
-                            initialValue={departId}
-                        >
-                            <Select placeholder="Select Department" value={departId} onChange={val => setDepartId(val)}>
-                                { departmentOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="generation" />}
-                            name="generation"
-                            initialValue={genId}
-                        >
-                            <Select placeholder="Select Generation">
-                                { generationOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                </Row>
+            <Row className="mt-30" justify="space-between">
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="faculty" />}
+                        name="facultyId"
+                        initialValue={facId}
+                    >
+                        <Select placeholder="Select Faculty" value={facId} onChange={val => setFacId(val)}>
+                            { facultyOption() }
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="department" />}
+                        name="departmentId"
+                        initialValue={departId}
+                    >
+                        <Select placeholder="Select Department" value={departId} onChange={val => setDepartId(val)}>
+                            { departmentOption() }
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="generation" />}
+                        name="generationId"
+                        initialValue={genId}
+                    >
+                        <Select placeholder="Select Generation">
+                            { generationOption() }
+                        </Select>
+                    </Form.Item>
+                </Col>
+            </Row>
 
-                <Row className="mt-30" justify="space-between">
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="class" />}
-                            name="classes"
-                            initialValue={classId}
-                        >
-                            <Select placeholder="Select Class">
-                                { classOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="english_class" />}
-                            name="englishClass"
-                        >
-                            <Select placeholder="Select English Class">
-                                <Option value="monday" key="monday"><IntlMessage id="monday" /></Option>
-                                <Option value="tuesday" key="tuesday"><IntlMessage id="tuesday" /></Option>
-                                <Option value="wednesday" key="wednesday"><IntlMessage id="wednesday" /></Option>
-                                <Option value="thursday" key="thursday"><IntlMessage id="thursday" /></Option>
-                                <Option value="friday" key="friday"><IntlMessage id="friday" /></Option>
-                                <Option value="saturday" key="saturday"><IntlMessage id="saturday" /></Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7} />
-                </Row>
+            <Row className="mt-30" justify="space-between">
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="class" />}
+                        name="classId"
+                        initialValue={classId}
+                    >
+                        <Select placeholder="Select Class">
+                            { classOption() }
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="english_class_date" />}
+                        name="englishClass"
+                    >
+                        <Select placeholder="Select English Class" onChange={val => onEnglishClassChange(val)}>
+                            <Option value="monday" key="monday"><IntlMessage id="monday" /></Option>
+                            <Option value="tuesday" key="tuesday"><IntlMessage id="tuesday" /></Option>
+                            <Option value="wednesday" key="wednesday"><IntlMessage id="wednesday" /></Option>
+                            <Option value="thursday" key="thursday"><IntlMessage id="thursday" /></Option>
+                            <Option value="friday" key="friday"><IntlMessage id="friday" /></Option>
+                            <Option value="saturday" key="saturday"><IntlMessage id="saturday" /></Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Row className="fs-15 c-primary pb-8">
+                        <span><IntlMessage id="english_class_time" /></span>
+                    </Row>
+                    <Row>
+                        <RangePicker className="w-100" />
+                    </Row>
+                </Col>
+            </Row>
         </div>
     }
 
     const schedulePart = () => {
         return <Row className="mb-20">
             <Col span={4} align="middle">
-                <Button onClick={() => onSelectedDayChange("monday")}><IntlMessage id="monday" /></Button>
+                <Button className={day === "monday" ? "border-primary" : ""} onClick={() => onSelectedDayChange("monday")}><IntlMessage id="monday" /></Button>
             </Col>
             <Col span={4} align="middle">
-                <Button onClick={() => onSelectedDayChange("tuesday")}><IntlMessage id="tuesday" /></Button>
+                <Button className={day === "tuesday" ? "border-primary" : ""} onClick={() => onSelectedDayChange("tuesday")}><IntlMessage id="tuesday" /></Button>
             </Col>
             <Col span={4} align="middle">
-                <Button onClick={() => onSelectedDayChange("wednesday")}><IntlMessage id="wednesday" /></Button>
+                <Button className={day === "wednesday" ? "border-primary" : ""} onClick={() => onSelectedDayChange("wednesday")}><IntlMessage id="wednesday" /></Button>
             </Col>
             <Col span={4} align="middle">
-                <Button onClick={() => onSelectedDayChange("thursday")}><IntlMessage id="thursday" /></Button>
+                <Button className={day === "thursday" ? "border-primary" : ""} onClick={() => onSelectedDayChange("thursday")}><IntlMessage id="thursday" /></Button>
             </Col>
             <Col span={4} align="middle">
-                <Button onClick={() => onSelectedDayChange("friday")}><IntlMessage id="friday" /></Button>
+                <Button className={day === "friday" ? "border-primary" : ""} onClick={() => onSelectedDayChange("friday")}><IntlMessage id="friday" /></Button>
             </Col>
             <Col span={4} align="middle">
-                <Button onClick={() => onSelectedDayChange("saturday")}><IntlMessage id="saturday" /></Button>
+                <Button className={day === "saturday" ? "border-primary" : ""} onClick={() => onSelectedDayChange("saturday")}><IntlMessage id="saturday" /></Button>
             </Col>
         </Row>
     }
@@ -590,6 +751,46 @@ const CreateSchedule = () => {
         }
     }
 
+    const onRoomChange = (val, day, index) => {
+        if (day === "monday") {
+            const item = monday
+            item[index].room = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setMonday(clone)
+        } else if (day === "tuesday") {
+            const item = tuesday
+            item[index].room = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setTuesday(clone)
+        } else if (day === "wednesday") {
+            const item = wednesday
+            item[index].room = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setWednesday(clone)
+        } else if (day === "thursday") {
+            const item = thursday
+            item[index].room = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setThursday(clone)
+        } else if (day === "friday") {
+            const item = friday
+            item[index].room = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setFriday(clone)
+        } else if (day === "saturday") {
+            const item = saturday
+            item[index].room = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setSaturday(clone)
+        }
+    }
+
     const onChangeTime = (val, index, day) => {
         console.log("Val: ", val)
         if (day === "monday") {
@@ -638,20 +839,153 @@ const CreateSchedule = () => {
     }
 
     const onClassTypeChange = (val, day, index) => {
-
+        if (day === "monday") {
+            const item = monday
+            item[index].type = val
+            item[index].duration = val === "Lecture" ? userSubject.find(x => x.lecId === item[index].teacher).duration : userSubject.find(x => x.lecId === item[index].teacher).labDuration
+            let clone = [...item]
+            clone[index] = item[index]
+            setMonday(clone)
+        } else if (day === "tuesday") {
+            const item = tuesday
+            item[index].type = val
+            item[index].duration = val === "Lecture" ? userSubject.find(x => x.lecId === item[index].teacher).duration : userSubject.find(x => x.lecId === item[index].teacher).labDuration
+            let clone = [...item]
+            clone[index] = item[index]
+            setTuesday(clone)
+        } else if (day === "wednesday") {
+            const item = wednesday
+            item[index].type = val
+            item[index].duration = val === "Lecture" ? userSubject.find(x => x.lecId === item[index].teacher).duration : userSubject.find(x => x.lecId === item[index].teacher).labDuration
+            let clone = [...item]
+            clone[index] = item[index]
+            setWednesday(clone)
+        } else if (day === "thursday") {
+            const item = thursday
+            item[index].type = val
+            item[index].duration = val === "Lecture" ? userSubject.find(x => x.lecId === item[index].teacher).duration : userSubject.find(x => x.lecId === item[index].teacher).labDuration
+            let clone = [...item]
+            clone[index] = item[index]
+            setThursday(clone)
+        } else if (day === "friday") {
+            const item = friday
+            item[index].type = val
+            item[index].duration = val === "Lecture" ? userSubject.find(x => x.lecId === item[index].teacher).duration : userSubject.find(x => x.lecId === item[index].teacher).labDuration
+            let clone = [...item]
+            clone[index] = item[index]
+            setFriday(clone)
+        } else if (day === "saturday") {
+            const item = saturday
+            item[index].type = val
+            item[index].duration = val === "Lecture" ? userSubject.find(x => x.lecId === item[index].teacher).duration : userSubject.find(x => x.lecId === item[index].teacher).labDuration
+            let clone = [...item]
+            clone[index] = item[index]
+            setSaturday(clone)
+        }
     }
 
     const classTypeOption = (day, index) => {
         if (day === "monday") {
             let obj = userSubject.find(x => x.lecId === monday[index].teacher)
-            console.log("OBJ: ", obj)
+            console.log("OBJ: ", monday[index].type)
             if (obj !== undefined) {
-                obj.hasLab === true ? <Select placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
-                    <Option key="lec" value="Lecture">Lecture</Option>
-                    <Option key="lab" value="Lab">Lab</Option>
-                </Select> : <Select placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
-                    <Option key="lec" value="Lecture">Lecture</Option>
-                </Select>
+                if (obj.hasLab) {
+                    return <Select value={monday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                        <Option key="lab" value="Lab">Lab</Option>
+                    </Select>
+                } else {
+                    return <Select value={monday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                    </Select>
+                }
+            } else {
+                return <Select placeholder="Select Class Type" className="w-100" />
+            }
+        } else if (day === "tuesday") {
+            let obj = userSubject.find(x => x.lecId === tuesday[index].teacher)
+            console.log("OBJ: ", tuesday[index].type)
+            if (obj !== undefined) {
+                if (obj.hasLab) {
+                    return <Select value={tuesday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                        <Option key="lab" value="Lab">Lab</Option>
+                    </Select>
+                } else {
+                    return <Select value={tuesday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                    </Select>
+                }
+            } else {
+                return <Select placeholder="Select Class Type" className="w-100" />
+            }
+        } else if (day === "wednesday") {
+            let obj = userSubject.find(x => x.lecId === wednesday[index].teacher)
+            console.log("OBJ: ", wednesday[index].type)
+            if (obj !== undefined) {
+                if (obj.hasLab) {
+                    return <Select value={wednesday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                        <Option key="lab" value="Lab">Lab</Option>
+                    </Select>
+                } else {
+                    return <Select value={wednesday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                    </Select>
+                }
+            } else {
+                return <Select placeholder="Select Class Type" className="w-100" />
+            }
+        } else if (day === "thursday") {
+            let obj = userSubject.find(x => x.lecId === thursday[index].teacher)
+            console.log("OBJ: ", thursday[index].type)
+            if (obj !== undefined) {
+                if (obj.hasLab) {
+                    return <Select value={thursday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                        <Option key="lab" value="Lab">Lab</Option>
+                    </Select>
+                } else {
+                    return <Select value={thursday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                    </Select>
+                }
+            } else {
+                return <Select placeholder="Select Class Type" className="w-100" />
+            }
+        } else if (day === "friday") {
+            let obj = userSubject.find(x => x.lecId === friday[index].teacher)
+            console.log("OBJ: ", friday[index].type)
+            if (obj !== undefined) {
+                if (obj.hasLab) {
+                    return <Select value={friday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                        <Option key="lab" value="Lab">Lab</Option>
+                    </Select>
+                } else {
+                    return <Select value={friday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                    </Select>
+                }
+            } else {
+                return <Select placeholder="Select Class Type" className="w-100" />
+            }
+        } else if (day === "saturday") {
+            let obj = userSubject.find(x => x.lecId === saturday[index].teacher)
+            console.log("OBJ: ", saturday[index].type)
+            if (obj !== undefined) {
+                if (obj.hasLab) {
+                    return <Select value={saturday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                        <Option key="lab" value="Lab">Lab</Option>
+                    </Select>
+                } else {
+                    return <Select value={saturday[index].type} placeholder="Select Class Type" onChange={val => onClassTypeChange(val, day, index)} className="w-100">
+                        <Option key="lec" value="Lecture">Lecture</Option>
+                    </Select>
+                }
+            } else {
+                return <Select placeholder="Select Class Type" className="w-100" />
             }
         }
     }
@@ -661,38 +995,56 @@ const CreateSchedule = () => {
             if (index === 0) {
                 return <div className="mt-20">
                     <Row>
-                        <Col span={4}>
+                        <Col span={2} />
+                        <Col span={4} className="mr-20">
                             <span><IntlMessage id="lecturer" /></span>
+                        </Col>
+                        <Col span={4} className="mr-20">
+                            <span><IntlMessage id="class_type" /></span>
+                        </Col>
+                        <Col span={4} className="mr-20">
+                            <span><IntlMessage id="room" /></span>
                         </Col>
                         <Col span={7}>
                             <span><IntlMessage id="start_time" /></span>
                         </Col>
                     </Row>
                     <Row className="mt-10" align="middle">
-                        <Col span={4}>
-                            <Select onChange={val => onLecturerChange(val, day, index)} className="w-100">
+                        <Col span={2} />
+                        <Col span={4} className="mr-20">
+                            <Select placeholder="Select Lecturer" value={res.teacher} onChange={val => onLecturerChange(val, day, index)} className="w-100">
                                 { selectedDay.map(day => {
                                     return <Option id={day.lecId} value={day.lecId}>{day.lecName}</Option>
                                 }) }
                             </Select>
                         </Col>
+                        <Col span={4} className="mr-20">
+                            { classTypeOption(day, index) }
+                        </Col>
+                        <Col span={4} className="mr-20">
+                            <Input placeholder="Enter Room" onChange={val => onRoomChange(val, day, index)} />
+                        </Col>
                         <Col span={7}>
-                            <TimePicker.RangePicker onChange={val => onChangeTime(val, index, day)} className="w-100" />
+                            <TimePicker.RangePicker value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} className="w-100" />
                         </Col>
                     </Row>
                 </div>
             } else {
-                return <div className="mt-20">
-                    <Row className="mt-10" align="middle">
-                        <Col span={4}>
-                            <Select onChange={val => onLecturerChange(val, day, index)} className="w-100">
+                return <div className="mt-10">
+                    <Row align="middle">
+                        <Col span={2} />
+                        <Col span={4} className="mr-20">
+                            <Select placeholder="Select Lecturer" value={res.teacher} onChange={val => onLecturerChange(val, day, index)} className="w-100">
                                 { selectedDay.map(day => {
                                     return <Option id={day.lecId} value={day.lecId}>{day.lecName}</Option>
                                 }) }
                             </Select>
                         </Col>
-                        <Col span={7}>
-                            <TimePicker.RangePicker onChange={val => onChangeTime(val, index, day)} className="w-100" />
+                        <Col span={4} className="mr-20">
+                            { classTypeOption(day, index) }
+                        </Col>
+                        <Col span={7} className="mr-20">
+                            <TimePicker.RangePicker value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} className="w-100" />
                         </Col>
                         <Col span={2}>
                             <MinusCircleOutlined onClick={() => onRemoveTime(index, day)} />
@@ -823,125 +1175,169 @@ const CreateSchedule = () => {
         if (selectedDay !== null) {
             if (val === "monday") {
                 return <div>
-                    <span>Monday available lecturer: </span>
+                    <span className="ml-90 fw-bold">Monday available lecturer: </span>
                     { selectedDay.map((res, index) => {
                         return <Row>
+                            <Col span={1} />
                             <Col align="middle" span={1}>
                                 <span>{index+1}</span>
                             </Col>
                             <Col span={7}>
                                 <span>{res.lecName} ({res.subjectName} {res.duration}mn)</span>
                             </Col>
-                            <Col span={16}>
+                            <Col span={14}>
                                 { res.freeTime.monday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm:ss')} - {moment(result.endTime).format('HH:mm:ss')} </span>
+                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
                                 }) }
                             </Col>
                         </Row>
                     }) }
                     { inputSchedule(monday) }
-                    <Button onClick={() => onAddSchedule(day)}><PlusCircleOutlined className="mr-5" /><IntlMessage id="monday" /></Button>
+                    <Row className="mt-10 mb-20">
+                        <Col span={2} />
+                        <Col>
+                            <Button onClick={() => onAddSchedule(day)}><PlusCircleOutlined className="mr-5" /><IntlMessage id="monday" /></Button>
+                        </Col>
+                    </Row>
                 </div>
             } else if (val === "tuesday") {
                 return <div>
-                    <span>Tuesday available lecturer: </span>
+                    <span className="ml-90 fw-bold">Tuesday available lecturer: </span>
                     { selectedDay.map((res, index) => {
                         return <Row>
+                            <Col span={1} />
                             <Col align="middle" span={1}>
                                 <span>{index+1}</span>
                             </Col>
-                            <Col span={3}>
-                                <span>{res.lecName}</span>
+                            <Col span={7}>
+                                <span>{res.lecName} ({res.subjectName} {res.duration}mn)</span>
                             </Col>
-                            <Col span={16}>
+                            <Col span={14}>
                                 { res.freeTime.tuesday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm:ss')} - {moment(result.endTime).format('HH:mm:ss')} </span>
+                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
                                 }) }
                             </Col>
                         </Row>
                     }) }
+                    { inputSchedule(tuesday) }
+                    <Row className="mt-10 mb-20">
+                        <Col span={2} />
+                        <Col>
+                            <Button onClick={() => onAddSchedule(day)}><PlusCircleOutlined className="mr-5" /><IntlMessage id="tuesday" /></Button>
+                        </Col>
+                    </Row>
                 </div>
             } else if (val === "wednesday") {
                 return <div>
-                    <span>Wednesday available lecturer: </span>
+                    <span className="ml-90 fw-bold">Wednesday available lecturer: </span>
                     { selectedDay.map((res, index) => {
                         return <Row>
+                            <Col span={1} />
                             <Col align="middle" span={1}>
                                 <span>{index+1}</span>
                             </Col>
-                            <Col span={3}>
-                                <span>{res.lecName}</span>
+                            <Col span={7}>
+                                <span>{res.lecName} ({res.subjectName} {res.duration}mn)</span>
                             </Col>
-                            <Col span={16}>
+                            <Col span={14}>
                                 { res.freeTime.wednesday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm:ss')} - {moment(result.endTime).format('HH:mm:ss')} </span>
+                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
                                 }) }
                             </Col>
                         </Row>
                     }) }
+                    { inputSchedule(wednesday) }
+                    <Row className="mt-10 mb-20">
+                        <Col span={2} />
+                        <Col>
+                            <Button onClick={() => onAddSchedule(day)}><PlusCircleOutlined className="mr-5" /><IntlMessage id="wednesday" /></Button>
+                        </Col>
+                    </Row>
                 </div>
             } else if (val === "thursday") {
                 return <div>
-                    <span>Thursday available lecturer: </span>
+                    <span className="ml-90 fw-bold">Thursday available lecturer: </span>
                     { selectedDay.map((res, index) => {
                         return <Row>
+                            <Col span={1} />
                             <Col align="middle" span={1}>
                                 <span>{index+1}</span>
                             </Col>
-                            <Col span={3}>
-                                <span>{res.lecName}</span>
+                            <Col span={7}>
+                                <span>{res.lecName} ({res.subjectName} {res.duration}mn)</span>
                             </Col>
-                            <Col span={16}>
+                            <Col span={14}>
                                 { res.freeTime.thursday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm:ss')} - {moment(result.endTime).format('HH:mm:ss')} </span>
+                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
                                 }) }
                             </Col>
                         </Row>
                     }) }
+                    { inputSchedule(thursday) }
+                    <Row className="mt-10 mb-20">
+                        <Col span={2} />
+                        <Col>
+                            <Button onClick={() => onAddSchedule(day)}><PlusCircleOutlined className="mr-5" /><IntlMessage id="thursday" /></Button>
+                        </Col>
+                    </Row>
                 </div>
             } else if (val === "friday") {
                 return <div>
-                    <span>Friday available lecturer: </span>
+                    <span className="ml-90 fw-bold">Friday available lecturer: </span>
                     { selectedDay.map((res, index) => {
                         return <Row>
+                            <Col span={1} />
                             <Col align="middle" span={1}>
                                 <span>{index+1}</span>
                             </Col>
-                            <Col span={3}>
-                                <span>{res.lecName}</span>
+                            <Col span={7}>
+                                <span>{res.lecName} ({res.subjectName} {res.duration}mn)</span>
                             </Col>
-                            <Col span={16}>
+                            <Col span={14}>
                                 { res.freeTime.friday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm:ss')} - {moment(result.endTime).format('HH:mm:ss')} </span>
+                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
                                 }) }
                             </Col>
                         </Row>
                     }) }
+                    { inputSchedule(friday) }
+                    <Row className="mt-10 mb-20">
+                        <Col span={2} />
+                        <Col>
+                            <Button onClick={() => onAddSchedule(day)}><PlusCircleOutlined className="mr-5" /><IntlMessage id="friday" /></Button>
+                        </Col>
+                    </Row>
                 </div>
             } else if (val === "saturday") {
                 return <div>
-                    <span>Saturday available lecturer: </span>
+                    <span className="ml-90 fw-bold">Saturday available lecturer: </span>
                     { selectedDay.map((res, index) => {
                         return <Row>
+                            <Col span={1} />
                             <Col align="middle" span={1}>
                                 <span>{index+1}</span>
                             </Col>
-                            <Col span={3}>
-                                <span>{res.lecName}</span>
+                            <Col span={7}>
+                                <span>{res.lecName} ({res.subjectName} {res.duration}mn)</span>
                             </Col>
-                            <Col span={16}>
+                            <Col span={14}>
                                 { res.freeTime.saturday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm:ss')} - {moment(result.endTime).format('HH:mm:ss')} </span>
+                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
                                 }) }
                             </Col>
                         </Row>
                     }) }
+                    { inputSchedule(saturday) }
+                    <Row className="mt-10 mb-20">
+                        <Col span={2} />
+                        <Col>
+                            <Button onClick={() => onAddSchedule(day)}><PlusCircleOutlined className="mr-5" /><IntlMessage id="saturday" /></Button>
+                        </Col>
+                    </Row>
                 </div>
             }
         }
     }
-
-    console.log("SSSS: ", schedules)
 
     return (
         <Fragment>
@@ -987,11 +1383,13 @@ const CreateSchedule = () => {
                 </Form.Item>
                 { scheduleOpen === true ? schedulePart() : <></> }
 
-                <ScheduleTableTemplate schedules={schedules} shift={shift} />
+                { isOpen ? displayLecTime(day) : <></> }
 
-                <Modal width={1000} title="Set Time" visible={isOpen} onOk={onOk} onCancel={onCancel}>
-                    { displayLecTime(day) }
-                </Modal>
+                <ScheduleTableTemplate className="mt-40" schedules={schedules} shift={shift} />
+
+                <Row className="mt-50" />
+                {/* <Modal width={1000} title="Set Time" visible={isOpen} onOk={onOk} onCancel={onCancel}> */}
+                {/* </Modal> */}
 
             </Form>
         </Fragment>
