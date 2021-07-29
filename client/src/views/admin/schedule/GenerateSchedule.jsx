@@ -13,12 +13,26 @@ const GenerateSchedule = () => {
     const { Option } = Select
     const { RangePicker } = DatePicker
 
+    const [classes, setClasses] = useState(null)
+    const [classId, setClassId] = useState(null)
     const [generation, setGeneration] = useState(null)
+    const [genId, setGenId] = useState(null)
     const [department, setDepartment] = useState(null)
     const [departId, setDepartId] = useState(null)
+    const [faculty, setFaculty] = useState(null)
+    const [facId, setFacId] = useState(null)
+
+    const [departByFaculty, setDepartByFaculty] = useState(null)
     const [generationByDepart, setGenerationByDepart] = useState(null)
+    const [classByGen, setClassByGen] = useState(null)
 
     useEffect(() => {
+        baseAPI.get('/classes')
+        .then(res => {
+            setClasses(res.data)
+        })
+        .catch(err => console.log(err))
+
         baseAPI.get('/generations')
         .then(res => {
             setGeneration(res.data)
@@ -28,13 +42,37 @@ const GenerateSchedule = () => {
         baseAPI.get('/departments')
         .then(res => {
             setDepartment(res.data)
-            setDepartId(res.data[0]._id)
+        })
+        .catch(err => console.log(err))
+
+        baseAPI.get('/faculties')
+        .then(res => {
+            setFaculty(res.data)
+            setFacId(res.data[0]._id)
         })
         .catch(err => console.log(err))
     }, [])
 
     useEffect(() => {
-        console.log("1")
+        if (department !== null && department.length > 0 && facId !== null) {
+            let arr = []
+            department.map(res => {
+                if (res.faculty === facId) {
+                    arr.push(res)
+                }
+            })
+            console.log("arr: ", arr)
+            if (arr.length === 0) {
+                setDepartByFaculty(arr)
+                setDepartId("default")
+            } else {
+                setDepartId(arr[0]._id)
+                setDepartByFaculty(arr)
+            }
+        }
+    }, [facId, department])
+
+    useEffect(() => {
         if (generation !== null && generation.length > 0 && departId !== null) {
             let arr = []
             generation.map(res => {
@@ -43,15 +81,36 @@ const GenerateSchedule = () => {
                 }
             })
             console.log("arr: ", arr)
-            setGenerationByDepart(arr)
+            if (arr.length === 0) {
+                setGenerationByDepart(arr)
+                setGenId("default")
+            } else {
+                setGenerationByDepart(arr)
+                setGenId(arr[0]._id)
+            }
         }
     }, [departId, generation])
 
-    console.log("Gen: ", generation)
-    console.log("ID: ", departId)
-    console.log("genDepart: ", generationByDepart)
+    useEffect(() => {
+        if (classes !== null && classes.length > 0 && genId !== null) {
+            let arr = []
+            classes.map(res => {
+                if (res.generation === genId) {
+                    arr.push(res)
+                }
+            })
+            console.log("arr: ", arr)
+            if (arr.length === 0) {
+                setClassByGen(arr)
+                setClassId("default")
+            } else {
+                setClassByGen(arr)
+                setClassId(arr[0]._id)
+            }
+        }
+    }, [genId, classes])
 
-    if (generation === null || department === null || departId === null || generationByDepart === null) {
+    if (faculty === null || facId === null || genId === null || generation === null || department === null || departId === null || classes === null || classId === null || generationByDepart === null || departByFaculty === null || classByGen === null) {
         return <LoopCircleLoading color="#000000" />
     }
 
@@ -75,6 +134,56 @@ const GenerateSchedule = () => {
 
     const onSubmit = val => {
 
+    }
+
+    const facultyOption = () => {
+        return faculty.map(res => {
+            return <Option key={res._id} value={res._id}>
+                {res.facultyName}
+            </Option>
+        })
+    }
+
+    const departmentOption = () => {
+        if (departByFaculty.length > 0) {
+            return departByFaculty.map(res => {
+                return <Option key={res._id} value={res._id}>
+                    {res.departmentName}
+                </Option>
+            })
+        } else {
+            return <Option key="default" value="default">
+                Default
+            </Option>
+        }
+    }
+
+    const generationOption = () => {
+        if (generationByDepart.length > 0) {
+            return generationByDepart.map(res => {
+                return <Option key={res._id} value={res._id}>
+                    {res.generationName}
+                </Option>
+            })
+        } else {
+            return <Option key="default" value="default">
+                Default
+            </Option>
+        }
+    }
+
+    const classOption = () => {
+        if (classByGen.length > 0) {
+            return classByGen.map(res => {
+                return <Option key={res._id} value={res._id}>
+                    {res.classesName}
+                </Option>
+            })
+        } else {
+            return <Option key="default" value="default">
+                Default
+            </Option>
+        }
     }
 
     return (
@@ -136,14 +245,23 @@ const GenerateSchedule = () => {
                 <Row className="mt-30" justify="space-between">
                     <Col span={7}>
                         <Form.Item
+                            label={<IntlMessage id="faculty" />}
+                            name="faculty"
+                            initialValue={facId}
+                        >
+                            <Select placeholder="Select Faculty" value={facId} onChange={val => setFacId(val)}>
+                                { facultyOption() }
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col span={7}>
+                        <Form.Item
                             label={<IntlMessage id="department" />}
                             name="department"
                             initialValue={departId}
                         >
                             <Select placeholder="Select Department" value={departId} onChange={val => setDepartId(val)}>
-                                { department.map(res => {
-                                    return <Option key={res._id} value={res._id}>{res.departmentName}</Option>
-                                }) }
+                                { departmentOption() }
                             </Select>
                         </Form.Item>
                     </Col>
@@ -151,11 +269,24 @@ const GenerateSchedule = () => {
                         <Form.Item
                             label={<IntlMessage id="generation" />}
                             name="generation"
+                            initialValue={genId}
                         >
                             <Select placeholder="Select Generation">
-                                { generationByDepart.map(res => {
-                                    return <Option key={res._id} value={res._id}>{res.generationName}</Option>
-                                }) }
+                                { generationOption() }
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Row className="mt-30" justify="space-between">
+                    <Col span={7}>
+                        <Form.Item
+                            label={<IntlMessage id="class" />}
+                            name="classes"
+                            initialValue={classId}
+                        >
+                            <Select placeholder="Select Class">
+                                { classOption() }
                             </Select>
                         </Form.Item>
                     </Col>
@@ -174,6 +305,7 @@ const GenerateSchedule = () => {
                             </Select>
                         </Form.Item>
                     </Col>
+                    <Col span={7} />
                 </Row>
                 
             </Form>

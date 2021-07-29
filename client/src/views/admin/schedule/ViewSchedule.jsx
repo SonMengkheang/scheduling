@@ -1,10 +1,9 @@
 import React from 'react'
+import ScheduleTemplate from '../../../components/ScheduleTemplate'
 
 const ViewSchedule = () => {
     return (
-        <div>
-            View Schedule
-        </div>
+        <ScheduleTemplate />
     )
 }
 

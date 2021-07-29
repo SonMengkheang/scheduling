@@ -2,125 +2,185 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const scheduleSchema = new Schema({
-  classId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Class"
-  },
-  schedule: {
-    monday : [{
-        startTime : {
-            type : Date
-        },
-        endTime : {
-            type : Date
-        },
-        subject : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Subject"
-        },
-        teacher : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        room : {
-            type: String
-        }
-    }],
-    tuesday : [{
-        startTime : {
-            type : Date
-        },
-        endTime : {
-            type : Date
-        },
-        subject : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Subject"
-        },
-        teacher : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        room : {
-            type: String
-        }
-    }],
-    wednesday : [{
-        startTime : {
-            type : Date
-        },
-        endTime : {
-            type : Date
-        },
-        subject : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Subject"
-        },
-        teacher : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        room : {
-            type: String
-        }
-    }],
-    thursday : [{
-        startTime : {
-            type : Date
-        },
-        endTime : {
-            type : Date
-        },
-        subject : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Subject"
-        },
-        teacher : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        room : {
-            type: String
-        }
-    }],
-    friday : [{
-        startTime : {
-            type : Date
-        },
-        endTime : {
-            type : Date
-        },
-        subject : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Subject"
-        },
-        teacher : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        room : {
-            type: String
-        }
-    }],
-    saturday : [{
-        startTime : {
-            type : Date
-        },
-        endTime : {
-            type : Date
-        },
-        subject : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Subject"
-        },
-        teacher : {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        room : {
-            type: String
-        }
-    }]
+    classId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Class"
+    },
+    facultyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Faculty"
+    },
+    departmentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Department"
+    },
+    generationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Generation"
+    },
+    englishClass: {
+        type: String
+    },
+    semester: {
+        type: Number
+    },
+    semesterDate: {
+        type: Date
+    },
+    fianlExamDate: {
+        type: Date
+    },
+    schedule: {
+        monday : [{
+            startTime : {
+                type : Date
+            },
+            endTime : {
+                type : Date
+            },
+            subject : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Subject"
+            },
+            type: {
+                type: String
+            },
+            teacher : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            room : {
+                type: String
+            },
+            duration: {
+                type: Number
+            }
+        }],
+        tuesday : [{
+            startTime : {
+                type : Date
+            },
+            endTime : {
+                type : Date
+            },
+            subject : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Subject"
+            },
+            type: {
+                type: String
+            },
+            teacher : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            room : {
+                type: String
+            },
+            duration: {
+                type: Number
+            }
+        }],
+        wednesday : [{
+            startTime : {
+                type : Date
+            },
+            endTime : {
+                type : Date
+            },
+            subject : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Subject"
+            },
+            type: {
+                type: String
+            },
+            teacher : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            room : {
+                type: String
+            },
+            duration: {
+                type: Number
+            }
+        }],
+        thursday : [{
+            startTime : {
+                type : Date
+            },
+            endTime : {
+                type : Date
+            },
+            subject : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Subject"
+            },
+            type: {
+                type: String
+            },
+            teacher : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            room : {
+                type: String
+            },
+            duration: {
+                type: Number
+            }
+        }],
+        friday : [{
+            startTime : {
+                type : Date
+            },
+            endTime : {
+                type : Date
+            },
+            subject : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Subject"
+            },
+            type: {
+                type: String
+            },
+            teacher : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            room : {
+                type: String
+            },
+            duration: {
+                type: Number
+            }
+        }],
+        saturday : [{
+            startTime : {
+                type : Date
+            },
+            endTime : {
+                type : Date
+            },
+            subject : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Subject"
+            },
+            type: {
+                type: String
+            },
+            teacher : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            room : {
+                type: String
+            },
+            duration: {
+                type: Number
+            }
+        }]
 }
 },{timestamps : true}
 )

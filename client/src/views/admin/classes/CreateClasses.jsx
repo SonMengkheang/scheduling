@@ -16,6 +16,9 @@ const CreateClasses = () => {
     const [generations, setGenerations] = useState(null)
     const [genId, setGenId] = useState(null)
     const [generationByDepart, setGenerationByDepart] = useState(null)
+    const [users, setUsers] = useState(null)
+    const [userId, setUserId] = useState(null)
+    const [userByDepart, setUserByDepart] = useState(null)
 
     useEffect(() => {
         baseAPI.get('generations')
@@ -30,10 +33,15 @@ const CreateClasses = () => {
             setDepartId(res.data[0]._id)
         })
         .catch(err => console.log(err))
+
+        baseAPI.get('users')
+        .then(res => {
+            setUsers(res.data)
+        })
+        .catch(err => console.log(err))
     }, [])
 
     useEffect(() => {
-        console.log("1")
         if (generations !== null && generations.length > 0 && departId !== null) {
             let arr = []
             generations.map(res => {
@@ -42,17 +50,54 @@ const CreateClasses = () => {
                 }
             })
             console.log("arr: ", arr)
-            setGenerationByDepart(arr)
-            setGenId(arr[0]._id)
+            if (arr.length === 0) {
+                setGenerationByDepart(arr)
+                setGenId("default")
+            } else {
+                setGenerationByDepart(arr)
+                setGenId(arr[0]._id)
+            }
         }
     }, [departId, generations])
 
-    if (departments === null || generations === null || departId === null || generationByDepart === null) {
+    useEffect(() => {
+        if (users !== null && users.length > 0 && departId !== null) {
+            let arr = []
+            users.map(res => {
+                console.log("Res: ", res)
+                let id
+                if (res.department.length > 0 || res.department !== null) {
+                    res.department.map(result => {
+                        if (result === departId) {
+                            id = result
+                        }
+                    })
+                }
+                console.log("Id: ", id)
+                if (id !== null && id !== undefined) {
+                    arr.push(res)
+                }
+            })
+            console.log("arr: ", arr)
+            if (arr.length === 0) {
+                setUserByDepart(arr)
+                setUserId("default")
+            } else {
+                setUserByDepart(arr)
+                setUserId([arr[0]._id])
+            }
+        }
+    }, [departId, users])
+
+    if (departments === null || generations === null || users === null || departId === null || generationByDepart === null || genId === null || userId === null || userByDepart === null) {
         return <LoopCircleLoading color="#000000" />
     }
 
     const onSubmit = values => {
         console.log("Values: ", values)
+        values.department = departId
+        values.generation = genId
+        values.user = userId
         baseAPI.post(`/classes`, values)
             .then(response => {
                 console.log("Result: ", response)
@@ -88,12 +133,34 @@ const CreateClasses = () => {
     }
 
     const generationOption = () => {
-        return generationByDepart.map(res => {
-            return <Option key={res._id} value={res._id}>
-                {res.generationName}
+        if (generationByDepart.length > 0) {
+            return generationByDepart.map(res => {
+                return <Option key={res._id} value={res._id}>
+                    {res.generationName}
+                </Option>
+            })
+        } else {
+            return <Option key="default" value="default">
+                Default
             </Option>
-        })
+        }
     }
+
+    const userOption = () => {
+        if (userByDepart.length > 0) {
+            return userByDepart.map(res => {
+                return <Option key={res._id} value={res._id}>
+                    {res.username}
+                </Option>
+            })
+        } else {
+            return <Option key="default" value="default">
+                Default
+            </Option>
+        }
+    }
+
+    console.log("User Id: ", userId)
 
     return (
         <Fragment>
@@ -142,34 +209,39 @@ const CreateClasses = () => {
                     </Col>
                 </Row>
 
-                <Row className="mb-20">
+                <Row className="mb-40">
                     <Col span={11}>
-                        <Form.Item
-                            label={<IntlMessage id="department" />}
-                            name="department"
-                            initialValue={departId}
-                            rules={[{ required: true, message: 'Please select department!' }]}
-                        >
-                            <Select value={departId} placeholder="Select Department" onChange={val => setDepartId(val)}>
-                                { departmentOption() }
-                            </Select>
-                        </Form.Item>
+                        <Row>
+                            <span className="c-require fs-20 mr-5">*</span>
+                            <span className="c-primary fs-16"><IntlMessage id="department" /></span>
+                        </Row>
+                        <Select className="w-100 mt-5" value={departId} placeholder="Select Department" onChange={val => setDepartId(val)}>
+                            { departmentOption() }
+                        </Select>
                     </Col>
                 </Row>
 
-                <Row className="mb-20">
+                <Row className="mb-40">
                     <Col span={11}>
-                        <Form.Item
-                            label={<IntlMessage id="generation" />}
-                            name="generation"
-                            // initialValue={genId}
-                            values={genId}
-                            rules={[{ required: true, message: 'Please select generation!' }]}
-                        >
-                            <Select value={genId} placeholder="Select Generation" onChange={val => setGenId(val)}>
-                                { generationOption() }
-                            </Select>
-                        </Form.Item>
+                        <Row>
+                            <span className="c-require fs-20 mr-5">*</span>
+                            <span className="c-primary fs-16"><IntlMessage id="generation" /></span>
+                        </Row>
+                        <Select className="w-100 mt-5" value={genId} placeholder="Select Generation" onChange={val => setGenId(val)}>
+                            { generationOption() }
+                        </Select>
+                    </Col>
+                </Row>
+
+                <Row className="mb-40">
+                    <Col span={11}>
+                        <Row>
+                            <span className="c-require fs-20 mr-5">*</span>
+                            <span className="c-primary fs-16"><IntlMessage id="lecturer" /></span>
+                        </Row>
+                        <Select mode="multiple" allowClear className="w-100 mt-5" value={userId} placeholder="Select Lecturer" onChange={val => setUserId(val)}>
+                            { userOption() }
+                        </Select>
                     </Col>
                 </Row>
 

@@ -28,6 +28,7 @@ const generations = require("./routes/subjects/generationRoute")
 const classes = require("./routes/classes/classRoute")
 const users = require("./routes/users/userRoute")
 const roles = require("./routes/users/roleRoute")
+const schedules = require("./routes/schedule/scheduleRoute")
 
 // middlewares
 server.use(cors());
@@ -48,6 +49,7 @@ server.use("/generations", generations)
 server.use("/classes", classes)
 server.use("/users", users)
 server.use("/roles", roles)
+server.use("/schedules", schedules)
 
 // Session
 // server.use(session({

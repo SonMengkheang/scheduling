@@ -17,7 +17,7 @@ const classSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Generation"
     },
-    users: [{
+    user: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
