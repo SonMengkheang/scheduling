@@ -70,48 +70,52 @@ const CreateClasses = () => {
 
     useEffect(() => {
         if (genId !== null && generationByDepart !== null) {
-            let newArr = []
-            let newSub = generationByDepart.find(x => x._id === genId)
-            newSub.subject.map(res => {
-                newArr.push({
-                    user: null,
-                    subject: res
+            if (genId !== "default" && generationByDepart.length > 0) {
+                let newArr = []
+                let newSub = generationByDepart.find(x => x._id === genId)
+                newSub.subject.map(res => {
+                    newArr.push({
+                        user: null,
+                        subject: res
+                    })
                 })
-            })
-            setLecSubject(newArr)
+                setLecSubject(newArr)
+            } else {
+                setLecSubject([])
+            }
         }
     }, [genId])
 
-    useEffect(() => {
-        if (users !== null && users.length > 0 && departId !== null) {
-            let arr = []
-            users.map(res => {
-                console.log("Res: ", res)
-                let id
-                if (res.department.length > 0 || res.department !== null) {
-                    res.department.map(result => {
-                        if (result === departId) {
-                            id = result
-                        }
-                    })
-                }
-                console.log("Id: ", id)
-                if (id !== null && id !== undefined) {
-                    arr.push(res)
-                }
-            })
-            console.log("arr: ", arr)
-            if (arr.length === 0) {
-                setUserByDepart(arr)
-                setUserId("default")
-            } else {
-                setUserByDepart(arr)
-                setUserId([arr[0]._id])
-            }
-        }
-    }, [departId, users])
+    // useEffect(() => {
+    //     if (users !== null && users.length > 0 && departId !== null) {
+    //         let arr = []
+    //         users.map(res => {
+    //             console.log("Res: ", res)
+    //             let id
+    //             if (res.department.length > 0 || res.department !== null) {
+    //                 res.department.map(result => {
+    //                     if (result === departId) {
+    //                         id = result
+    //                     }
+    //                 })
+    //             }
+    //             console.log("Id: ", id)
+    //             if (id !== null && id !== undefined) {
+    //                 arr.push(res)
+    //             }
+    //         })
+    //         console.log("arr: ", arr)
+    //         if (arr.length === 0) {
+    //             setUserByDepart(arr)
+    //             setUserId("default")
+    //         } else {
+    //             setUserByDepart(arr)
+    //             setUserId([arr[0]._id])
+    //         }
+    //     }
+    // }, [departId, users])
 
-    if (departments === null || generations === null || users === null || departId === null || generationByDepart === null || genId === null || userId === null || userByDepart === null || subjects === null || lecSubject === null) {
+    if (departments === null || generations === null || users === null || departId === null || generationByDepart === null || genId === null || subjects === null || lecSubject === null) {
         return <LoopCircleLoading color="#000000" />
     }
 
@@ -184,18 +188,35 @@ const CreateClasses = () => {
     // }
 
     const userSubject = () => {
-        return lecSubject.map((res, index) => {
-            if (index === 0) {
-                return <div>
-                    <Row>
-                        <Col span={11}>
-                            <span className="c-primary fs-16"><IntlMessage id="subject" /></span>
-                        </Col>
-                        <Col span={11}>
-                            <span className="c-primary fs-16"><IntlMessage id="lecturer" /></span>
-                        </Col>
-                    </Row>
-                    <Row className="mt-10">
+        if (lecSubject.length > 0) {
+            return lecSubject.map((res, index) => {
+                if (index === 0) {
+                    return <div>
+                        <Row>
+                            <Col span={11}>
+                                <span className="c-primary fs-16"><IntlMessage id="subject" /></span>
+                            </Col>
+                            <Col span={11}>
+                                <span className="c-primary fs-16"><IntlMessage id="lecturer" /></span>
+                            </Col>
+                        </Row>
+                        <Row className="mt-10">
+                            <Col span={11}>
+                                <span>{subjects.find(x => x._id === res.subject).subjectName}</span>
+                            </Col>
+                            <Col span={11}>
+                                <Select className="w-100" value={res.user} onChange={val => onLecChange(val, index)}>
+                                    { subjects.find(x => x._id === res.subject).user.map(u => {
+                                        return <Option key={u} value={u}>
+                                            { users.find(x => x._id === u).username }
+                                        </Option>
+                                    }) }
+                                </Select>
+                            </Col>
+                        </Row>
+                    </div>
+                } else {
+                    return <Row className="mt-10">
                         <Col span={11}>
                             <span>{subjects.find(x => x._id === res.subject).subjectName}</span>
                         </Col>
@@ -209,24 +230,9 @@ const CreateClasses = () => {
                             </Select>
                         </Col>
                     </Row>
-                </div>
-            } else {
-                return <Row className="mt-10">
-                    <Col span={11}>
-                        <span>{subjects.find(x => x._id === res.subject).subjectName}</span>
-                    </Col>
-                    <Col span={11}>
-                        <Select className="w-100" value={res.user} onChange={val => onLecChange(val, index)}>
-                            { subjects.find(x => x._id === res.subject).user.map(u => {
-                                return <Option key={u} value={u}>
-                                    { users.find(x => x._id === u).username }
-                                </Option>
-                            }) }
-                        </Select>
-                    </Col>
-                </Row>
-            }
-        })
+                }
+            })
+        }
     }
 
     const onLecChange = (val, index) => {

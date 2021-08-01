@@ -6,6 +6,7 @@ import IntlMessage from '../../../helpers/IntlMessages'
 import HeaderPage from '../../../components/HeaderPage'
 import baseAPI from '../../../api/baseAPI'
 import LoopCircleLoading from 'react-loadingg/lib/LoopCircleLoading'
+import ScheduleTableTemplate from '../../../components/ScheduleTableTemplate'
 
 const GenerateSchedule = () => {
 
@@ -22,9 +23,14 @@ const GenerateSchedule = () => {
     const [faculty, setFaculty] = useState(null)
     const [facId, setFacId] = useState(null)
 
+    const [users, setUsers] = useState(null)
+    const [subjects, setSubjects] = useState(null)
+    const [userSubject, setUserSubject] = useState(null)
+
     const [departByFaculty, setDepartByFaculty] = useState(null)
     const [generationByDepart, setGenerationByDepart] = useState(null)
     const [classByGen, setClassByGen] = useState(null)
+    const [submitSchedule, setSubmitSchedule] = useState(null)
 
     useEffect(() => {
         baseAPI.get('/classes')
@@ -49,6 +55,18 @@ const GenerateSchedule = () => {
         .then(res => {
             setFaculty(res.data)
             setFacId(res.data[0]._id)
+        })
+        .catch(err => console.log(err))
+
+        baseAPI.get('/users')
+        .then(res => {
+            setUsers(res.data)
+        })
+        .catch(err => console.log(err))
+
+        baseAPI.get('/subjects')
+        .then(res => {
+            setSubjects(res.data)
         })
         .catch(err => console.log(err))
     }, [])
@@ -110,14 +128,48 @@ const GenerateSchedule = () => {
         }
     }, [genId, classes])
 
-    if (faculty === null || facId === null || genId === null || generation === null || department === null || departId === null || classes === null || classId === null || generationByDepart === null || departByFaculty === null || classByGen === null) {
+    useEffect(() => {
+        if (classes !== null && classId !== null && subjects !== null) {
+            let userSubject = []
+            let findClass = classes.find(x => x._id === classId)
+            findClass.userSubject.map(res => {
+                let subject = subjects.find(x => x._id === res.subject)
+                userSubject.push({
+                    _id: res._id,
+                    user: res.user,
+                    subject: res.subject,
+                    duration: subject.duration,
+                    labDuration: subject.labDuration
+                })
+            })
+            setUserSubject(userSubject)
+        }
+    }, [classId, classes, subjects])
+
+    console.log("User Subject: ", userSubject)
+
+    if (faculty === null || facId === null || genId === null || generation === null || department === null || departId === null || classes === null || classId === null || generationByDepart === null || departByFaculty === null || classByGen === null || users === null || subjects === null || userSubject === null) {
         return <LoopCircleLoading color="#000000" />
+    }
+
+    console.log("Submit: ", submitSchedule)
+    const onGenerate = () => {
+        let obj = {
+            classId: classId,
+            userSubject: userSubject
+        }
+        baseAPI.post('schedules/generate', obj)
+            .then(res => setSubmitSchedule(res.data))
+            .catch(err => console.log(err))
     }
 
     const buttonTem = () => {
         return <Row justify="end">
             <Button className="btn-border-danger mr-10" size="large" onClick={() => history.goBack()}>
                 <IntlMessage id="discard" />
+            </Button>
+            <Button className="btn-border-primary" size="large" onClick={() => onGenerate()}>
+                <IntlMessage id="generate" />
             </Button>
             <Button className="btn-border-primary" size="large" htmlType="submit">
                 <IntlMessage id="generate" />
@@ -133,7 +185,11 @@ const GenerateSchedule = () => {
     }
 
     const onSubmit = val => {
-
+        baseAPI.post('/schedules/generate', val)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => console.log(err))
     }
 
     const facultyOption = () => {
@@ -186,6 +242,135 @@ const GenerateSchedule = () => {
         }
     }
 
+    console.log("DepartID: ", departId)
+
+    const infoPart = () => {
+        return <div>
+            <Row className="mt-30" justify="space-between">
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="semester" />}
+                        name="semester"
+                    >
+                        <Select placeholder="Select Semester">
+                            <Option value={1} key={1}>1</Option>
+                            <Option value={2} key={2}>2</Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="semester_start" />}
+                        name="semesterDate"
+                    >
+                        <RangePicker className="w-100" />
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="final_exam" />}
+                        name="finalExamDate"
+                    >
+                        <RangePicker className="w-100" />
+                    </Form.Item>
+                </Col>
+            </Row>
+
+            <Row className="mt-30" justify="space-between">
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="faculty" />}
+                        name="facultyId"
+                        initialValue={facId}
+                    >
+                        <Select placeholder="Select Faculty" value={facId} onChange={val => setFacId(val)}>
+                            { facultyOption() }
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="department" />}
+                        name="departmentId"
+                        initialValue={departId}
+                    >
+                        <Select placeholder="Select Department" value={departId} onChange={val => setDepartId(val)}>
+                            { departmentOption() }
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="generation" />}
+                        name="generationId"
+                        initialValue={genId}
+                    >
+                        <Select placeholder="Select Generation">
+                            { generationOption() }
+                        </Select>
+                    </Form.Item>
+                </Col>
+            </Row>
+
+            <Row className="mt-30" justify="space-between">
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="class" />}
+                        name="classId"
+                        initialValue={classId}
+                    >
+                        <Select placeholder="Select Class">
+                            { classOption() }
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="english_class_date" />}
+                        name="englishClass"
+                    >
+                        <Select placeholder="Select English Class">
+                            <Option value="monday" key="monday"><IntlMessage id="monday" /></Option>
+                            <Option value="tuesday" key="tuesday"><IntlMessage id="tuesday" /></Option>
+                            <Option value="wednesday" key="wednesday"><IntlMessage id="wednesday" /></Option>
+                            <Option value="thursday" key="thursday"><IntlMessage id="thursday" /></Option>
+                            <Option value="friday" key="friday"><IntlMessage id="friday" /></Option>
+                            <Option value="saturday" key="saturday"><IntlMessage id="saturday" /></Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={7}>
+                    <Row className="fs-15 c-primary pb-8">
+                        <span><IntlMessage id="english_class_time" /></span>
+                    </Row>
+                    <Row>
+                        <RangePicker className="w-100" />
+                    </Row>
+                </Col>
+            </Row>
+            <Row className="mt-30" justify="space-between">
+                <Col span={7}>
+                    <Form.Item
+                        label={<IntlMessage id="lecturer_priority" />}
+                        name="priority"
+                    >
+                        <Select placeholder="Select Priority">
+                            {/* { userPriority() } */}
+                        </Select>
+                    </Form.Item>
+                </Col>
+            </Row>
+        </div>
+    }
+
+    // const userPriority = () => {
+    //     return userSubject.map(res => {
+    //         return <Option key={res._id} value={res.user}>
+    //             {users.find(x => x._id === res.user).username} ({subjects.find(x => x._id === res.subject).subjectName})
+    //         </Option>
+    //     })
+    // }
+
     return (
         <Fragment>
             <IntlMessage id="schedule">
@@ -212,101 +397,9 @@ const GenerateSchedule = () => {
             >
                 <HeaderPage id="generate_schedule" button={buttonTem()} />
 
-                <Row className="mt-30" justify="space-between">
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="semester" />}
-                            name="semester"
-                        >
-                            <Select placeholder="Select Semester">
-                                <Option value={1} key={1}>1</Option>
-                                <Option value={2} key={2}>2</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="semester_start" />}
-                            name="semesterStartDate"
-                        >
-                            <RangePicker className="w-100" />
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="final_exam" />}
-                            name="finalExamDate"
-                        >
-                            <RangePicker className="w-100" />
-                        </Form.Item>
-                    </Col>
-                </Row>
+                { infoPart() }
 
-                <Row className="mt-30" justify="space-between">
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="faculty" />}
-                            name="faculty"
-                            initialValue={facId}
-                        >
-                            <Select placeholder="Select Faculty" value={facId} onChange={val => setFacId(val)}>
-                                { facultyOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="department" />}
-                            name="department"
-                            initialValue={departId}
-                        >
-                            <Select placeholder="Select Department" value={departId} onChange={val => setDepartId(val)}>
-                                { departmentOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="generation" />}
-                            name="generation"
-                            initialValue={genId}
-                        >
-                            <Select placeholder="Select Generation">
-                                { generationOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row className="mt-30" justify="space-between">
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="class" />}
-                            name="classes"
-                            initialValue={classId}
-                        >
-                            <Select placeholder="Select Class">
-                                { classOption() }
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7}>
-                        <Form.Item
-                            label={<IntlMessage id="english_class" />}
-                            name="englishClass"
-                        >
-                            <Select placeholder="Select English Class">
-                                <Option value="monday" key="monday"><IntlMessage id="monday" /></Option>
-                                <Option value="tuesday" key="tuesday"><IntlMessage id="tuesday" /></Option>
-                                <Option value="wednesday" key="wednesday"><IntlMessage id="wednesday" /></Option>
-                                <Option value="thursday" key="thursday"><IntlMessage id="thursday" /></Option>
-                                <Option value="friday" key="friday"><IntlMessage id="friday" /></Option>
-                                <Option value="saturday" key="saturday"><IntlMessage id="saturday" /></Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col span={7} />
-                </Row>
+                { submitSchedule !== null ? <ScheduleTableTemplate className="mt-40" schedules={submitSchedule} shift="M" /> : <></> }
                 
             </Form>
         </Fragment>

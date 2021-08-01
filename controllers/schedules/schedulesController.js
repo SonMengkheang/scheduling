@@ -1,5 +1,7 @@
 const Schedule = require('../../models/schedules/Schedule')
 const User = require('../../models/users/User')
+const Subject = require('../../models/subjects/Subject')
+const Classes = require('../../models/classes/Classes')
 const moment = require('moment')
 
 module.exports = {
@@ -623,6 +625,20 @@ module.exports = {
             next(err)
         }
     },
+
+    generateSchedule: async(req, res, next) => {
+        try {
+            const data = req.body
+            const classes = await Classes.findById(data.classId)
+            const subjects = await Subject.find({})
+            const users = await User.find({})
+
+            console.log("Data: ", data)
+            console.log("User Subject: ", classes)
+        } catch (err) {
+            next(err)
+        }
+    },
     
     getClassSchedule: async(req, res, next) => {
         try {
@@ -644,6 +660,628 @@ module.exports = {
             next(err)
         }
     },
+
+    generateClassSchedule: async(req, res, next) => {
+        try {
+            const schedule = req.body
+            const findClass = await Classes.findById(schedule.classId)
+            let findAllUsers = await User.find({})
+            let submitSchedule = {
+                monday : [{
+                    startTime: moment('2021-08-05 7:00:00'),
+                    endTime: moment('2021-08-05 13:00:00'),
+                    status: false,
+                    user: null,
+                    subject: null,
+                    duration: null,
+                    labDuration: null
+                }],
+                tuesday : [{
+                    startTime: moment('2021-08-05 7:00:00'),
+                    endTime: moment('2021-08-05 13:00:00'),
+                    status: false,
+                    user: null,
+                    subject: null,
+                    duration: null,
+                    labDuration: null
+                }],
+                wednesday : [{
+                    startTime: moment('2021-08-05 7:00:00'),
+                    endTime: moment('2021-08-05 13:00:00'),
+                    status: false,
+                    user: null,
+                    subject: null,
+                    duration: null,
+                    labDuration: null
+                }],
+                thursday : [{
+                    startTime: moment('2021-08-05 7:00:00'),
+                    endTime: moment('2021-08-05 13:00:00'),
+                    status: false,
+                    user: null,
+                    subject: null,
+                    duration: null,
+                    labDuration: null
+                }],
+                friday : [{
+                    startTime: moment('2021-08-05 7:00:00'),
+                    endTime: moment('2021-08-05 13:00:00'),
+                    status: false,
+                    user: null,
+                    subject: null,
+                    duration: null,
+                    labDuration: null
+                }],
+                saturday : [{
+                    startTime: moment('2021-08-05 7:00:00'),
+                    endTime: moment('2021-08-05 13:00:00'),
+                    status: false,
+                    user: null,
+                    subject: null,
+                    duration: null,
+                    labDuration: null
+                }],
+            }
+            // console.log("Schedule: ", schedule)
+            for (let k=0; k<schedule.userSubject.length; k++) {
+                // let findTeacher = await User.findById(schedule.userSubject[k].user)
+                let findTeacher = findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user))
+                console.log(`Find Teacher ${k}: `, findTeacher)
+
+                findTeacher.freeTime.monday.filter(e =>{
+                    e.status = false
+                })
+                findTeacher.freeTime.tuesday.filter(e =>{
+                    e.status = false
+                })
+                findTeacher.freeTime.wednesday.filter(e =>{
+                    e.status = false
+                })
+                findTeacher.freeTime.thursday.filter(e =>{
+                    e.status = false
+                })
+                findTeacher.freeTime.friday.filter(e =>{
+                    e.status = false
+                })
+                findTeacher.freeTime.saturday.filter(e =>{
+                    e.status = false
+                })
+                
+                if(findClass.shift === "M") {
+                    findTeacher.freeTime.monday.filter(e => {
+                        moment(e.endTime)._d.getHours() <= 13
+                    })
+                    findTeacher.freeTime.tuesday.filter(e => {
+                        moment(e.endTime)._d.getHours() <= 13
+                    })
+                    findTeacher.freeTime.wednesday.filter(e => {
+                        moment(e.endTime)._d.getHours() <= 13
+                    })
+                    findTeacher.freeTime.thursday.filter(e => {
+                        moment(e.endTime)._d.getHours() <= 13
+                    })
+                    findTeacher.freeTime.friday.filter(e => {
+                        moment(e.endTime)._d.getHours() <= 13
+                    })
+                    findTeacher.freeTime.saturday.filter(e => {
+                        moment(e.endTime)._d.getHours() <= 13
+                    })
+                } else if (findClass.shift === "A"){
+                    findTeacher.freeTime.monday.filter(e => {
+                        moment(e.startTime)._d.getHours() >= 13
+                    })
+                    findTeacher.freeTime.tuesday.filter(e => {
+                        moment(e.startTime)._d.getHours() >= 13
+                    })
+                    findTeacher.freeTime.wednesday.filter(e => {
+                        moment(e.startTime)._d.getHours() >= 13
+                    })
+                    findTeacher.freeTime.thursday.filter(e => {
+                        moment(e.startTime)._d.getHours() >= 13
+                    })
+                    findTeacher.freeTime.friday.filter(e => {
+                        moment(e.startTime)._d.getHours() >= 13
+                    })
+                    findTeacher.freeTime.saturday.filter(e => {
+                        moment(e.startTime)._d.getHours() >= 13
+                    })
+                }
+
+                let day = [
+                    findTeacher.freeTime.monday,
+                    findTeacher.freeTime.tuesday,
+                    findTeacher.freeTime.wednesday,
+                    findTeacher.freeTime.thursday,
+                    findTeacher.freeTime.friday,
+                    findTeacher.freeTime.saturday,
+                ]
+                let finalDay = [
+                    submitSchedule.monday,
+                    submitSchedule.tuesday,
+                    submitSchedule.wednesday,
+                    submitSchedule.thursday,
+                    submitSchedule.friday,
+                    submitSchedule.saturday,
+                ]
+                for(let i=0; i<day.length; i++){
+            
+                    // check possible assign
+                    for(let j=0; j<day[i].length; j++){
+                        for (let x = 0; x < finalDay[i].length; x++) {
+                            if (finalDay[i][x].status === false) {
+                                let u_start_hour = moment(day[i][j].startTime)._d.getHours()
+                                let u_start_minute = moment(day[i][j].startTime)._d.getMinutes()
+                                let u_end_hour = moment(day[i][j].endTime)._d.getHours()
+                                let u_end_minute = moment(day[i][j].endTime)._d.getMinutes()
+                                let i_start_hour = moment(finalDay[i][x].startTime)._d.getHours()
+                                let i_start_minute = moment(finalDay[i][x].startTime)._d.getMinutes()
+                                let i_end_hour = moment(finalDay[i][x].endTime)._d.getHours()
+                                let i_end_minute = moment(finalDay[i][x].endTime)._d.getMinutes()
+                                let finalHour = u_end_hour - u_start_hour
+                                let finalMinute = ( u_end_minute - u_start_minute ) / 60
+                                let compareDuration = ( finalHour + finalMinute ) * 60
+                                
+                                if (schedule.userSubject[k].duration > 0) {
+                                    if(compareDuration >= schedule.userSubject[k].duration ){
+                                        // complete for duration
+                                        // time block pass schedule 
+                                        // move to next element 
+                                        let newTime = u_start_hour + (schedule.userSubject[k].duration / 60)
+                                        let newHour = parseInt(newTime)
+                                        let newMinute = ( newTime - newHour ) * 60 
+                                        let finalEndTime = moment(`2021-08-05 ${newHour}:${newMinute}:00`)
+                                        // console.log("Final: ", finalEndTime._d)
+                                        if (i === 0) {
+                                            submitSchedule.monday.push({
+                                                user : schedule.userSubject[k].user,
+                                                subject : schedule.userSubject[k].subject,
+                                                startTime : moment(day[i][j].startTime),
+                                                endTime : finalEndTime,
+                                                duration: schedule.userSubject[k].duration,
+                                                labDuration: schedule.userSubject[k].labDuration,
+                                                status: true
+                                            })
+                                            let newDay = {
+                                                startTime: day[i][j].startTime,
+                                                endTime: day[i][j].endTime,
+                                                status: true
+                                            }
+                                            day[i][j] = newDay
+                                            findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                        } else if (i === 1) {
+                                            submitSchedule.tuesday.push({
+                                                user : schedule.userSubject[k].user,
+                                                subject : schedule.userSubject[k].subject,
+                                                startTime : moment(day[i][j].startTime),
+                                                endTime : finalEndTime,
+                                                duration: schedule.userSubject[k].duration,
+                                                labDuration: schedule.userSubject[k].labDuration
+                                            })
+                                            let newDay = {
+                                                startTime: day[i][j].startTime,
+                                                endTime: day[i][j].endTime,
+                                                status: true
+                                            }
+                                            day[i][j] = newDay
+                                            findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                            // console.log("Submit Schedule: ", submitSchedule.tuesday)
+                                        } else if (i === 2) {
+                                            submitSchedule.wednesday.push({
+                                                user : schedule.userSubject[k].user,
+                                                subject : schedule.userSubject[k].subject,
+                                                startTime : moment(day[i][j].startTime),
+                                                endTime : finalEndTime,
+                                                duration: schedule.userSubject[k].duration,
+                                                labDuration: schedule.userSubject[k].labDuration
+                                            })
+                                            let newDay = {
+                                                startTime: day[i][j].startTime,
+                                                endTime: day[i][j].endTime,
+                                                status: true
+                                            }
+                                            day[i][j] = newDay
+                                            findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                        } else if (i === 3) {
+                                            submitSchedule.thursday.push({
+                                                user : schedule.userSubject[k].user,
+                                                subject : schedule.userSubject[k].subject,
+                                                startTime : moment(day[i][j].startTime),
+                                                endTime : finalEndTime,
+                                                duration: schedule.userSubject[k].duration,
+                                                labDuration: schedule.userSubject[k].labDuration
+                                            })
+                                            let newDay = {
+                                                startTime: day[i][j].startTime,
+                                                endTime: day[i][j].endTime,
+                                                status: true
+                                            }
+                                            day[i][j] = newDay
+                                            findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                        } else if (i === 4) {
+                                            submitSchedule.friday.push({
+                                                user : schedule.userSubject[k].user,
+                                                subject : schedule.userSubject[k].subject,
+                                                startTime : moment(day[i][j].startTime),
+                                                endTime : finalEndTime,
+                                                duration: schedule.userSubject[k].duration,
+                                                labDuration: schedule.userSubject[k].labDuration
+                                            })
+                                            let newDay = {
+                                                startTime: day[i][j].startTime,
+                                                endTime: day[i][j].endTime,
+                                                status: true
+                                            }
+                                            day[i][j] = newDay
+                                            findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                        } else if (i === 5) {
+                                            submitSchedule.saturday.push({
+                                                user : schedule.userSubject[k].user,
+                                                subject : schedule.userSubject[k].subject,
+                                                startTime : moment(day[i][j].startTime),
+                                                endTime : finalEndTime,
+                                                duration: schedule.userSubject[k].duration,
+                                                labDuration: schedule.userSubject[k].labDuration
+                                            })
+                                            let newDay = {
+                                                startTime: day[i][j].startTime,
+                                                endTime: day[i][j].endTime,
+                                                status: true
+                                            }
+                                            day[i][j] = newDay
+                                            findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                        }
+                                    } else {
+                                        if (schedule.userSubject[k].labDuration !== undefined) {
+                                            if(compareDuration > schedule.userSubject[k].labDuration ){
+                                                // complete for duration
+                                                // time block pass schedule 
+                                                // move to next element 
+                                                let newTime = u_start_hour + (schedule.userSubject[k].labDuration / 60)
+                                                let newHour = parseInt(newTime)
+                                                let newMinute = ( newTime - newHour ) * 60 
+                                                let finalEndTime = moment(`2021-08-05 ${newHour}:${newMinute}:00`)
+        
+                                                if(i === 0){
+                                                    submitSchedule.monday.push({
+                                                        user : schedule.userSubject[k].user,
+                                                        subject : schedule.userSubject[k].subject,
+                                                        startTime : moment(day[i][j].startTime),
+                                                        endTime : finalEndTime,
+                                                        duration: schedule.userSubject[k].duration,
+                                                        labDuration: schedule.userSubject[k].labDuration
+                                                    })
+                                                    let newDay = {
+                                                        startTime: day[i][j].startTime,
+                                                        endTime: day[i][j].endTime,
+                                                        status: true
+                                                    }
+                                                    day[i][j] = newDay
+                                                    findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                                } else if (i === 1) {
+                                                    submitSchedule.tuesday.push({
+                                                        user : schedule.userSubject[k].user,
+                                                        subject : schedule.userSubject[k].subject,
+                                                        startTime : moment(day[i][j].startTime),
+                                                        endTime : finalEndTime,
+                                                        duration: schedule.userSubject[k].duration,
+                                                        labDuration: schedule.userSubject[k].labDuration
+                                                    })
+                                                    let newDay = {
+                                                        startTime: day[i][j].startTime,
+                                                        endTime: day[i][j].endTime,
+                                                        status: true
+                                                    }
+                                                    day[i][j] = newDay
+                                                    findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                                } else if (i === 2) {
+                                                    submitSchedule.wednesday.push({
+                                                        user : schedule.userSubject[k].user,
+                                                        subject : schedule.userSubject[k].subject,
+                                                        startTime : moment(day[i][j].startTime),
+                                                        endTime : finalEndTime,
+                                                        duration: schedule.userSubject[k].duration,
+                                                        labDuration: schedule.userSubject[k].labDuration
+                                                    })
+                                                    let newDay = {
+                                                        startTime: day[i][j].startTime,
+                                                        endTime: day[i][j].endTime,
+                                                        status: true
+                                                    }
+                                                    day[i][j] = newDay
+                                                    findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                                } else if (i === 3) {
+                                                    submitSchedule.thursday.push({
+                                                        user : schedule.userSubject[k].user,
+                                                        subject : schedule.userSubject[k].subject,
+                                                        startTime : moment(day[i][j].startTime),
+                                                        endTime : finalEndTime,
+                                                        duration: schedule.userSubject[k].duration,
+                                                        labDuration: schedule.userSubject[k].labDuration
+                                                    })
+                                                    let newDay = {
+                                                        startTime: day[i][j].startTime,
+                                                        endTime: day[i][j].endTime,
+                                                        status: true
+                                                    }
+                                                    day[i][j] = newDay
+                                                    findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                                } else if (i === 4) {
+                                                    submitSchedule.friday.push({
+                                                        user : schedule.userSubject[k].user,
+                                                        subject : schedule.userSubject[k].subject,
+                                                        startTime : moment(day[i][j].startTime),
+                                                        endTime : finalEndTime,
+                                                        duration: schedule.userSubject[k].duration,
+                                                        labDuration: schedule.userSubject[k].labDuration
+                                                    })
+                                                    let newDay = {
+                                                        startTime: day[i][j].startTime,
+                                                        endTime: day[i][j].endTime,
+                                                        status: true
+                                                    }
+                                                    day[i][j] = newDay
+                                                    findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                                } else if (i === 5) {
+                                                    submitSchedule.saturday.push({
+                                                        user : schedule.userSubject[k].user,
+                                                        subject : schedule.userSubject[k].subject,
+                                                        startTime : moment(day[i][j].startTime),
+                                                        endTime : finalEndTime,
+                                                        duration: schedule.userSubject[k].duration,
+                                                        labDuration: schedule.userSubject[k].labDuration
+                                                    })
+                                                    let newDay = {
+                                                        startTime: day[i][j].startTime,
+                                                        endTime: day[i][j].endTime,
+                                                        status: true
+                                                    }
+                                                    day[i][j] = newDay
+                                                    findAllUsers.find(x => String(x._id) === String(schedule.userSubject[k].user)).freeTime.monday[j] = newDay
+                                                }
+                                            }   
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    // check if not yet complete assigning start new round 
+                    // if(i === day.length-1){
+                    //     if(schedule.userSubject[k].duration > 0 || schedule.userSubject[k].labDuration > 0){
+                    //         i=0
+                    //     }
+                    // }
+                }
+            }
+
+            // schedule.userSubject.forEach(async (e, index) =>{
+
+            //     let findTeacher = await User.findById(e.user)
+            //     console.log(`Find Teacher ${index}: `, findTeacher)
+
+            //     findTeacher.freeTime.monday.filter(e =>{
+            //         e.status = false
+            //     })
+            //     findTeacher.freeTime.tuesday.filter(e =>{
+            //         e.status = false
+            //     })
+            //     findTeacher.freeTime.wednesday.filter(e =>{
+            //         e.status = false
+            //     })
+            //     findTeacher.freeTime.thursday.filter(e =>{
+            //         e.status = false
+            //     })
+            //     findTeacher.freeTime.friday.filter(e =>{
+            //         e.status = false
+            //     })
+            //     findTeacher.freeTime.saturday.filter(e =>{
+            //         e.status = false
+            //     })
+                
+            //     if(findClass.shift === "M") {
+            //         findTeacher.freeTime.monday.filter(e => {
+            //             moment(e.endTime)._d.getHours() <= 13
+            //         })
+            //         findTeacher.freeTime.tuesday.filter(e => {
+            //             moment(e.endTime)._d.getHours() <= 13
+            //         })
+            //         findTeacher.freeTime.wednesday.filter(e => {
+            //             moment(e.endTime)._d.getHours() <= 13
+            //         })
+            //         findTeacher.freeTime.thursday.filter(e => {
+            //             moment(e.endTime)._d.getHours() <= 13
+            //         })
+            //         findTeacher.freeTime.friday.filter(e => {
+            //             moment(e.endTime)._d.getHours() <= 13
+            //         })
+            //         findTeacher.freeTime.saturday.filter(e => {
+            //             moment(e.endTime)._d.getHours() <= 13
+            //         })
+            //     } else if (findClass.shift === "A"){
+            //         findTeacher.freeTime.monday.filter(e => {
+            //             moment(e.startTime)._d.getHours() >= 13
+            //         })
+            //         findTeacher.freeTime.tuesday.filter(e => {
+            //             moment(e.startTime)._d.getHours() >= 13
+            //         })
+            //         findTeacher.freeTime.wednesday.filter(e => {
+            //             moment(e.startTime)._d.getHours() >= 13
+            //         })
+            //         findTeacher.freeTime.thursday.filter(e => {
+            //             moment(e.startTime)._d.getHours() >= 13
+            //         })
+            //         findTeacher.freeTime.friday.filter(e => {
+            //             moment(e.startTime)._d.getHours() >= 13
+            //         })
+            //         findTeacher.freeTime.saturday.filter(e => {
+            //             moment(e.startTime)._d.getHours() >= 13
+            //         })
+            //     }
+
+            //     let day = [
+            //         findTeacher.freeTime.monday,
+            //         findTeacher.freeTime.tuesday,
+            //         findTeacher.freeTime.wednesday,
+            //         findTeacher.freeTime.thursday,
+            //         findTeacher.freeTime.friday,
+            //         findTeacher.freeTime.saturday,
+            //     ]
+            //     for(let i=0; i<day.length; i++){
+            
+            //         // check possible assign
+            //         for(let j=0; j<day[i].length; j++){
+            //             let u_start_hour = moment(day[i][j].startTime)._d.getHours()
+            //             let u_start_minute = moment(day[i][j].startTime)._d.getMinutes()
+            //             let u_end_hour = moment(day[i][j].endTime)._d.getHours()
+            //             let u_end_minute = moment(day[i][j].endTime)._d.getMinutes()
+            //             let finalHour = u_end_hour - u_start_hour
+            //             let finalMinute = ( u_end_minute - u_start_minute ) / 60
+            //             let compareDuration = ( finalHour + finalMinute ) * 60
+                        
+            //             if (e.duration > 0) {
+            //                 if(compareDuration > e.duration ){
+            //                     // complete for duration
+            //                     // time block pass schedule 
+            //                     // move to next element 
+            //                     let newTime = u_start_hour + (e.duration / 60)
+            //                     let newHour = parseInt(newTime)
+            //                     let newMinute = ( newTime - newHour ) * 60 
+            //                     if (i === 0) {
+            //                         submitSchedule.monday.push({
+            //                             user : e.user,
+            //                             subject : e.subject,
+            //                             startTime : day[i][j].startTime,
+            //                             endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                         })
+            //                     } else if (i === 1) {
+            //                         submitSchedule.tuesday.push({
+            //                             user : e.user,
+            //                             subject : e.subject,
+            //                             startTime : day[i][j].startTime,
+            //                             endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                         })
+            //                     } else if (i === 2) {
+            //                         submitSchedule.wednesday.push({
+            //                             user : e.user,
+            //                             subject : e.subject,
+            //                             startTime : day[i][j].startTime,
+            //                             endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                         })
+            //                     } else if (i === 3) {
+            //                         submitSchedule.thursday.push({
+            //                             user : e.user,
+            //                             subject : e.subject,
+            //                             startTime : day[i][j].startTime,
+            //                             endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                         })
+            //                     } else if (i === 4) {
+            //                         submitSchedule.friday.push({
+            //                             user : e.user,
+            //                             subject : e.subject,
+            //                             startTime : day[i][j].startTime,
+            //                             endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                         })
+            //                     } else if (i === 5) {
+            //                         submitSchedule.saturday.push({
+            //                             user : e.user,
+            //                             subject : e.subject,
+            //                             startTime : day[i][j].startTime,
+            //                             endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                         })
+            //                     }
+            //                 } else {
+            //                     if (e.labDuration !== undefined) {
+            //                         if(compareDuration > e.labDuration ){
+            //                             // complete for duration
+            //                             // time block pass schedule 
+            //                             // move to next element 
+            //                             let newTime = u_start_hour + (e.labDuration / 60)
+            //                             let newHour = parseInt(newTime)
+            //                             let newMinute = ( newTime - newHour ) * 60 
+            //                             if(i === 0){
+            //                                 submitSchedule.monday.push({
+            //                                     user : e.user,
+            //                                     subject : e.subject,
+            //                                     startTime : day[i][j].startTime,
+            //                                     endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                                 })
+            //                             } else if (i === 1) {
+            //                                 submitSchedule.tuesday.push({
+            //                                     user : e.user,
+            //                                     subject : e.subject,
+            //                                     startTime : day[i][j].startTime,
+            //                                     endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                                 })
+            //                             } else if (i === 2) {
+            //                                 submitSchedule.wednesday.push({
+            //                                     user : e.user,
+            //                                     subject : e.subject,
+            //                                     startTime : day[i][j].startTime,
+            //                                     endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                                 })
+            //                             } else if (i === 3) {
+            //                                 submitSchedule.thursday.push({
+            //                                     user : e.user,
+            //                                     subject : e.subject,
+            //                                     startTime : day[i][j].startTime,
+            //                                     endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                                 })
+            //                             } else if (i === 4) {
+            //                                 submitSchedule.friday.push({
+            //                                     user : e.user,
+            //                                     subject : e.subject,
+            //                                     startTime : day[i][j].startTime,
+            //                                     endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                                 })
+            //                             } else if (i === 5) {
+            //                                 submitSchedule.saturday.push({
+            //                                     user : e.user,
+            //                                     subject : e.subject,
+            //                                     startTime : day[i][j].startTime,
+            //                                     endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+            //                                 })
+            //                             }
+            //                         }   
+            //                     }
+            //                 }
+            //             }
+                        
+            //         }
+            //         // check if not yet complete assigning start new round 
+            //         if(i === day.length-1){
+            //             if(e.duration > 0 || e.labDuration > 0){
+            //                 i=0
+            //             }
+            //         }
+            //     }
+            // })
+
+            console.log("Submit Schedule: ", submitSchedule)
+            res.status(200).json(submitSchedule)
+
+
+            // const classSchedule = new Schedule(newSchedule)
+            // classSchedule.save()
+            // res.status(201).json(classSchedule)
+        } catch (err) {
+            next(err)
+        }
+    },
+}
+
+const dayFunction = (submitSchedule, i, j, day, startHours, e) => {
+    let newTime = startHours + (e.duration / 60)
+    let newHour = parseInt(newTime)
+    let newMinute = ( newTime - newHour ) * 60 
+    if(i===0){
+        submitSchedule.monday.push({
+            user : e.user,
+            subject : e.subject,
+            startTime : day[i][j].startTime,
+            endTime : moment(`2021-08-05 ${newHour}:${newMinute}:00`),
+        })
+    }
 }
 
 const methodSchedulingFunction = async (day, i, date) => {

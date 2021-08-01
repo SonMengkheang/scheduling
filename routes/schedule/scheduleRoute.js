@@ -8,6 +8,10 @@ router
   .post(ScheduleController.createClassSchedule)
 
 router
+  .route("/generate")
+  .post(ScheduleController.generateClassSchedule)
+
+router
   .route("/:classID")
   .get(ScheduleController.getClassSchedule)
   .patch(ScheduleController.updateClassSchedule)
