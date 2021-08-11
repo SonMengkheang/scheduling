@@ -142,12 +142,12 @@ const Classes = () => {
                             state: record
                         })
                     }} style={{ cursor: "pointer" }} className="c-primary" />
-                    <FaEye size="20px" onClick={() => {
+                    {/* <FaEye size="20px" onClick={() => {
                         history.push({
                             pathname: `class/view`,
                             state: record
                         })
-                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                    }} style={{ cursor: "pointer" }} className="c-primary" /> */}
                 </Space>
             )
         },

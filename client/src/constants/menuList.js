@@ -140,12 +140,12 @@ const data = [
         icon: <GoSettings size="25px" />,
         label: <IntlMessage id="setting" />,
         subs: [
-            {
-                id: "general",
-                icon: <GoSettings size="15px" />,
-                label: <IntlMessage id="general" />,
-                to: ["/admin/setting/general"]
-            },
+            // {
+            //     id: "general",
+            //     icon: <GoSettings size="15px" />,
+            //     label: <IntlMessage id="general" />,
+            //     to: ["/admin/setting/general"]
+            // },
             {
                 id: "role",
                 icon: <FaUsersCog size="15px" />,

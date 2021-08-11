@@ -1,9 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { Form, Input, Button, Row, Upload, Col, Switch, Card, Avatar, message } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import baseAPI from '../../../api/baseAPI'
 import ImgCrop from 'antd-img-crop'
-import empty from '../../../assets/img/background/empty.jpg'
 import * as user from '../../../constants/variable'
 import IntlMessage from "../../../helpers/IntlMessages"
 import HeaderPage from '../../../components/HeaderPage'
@@ -18,6 +18,7 @@ import { decryptPayload } from "../../../helpers/cryptography"
 const Profile = () => {
 
     const history = useHistory()
+    const curUser = useSelector(state => state.auth.user)
     const dispatch = useDispatch()
     const [fileList, updateFileList] = useState([])
     const [ownProfile, setOwnProfile] = useState(null)
@@ -27,6 +28,7 @@ const Profile = () => {
     const [imageUrls, setImageUrls] = useState(null)
     const [changePwd, setChangePwd] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [getSubject, setGetSubject] = useState(null)
 
     const instance = axios.create({
         baseURL: 'http://localhost:5000',
@@ -57,13 +59,19 @@ const Profile = () => {
             setRoles(res.data)
         })
         .catch(err => console.log(err))
+
+        baseAPI.get(`users/getSubject/${curUser.userID}`)
+        .then(res => {
+            setGetSubject(res.data)
+        })
+        .catch(err => console.log(err))
     }, [])
 
     useEffect(() => {
         console.log(errorMessage)
     }, [errorMessage])
 
-    if (ownProfile === null || departments === null || subjects === null || roles === null) {
+    if (ownProfile === null || departments === null || subjects === null || roles === null || getSubject === null) {
         return <LoopCircleLoading color="#000000" />
     }
 
@@ -313,6 +321,33 @@ const Profile = () => {
                         </Form.Item>
                     </Col>
                 </Row>
+                <Row>
+                    <Col span={11}>
+                        <Row>
+                            <Col span={6}>
+                                <span className="c-primary fs-16">Subject:</span>
+                            </Col>
+                            <Col>
+                                { getSubject.map(res => {
+                                    return <Row>
+                                        <span>{res}</span>
+                                    </Row>
+                                }) }
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Card>
+        </Row>
+    }
+
+    const subjectPart = () => {
+        return <Row justify="center">
+            <Card
+                title={<span className="c-primary fw-bold fs-18"><IntlMessage id="profile" /></span>}
+                style={{ width: "95%" }}
+            >
+
             </Card>
         </Row>
     }

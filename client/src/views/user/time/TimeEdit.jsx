@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { Form, Row, Col, Button, TimePicker } from 'antd'
+import { Form, Row, Col, Button, TimePicker, Select } from 'antd'
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { Helmet } from 'react-helmet'
 import IntlMessage from '../../../helpers/IntlMessages'
@@ -13,47 +12,86 @@ import LoopCircleLoading from 'react-loadingg/lib/LoopCircleLoading'
 const TimeEdit = () => {
 
     const history = useHistory()
+    const { Option } = Select
     const [curUser, setCurUser] = useState(null)
+    const fixMorning = [1, 2, 3, 4, 5, 6, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0]
+    const fixAfternoon = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 19, 20, 21, 22, 23, 0]
     const [monday, setMonday] = useState([
         {
             startTime: null,
             endTime: null,
-            status: false
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null,
+            shift: null,
         }
     ])
     const [tuesday, setTuesday] = useState([
         {
             startTime: null,
             endTime: null,
-            status: false
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null,
+            shift: null,
         }
     ])
     const [wednesday, setWednesday] = useState([
         {
             startTime: null,
             endTime: null,
-            status: false
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null,
+            shift: null,
         }
     ])
     const [thursday, setThursday] = useState([
         {
             startTime: null,
             endTime: null,
-            status: false
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null,
+            shift: null,
         }
     ])
     const [friday, setFriday] = useState([
         {
             startTime: null,
             endTime: null,
-            status: false
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null,
+            shift: null,
         }
     ])
     const [saturday, setSaturday] = useState([
         {
             startTime: null,
             endTime: null,
-            status: false
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null,
+            shift: null,
         }
     ])
 
@@ -74,7 +112,13 @@ const TimeEdit = () => {
                 m.push({
                     startTime: null,
                     endTime: null,
-                    status: false
+                    status: false,
+                    subject: null,
+                    class: null,
+                    room: null,
+                    lectureType: null,
+                    duration: null,
+                    shift: null,
                 })
             } else {
                 curUser.freeTime.monday.map(res => {
@@ -82,13 +126,25 @@ const TimeEdit = () => {
                         m.push({
                             startTime: null,
                             endTime: null,
-                            status: false
+                            status: false,
+                            subject: null,
+                            class: null,
+                            room: null,
+                            lectureType: null,
+                            duration: null,
+                            shift: null,
                         })
                     } else {
                         m.push({
                             startTime: moment(res.startTime),
                             endTime: moment(res.endTime),
-                            status: res.status
+                            status: res.status,
+                            subject: res.subject,
+                            class: res.class,
+                            room: res.room,
+                            lectureType: res.lectureType,
+                            duration: res.duration,
+                            shift: res.shift
                         })
                     }
                 })
@@ -100,7 +156,13 @@ const TimeEdit = () => {
                 t.push({
                     startTime: null,
                     endTime: null,
-                    status: false
+                    status: false,
+                    subject: null,
+                    class: null,
+                    room: null,
+                    lectureType: null,
+                    duration: null,
+                    shift: null,
                 })
             } else {
                 curUser.freeTime.tuesday.map(res => {
@@ -108,13 +170,25 @@ const TimeEdit = () => {
                         t.push({
                             startTime: null,
                             endTime: null,
-                            status: false
+                            status: false,
+                            subject: null,
+                            class: null,
+                            room: null,
+                            lectureType: null,
+                            duration: null,
+                            shift: null,
                         })
                     } else {
                         t.push({
                             startTime: moment(res.startTime),
                             endTime: moment(res.endTime),
-                            status: res.status
+                            status: res.status,
+                            subject: res.subject,
+                            class: res.class,
+                            room: res.room,
+                            lectureType: res.lectureType,
+                            duration: res.duration,
+                            shift: res.shift,
                         })
                     }
                 })
@@ -126,7 +200,13 @@ const TimeEdit = () => {
                 w.push({
                     startTime: null,
                     endTime: null,
-                    status: false
+                    status: false,
+                    subject: null,
+                    class: null,
+                    room: null,
+                    lectureType: null,
+                    duration: null,
+                    shift: null,
                 })
             } else {
                 curUser.freeTime.wednesday.map(res => {
@@ -134,13 +214,25 @@ const TimeEdit = () => {
                         w.push({
                             startTime: null,
                             endTime: null,
-                            status: false
+                            status: false,
+                            subject: null,
+                            class: null,
+                            room: null,
+                            lectureType: null,
+                            duration: null,
+                            shift: null,
                         })
                     } else {
                         w.push({
                             startTime: moment(res.startTime),
                             endTime: moment(res.endTime),
-                            status: res.status
+                            status: res.status,
+                            subject: res.subject,
+                            class: res.class,
+                            room: res.room,
+                            lectureType: res.lectureType,
+                            duration: res.duration,
+                            shift: res.shift,
                         })
                     }
                 })
@@ -152,7 +244,13 @@ const TimeEdit = () => {
                 th.push({
                     startTime: null,
                     endTime: null,
-                    status: false
+                    status: false,
+                    subject: null,
+                    class: null,
+                    room: null,
+                    lectureType: null,
+                    duration: null,
+                    shift: null,
                 })
             } else {
                 curUser.freeTime.thursday.map(res => {
@@ -160,13 +258,25 @@ const TimeEdit = () => {
                         th.push({
                             startTime: null,
                             endTime: null,
-                            status: false
+                            status: false,
+                            subject: null,
+                            class: null,
+                            room: null,
+                            lectureType: null,
+                            duration: null,
+                            shift: null,
                         })
                     } else {
                         th.push({
                             startTime: moment(res.startTime),
                             endTime: moment(res.endTime),
-                            status: res.status
+                            status: res.status,
+                            subject: res.subject,
+                            class: res.class,
+                            room: res.room,
+                            lectureType: res.lectureType,
+                            duration: res.duration,
+                            shift: res.shift,
                         })
                     }
                 })
@@ -178,7 +288,13 @@ const TimeEdit = () => {
                 f.push({
                     startTime: null,
                     endTime: null,
-                    status: false
+                    status: false,
+                    subject: null,
+                    class: null,
+                    room: null,
+                    lectureType: null,
+                    duration: null,
+                    shift: null,
                 })
             } else {
                 curUser.freeTime.friday.map(res => {
@@ -186,13 +302,25 @@ const TimeEdit = () => {
                         f.push({
                             startTime: null,
                             endTime: null,
-                            status: false
+                            status: false,
+                            subject: null,
+                            class: null,
+                            room: null,
+                            lectureType: null,
+                            duration: null,
+                            shift: null,
                         })
                     } else {
                         f.push({
                             startTime: moment(res.startTime),
                             endTime: moment(res.endTime),
-                            status: res.status
+                            status: res.status,
+                            subject: res.subject,
+                            class: res.class,
+                            room: res.room,
+                            lectureType: res.lectureType,
+                            duration: res.duration,
+                            shift: res.shift,
                         })
                     }
                 })
@@ -204,7 +332,13 @@ const TimeEdit = () => {
                 s.push({
                     startTime: null,
                     endTime: null,
-                    status: false
+                    status: false,
+                    subject: null,
+                    class: null,
+                    room: null,
+                    lectureType: null,
+                    duration: null,
+                    shift: null,
                 })
             } else {
                 curUser.freeTime.saturday.map(res => {
@@ -212,13 +346,25 @@ const TimeEdit = () => {
                         s.push({
                             startTime: null,
                             endTime: null,
-                            status: false
+                            status: false,
+                            subject: null,
+                            class: null,
+                            room: null,
+                            lectureType: null,
+                            duration: null,
+                            shift: null,
                         })
                     } else {
                         s.push({
                             startTime: moment(res.startTime),
                             endTime: moment(res.endTime),
-                            status: res.status
+                            status: res.status,
+                            subject: res.subject,
+                            class: res.class,
+                            room: res.room,
+                            lectureType: res.lectureType,
+                            duration: res.duration,
+                            shift: res.shift,
                         })
                     }
                 })
@@ -352,16 +498,51 @@ const TimeEdit = () => {
     //     })
     // }
 
+    const disableTime = val => {
+        if (val.status || val.shift === null) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     const newTimeList = (value, day) => {
         return value.map((res, index) => {
             if (value.length === 1) {
                 return <div className="mt-5">
                     <Row justify="space-between" align="middle">
-                        <Col span={21}>
+                        <Col span={8}>
                             <Row>
-                                <TimePicker.RangePicker className="w-100" value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} />
+                                <Select
+                                    className="w-100"
+                                    onChange={val => onChangeShiftTime(val, index, day)}
+                                    placeholder="Select Shift"
+                                    disabled={res.status ? true : false}
+                                >
+                                    <Option key="M" value="M">Morning</Option>
+                                    <Option key="A" value="A">Afternoon</Option>
+                                </Select>
                             </Row>
                         </Col>
+                        <Col span={13}>
+                            <Row>
+                                <TimePicker.RangePicker 
+                                    className="w-100" 
+                                    value={[res.startTime, res.endTime]} 
+                                    onChange={val => onChangeTime(val, index, day)} 
+                                    format="HH:mm" 
+                                    disabled={disableTime(res)}
+                                    disabledHours={() => {
+                                        if (res.shift === "M") {
+                                            return fixMorning
+                                        } else {
+                                            return fixAfternoon
+                                        }
+                                    }}
+                                />
+                            </Row>
+                        </Col>
+                        <Col span={2} />
                         {/* <Col span={2}>
                             <MinusCircleOutlined onClick={() => onRemoveTime(index, day)} />
                         </Col> */}
@@ -370,13 +551,39 @@ const TimeEdit = () => {
             } else {
                 return <div className="mt-5">
                     <Row justify="space-between" align="middle">
-                        <Col span={21}>
+                        <Col span={8}>
                             <Row>
-                                <TimePicker.RangePicker className="w-100" value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} />
+                                <Select
+                                    className="w-100"
+                                    onChange={val => onChangeShiftTime(val, index, day)}
+                                    placeholder="Select Shift"
+                                    disabled={res.status ? true : false}
+                                >
+                                    <Option key="M" value="M">Morning</Option>
+                                    <Option key="A" value="A">Afternoon</Option>
+                                </Select>
+                            </Row>
+                        </Col>
+                        <Col span={13}>
+                            <Row>
+                                <TimePicker.RangePicker 
+                                    className="w-100" 
+                                    value={[res.startTime, res.endTime]} 
+                                    onChange={val => onChangeTime(val, index, day)} 
+                                    format="HH:mm" 
+                                    disabled={disableTime(res)}
+                                    disabledHours={() => {
+                                        if (res.shift === "M") {
+                                            return fixMorning
+                                        } else {
+                                            return fixAfternoon
+                                        }
+                                    }}
+                                />
                             </Row>
                         </Col>
                         <Col span={2}>
-                            <MinusCircleOutlined onClick={() => onRemoveTime(index, day)} />
+                            { res.status ? <></> : <MinusCircleOutlined onClick={() => onRemoveTime(index, day)} /> }
                         </Col>
                     </Row>
                 </div>
@@ -389,7 +596,13 @@ const TimeEdit = () => {
             monday.push({
                 startTime: null,
                 endTime: null,
-                status: false
+                status: false,
+                subject: null,
+                class: null,
+                room: null,
+                lectureType: null,
+                duration: null,
+                shift: null,
             })
             let clone = [...monday]
             setMonday(clone)
@@ -397,7 +610,13 @@ const TimeEdit = () => {
             tuesday.push({
                 startTime: null,
                 endTime: null,
-                status: false
+                status: false,
+                subject: null,
+                class: null,
+                room: null,
+                lectureType: null,
+                duration: null,
+                shift: null,
             })
             let clone = [...tuesday]
             setTuesday(clone)
@@ -405,7 +624,13 @@ const TimeEdit = () => {
             wednesday.push({
                 startTime: null,
                 endTime: null,
-                status: false
+                status: false,
+                subject: null,
+                class: null,
+                room: null,
+                lectureType: null,
+                duration: null,
+                shift: null,
             })
             let clone = [...wednesday]
             setWednesday(clone)
@@ -413,7 +638,13 @@ const TimeEdit = () => {
             thursday.push({
                 startTime: null,
                 endTime: null,
-                status: false
+                status: false,
+                subject: null,
+                class: null,
+                room: null,
+                lectureType: null,
+                duration: null,
+                shift: null,
             })
             let clone = [...thursday]
             setThursday(clone)
@@ -421,7 +652,13 @@ const TimeEdit = () => {
             friday.push({
                 startTime: null,
                 endTime: null,
-                status: false
+                status: false,
+                subject: null,
+                class: null,
+                room: null,
+                lectureType: null,
+                duration: null,
+                shift: null,
             })
             let clone = [...friday]
             setFriday(clone)
@@ -429,7 +666,13 @@ const TimeEdit = () => {
             saturday.push({
                 startTime: null,
                 endTime: null,
-                status: false
+                status: false,
+                subject: null,
+                class: null,
+                room: null,
+                lectureType: null,
+                duration: null,
+                shift: null,
             })
             let clone = [...saturday]
             setSaturday(clone)
@@ -548,7 +791,6 @@ const TimeEdit = () => {
     // }
 
     const onChangeTime = (val, index, day) => {
-        console.log("Val: ", val)
         if (day === "monday") {
             const item = monday
             item[index].startTime = val === null ? null : val[0]
@@ -588,6 +830,46 @@ const TimeEdit = () => {
             const item = saturday
             item[index].startTime = val === null ? null : val[0]
             item[index].endTime = val === null ? null : val[1]
+            let clone = [...item]
+            clone[index] = item[index]
+            setSaturday(clone)
+        }
+    }
+
+    const onChangeShiftTime = (val, index, day) => {
+        if (day === "monday") {
+            const item = monday
+            item[index].shift = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setMonday(clone)
+        } else if (day === "tuesday") {
+            const item = tuesday
+            item[index].shift = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setTuesday(clone)
+        } else if (day === "wednesday") {
+            const item = wednesday
+            item[index].shift = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setWednesday(clone)
+        } else if (day === "thursday") {
+            const item = thursday
+            item[index].shift = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setThursday(clone)
+        } else if (day === "friday") {
+            const item = friday
+            item[index].shift = val
+            let clone = [...item]
+            clone[index] = item[index]
+            setFriday(clone)
+        } else if (day === "saturday") {
+            const item = saturday
+            item[index].shift = val
             let clone = [...item]
             clone[index] = item[index]
             setSaturday(clone)

@@ -15,8 +15,11 @@ const ScheduleTemplate = () => {
     const [subjects, setSubjects] = useState(null)
     const [generations, setGenerations] = useState(null)
     const [classes, setClasses] = useState(null)
+    const [shift, setShift] = useState(null)
 
     // const [curUser, setCurUser] = useState(null)
+
+    console.log("JJJJJJJJJ: ", location.state)
 
     useEffect(() => {
         baseAPI.get('/users')
@@ -44,9 +47,16 @@ const ScheduleTemplate = () => {
             .catch(err => console.log(err))
     }, [])
 
+    useEffect(() => {
+        if (classes !== null) {
+            let c = classes.find(x => x._id === location.state.classId)
+            setShift(c.shift)
+        }
+    }, [classes])
+
     console.log("Schedule: ", schedules)
 
-    if (users === null || subjects === null || generations === null || classes === null) {
+    if (users === null || subjects === null || generations === null || classes === null || shift === null) {
         return <LoopCircleLoading color="#000000" />
     }
 
@@ -255,7 +265,7 @@ const ScheduleTemplate = () => {
             </Row>
 
             <Row className="w-100​ c-black" justify="center">
-                <Col span={3}>
+                { shift === "M" ? <Col span={3}>
                     <Row style={{height: "50px"}} justify="center" align="middle" className="border-all w-100">
                         <span>7:00-8:00</span>
                     </Row>
@@ -274,24 +284,43 @@ const ScheduleTemplate = () => {
                     <Row style={{height: "50px"}} justify="center" align="middle" className="border-all w-100">
                         <span>12:00-13:00</span>
                     </Row>
+                </Col> : <Col span={3}>
+                    <Row style={{height: "50px"}} justify="center" align="middle" className="border-all w-100">
+                        <span>12:00-13:00</span>
+                    </Row>
+                    <Row style={{height: "50px"}} justify="center" align="middle" className="border-all w-100">
+                        <span>13:00-14:00</span>
+                    </Row>
+                    <Row style={{height: "50px"}} justify="center" align="middle" className="border-all w-100">
+                        <span>14:00-15:00</span>
+                    </Row>
+                    <Row style={{height: "50px"}} justify="center" align="middle" className="border-all w-100">
+                        <span>15:00-16:00</span>
+                    </Row>
+                    <Row style={{height: "50px"}} justify="center" align="middle" className="border-all w-100">
+                        <span>16:00-17:00</span>
+                    </Row>
+                    <Row style={{height: "50px"}} justify="center" align="middle" className="border-all w-100">
+                        <span>17:00-18:00</span>
+                    </Row>
+                </Col> }
+                <Col span={3} className="border-right border-bottom">
+                    { displayTime(schedules.monday, shift) }
                 </Col>
                 <Col span={3} className="border-right border-bottom">
-                    { displayTime(schedules.monday, 'morning') }
+                    { displayTime(schedules.tuesday, shift) }
                 </Col>
                 <Col span={3} className="border-right border-bottom">
-                    { displayTime(schedules.tuesday, 'morning') }
+                    { displayTime(schedules.wednesday, shift) }
                 </Col>
                 <Col span={3} className="border-right border-bottom">
-                    { displayTime(schedules.wednesday, 'morning') }
+                    { displayTime(schedules.thursday, shift) }
                 </Col>
                 <Col span={3} className="border-right border-bottom">
-                    { displayTime(schedules.thursday, 'morning') }
+                    { displayTime(schedules.friday, shift) }
                 </Col>
                 <Col span={3} className="border-right border-bottom">
-                    { displayTime(schedules.friday, 'morning') }
-                </Col>
-                <Col span={3} className="border-right border-bottom">
-                    { displayTime(schedules.saturday, 'morning') }
+                    { displayTime(schedules.saturday, shift) }
                 </Col>
             </Row>
 

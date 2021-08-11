@@ -28,11 +28,6 @@ const Profile = () => {
     const [changePwd, setChangePwd] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
 
-    const instance = axios.create({
-        baseURL: 'http://localhost:5000',
-        headers: {'x-auth-token': decryptPayload(Cookies.get("_scheduling_session"))}
-    })
-
     useEffect(() => {
         baseAPI.get('/users/profile')
         .then(res => {

@@ -19,9 +19,6 @@ const scheduleSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Generation"
     },
-    englishClass: {
-        type: String
-    },
     semester: {
         type: Number
     },

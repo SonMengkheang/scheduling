@@ -87,7 +87,7 @@ const EditDepartment = () => {
                     "faculty": location.state.faculty
                 }}
             >
-                <HeaderPage id="create_department" button={buttonTem()} />
+                <HeaderPage id="edit_department" button={buttonTem()} />
 
                 <Row className="mb-20 mt-20">
                     <Col span={11}>

@@ -53,14 +53,14 @@ const NavBar = () => {
     const dropDownMenuItem = (
         <Menu>
             <Menu.Item key="0">
-                <Link to="/app/setting/profile">
+                <Link to="/admin/setting/profile">
                     <Row align="middle">
                         <BsPeopleCircle className="mr-10" />
                         <span>Profile</span>
                     </Row>
                 </Link>
             </Menu.Item>
-            <Menu.Item key="1">
+            {/* <Menu.Item key="1">
                 <Link to="/app/setting/general">
                     <Row align="middle">
                         <GoSettings className="mr-10" />
@@ -75,9 +75,9 @@ const NavBar = () => {
                         <span>Support</span>
                     </Row>
                 </Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Divider/>
-            <Menu.Item key="4">
+            <Menu.Item key="2">
                 <Link to="/login" onClick={() => dispatch(logoutUser())}>
                     <RiLogoutCircleLine className="mr-10" />
                     Logout
@@ -109,7 +109,7 @@ const NavBar = () => {
                 <Row justify="space-between" style={{width: "100%"}}>
                     <Link to="/admin/department">
                         <img className="ml-20" alt="auth-logo" width="53" height="53" src={Logo} />
-                        <span className="ml-10 fs-18 fw-bold c-black">Modern Scheduling</span>
+                        <span className="ml-10 fs-18 fw-bold c-black">Class Scheduling</span>
                     </Link>
                     <Row className="navbar-right mr-20" justify="end" align="middle">
                         <div className="mr-10">

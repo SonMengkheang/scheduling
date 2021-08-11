@@ -152,12 +152,12 @@ const Subject = () => {
                             state: record
                         })
                     }} style={{ cursor: "pointer" }} className="c-primary" />
-                    <FaEye size="20px" onClick={() => {
+                    {/* <FaEye size="20px" onClick={() => {
                         history.push({
                             pathname: `subject/view`,
                             state: record
                         })
-                    }} style={{ cursor: "pointer" }} className="c-primary" />
+                    }} style={{ cursor: "pointer" }} className="c-primary" /> */}
                 </Space>
             )
         },

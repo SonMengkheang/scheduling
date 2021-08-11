@@ -447,22 +447,22 @@ main {
 
       &:hover,
       &:focus {
-        color: darken($primary-color, 0.6);
+        color: $gray-600;
       }
 
       a {
         color: $black;
         &:hover,
         &:focus {
-          color: darken($primary-color, 0.6);
+          color: $gray-600;
         }
       }
     }
 
     .ant-menu-item-selected,
     .ant-menu-item-selected a {
-      color: darken($primary-color, 0.6);
-      background-color: $white;
+      color: $white;
+      background-color: darken($primary-color, 0.6);
     }
   }
 

@@ -1,5 +1,6 @@
 const Role = require("../../models/users/Role")
 const User = require("../../models/users/User")
+const Subject = require("../../models/subjects/Subject")
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
@@ -28,14 +29,14 @@ module.exports = {
       const user = await User.findOne({ email })
       if (!user) {
         return res.status(401).json({
-            error: "Email does not exist"
+            error: "Email or password is incorrect"
         })
       }
 
       const validPassword = await validatePassword(password, user.password)
       if (!validPassword) {
         return res.status(401).json({
-            error: "Password is incorrect"
+            error: "Email or password is incorrect"
         })
       }
 
@@ -113,6 +114,103 @@ module.exports = {
       res.status(200).json(payload)
     } catch (err) {
         next(err)
+    }
+  },
+
+  getSubject: async(req, res, next) => {
+    try {
+      const { userID } = req.params
+      const subjects = await Subject.find({})
+      let arr = []
+      subjects.map(sub => {
+        if (sub.user !== null || sub.user !== undefined || sub.user.length > 0) {
+          for (let i=0; i<sub.user.length; i++) {
+            if (String(sub.user[i]) === String(userID)) {
+              arr.push(sub.subjectName)
+              break
+            }
+          }
+        }
+      })
+      res.status(200).json(arr)
+    } catch (err) {
+      next(err)
+    }
+  },
+
+  resetAllUserFreeTime: async(req, res, next) => {
+    try {
+      const users = await User.find({})
+      for (let i = 0; i < users.length; i++) {
+        let user = await User.findById({_id: users[i]._id})
+        user.freeTime = {
+          monday: [{
+            startTime: null,
+            endTime: null,
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null
+          }],
+          tuesday: [{
+            startTime: null,
+            endTime: null,
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null
+          }],
+          wednesday: [{
+            startTime: null,
+            endTime: null,
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null
+          }],
+          thursday: [{
+            startTime: null,
+            endTime: null,
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null
+          }],
+          friday: [{
+            startTime: null,
+            endTime: null,
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null
+          }],
+          saturday: [{
+            startTime: null,
+            endTime: null,
+            status: false,
+            subject: null,
+            class: null,
+            room: null,
+            lectureType: null,
+            duration: null
+          }],
+        }
+        await user.save()
+      }
+      // console.log("User")
+      res.status(200).json(users)
+    } catch (err) {
+      next(err)
     }
   },
 

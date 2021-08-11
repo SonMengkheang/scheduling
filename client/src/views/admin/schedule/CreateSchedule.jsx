@@ -43,6 +43,15 @@ const CreateSchedule = () => {
     const [day, setDay] = useState(null)
     const [shift, setShift] = useState(null)
 
+    const [selectedTimeRange, setSelectedTimeRange] = useState({
+        monday: [],
+        tuesday: [],
+        wednesday: [],
+        thursday: [],
+        friday: [],
+        saturday: [],
+    })
+
     const [monday, setMonday] = useState([
         {
             startTime: null,
@@ -227,6 +236,7 @@ const CreateSchedule = () => {
             console.log("users: ", users)
             console.log("subjects: ", subjects)
             let obj = classByGen.find(x => x._id === classId)
+            console.log("UserSubject: ", obj)
             let arr = []
             obj.userSubject.map(res => {
                 let u = users.find(x => x._id === res.user)
@@ -303,6 +313,7 @@ const CreateSchedule = () => {
         baseAPI.post('/schedules', val)
             .then(res => {
                 console.log("Done: ", res)
+                history.goBack()
             })
             .catch(err => console.log(err))
 
@@ -554,7 +565,7 @@ const CreateSchedule = () => {
                         name="generationId"
                         initialValue={genId}
                     >
-                        <Select placeholder="Select Generation">
+                        <Select placeholder="Select Generation" onChange={val => setGenId(val)}>
                             { generationOption() }
                         </Select>
                     </Form.Item>
@@ -568,12 +579,12 @@ const CreateSchedule = () => {
                         name="classId"
                         initialValue={classId}
                     >
-                        <Select placeholder="Select Class">
+                        <Select placeholder="Select Class" onChange={val => setClassId(val)}>
                             { classOption() }
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col span={7}>
+                {/* <Col span={7}>
                     <Form.Item
                         label={<IntlMessage id="english_class_date" />}
                         name="englishClass"
@@ -595,7 +606,7 @@ const CreateSchedule = () => {
                     <Row>
                         <RangePicker className="w-100" />
                     </Row>
-                </Col>
+                </Col> */}
             </Row>
         </div>
     }
@@ -791,6 +802,8 @@ const CreateSchedule = () => {
         }
     }
 
+    console.log("C Time: ", selectedTimeRange.monday)
+
     const onChangeTime = (val, index, day) => {
         console.log("Val: ", val)
         if (day === "monday") {
@@ -800,6 +813,20 @@ const CreateSchedule = () => {
             let clone = [...item]
             clone[index] = item[index]
             setMonday(clone)
+            console.log("JJJJ: ", val[1])
+            let start = moment(val[0])._d.getHours()
+            let end = moment(val[1])._d.getHours()
+            let sub = end - start
+            let cTime = selectedTimeRange
+            for (let i=0; i<sub; i++) {
+                if (end-1 > start) {
+                    cTime.monday.push(end-1)
+                } else if (end-1 === start) {
+                    cTime.monday.push(start)
+                }
+                end -= 1
+            }
+            setSelectedTimeRange(cTime)
         } else if (day === "tuesday") {
             const item = tuesday
             item[index].startTime = val === null ? null : val[0]
@@ -990,7 +1017,7 @@ const CreateSchedule = () => {
         }
     }
 
-    const inputSchedule = val => {
+    const inputSchedule = (val, time) => {
         return val.map((res, index) => {
             if (index === 0) {
                 return <div className="mt-20">
@@ -1022,10 +1049,15 @@ const CreateSchedule = () => {
                             { classTypeOption(day, index) }
                         </Col>
                         <Col span={4} className="mr-20">
-                            <Input placeholder="Enter Room" onChange={val => onRoomChange(val, day, index)} />
+                            <Input placeholder="Enter Room" onChange={val => onRoomChange(val.target.value, day, index)} />
                         </Col>
                         <Col span={7}>
-                            <TimePicker.RangePicker value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} className="w-100" />
+                            <TimePicker.RangePicker 
+                                value={[res.startTime, res.endTime]} 
+                                onChange={val => onChangeTime(val, index, day)} 
+                                className="w-100" 
+                                disabledHours={() => time}
+                            />
                         </Col>
                     </Row>
                 </div>
@@ -1043,10 +1075,19 @@ const CreateSchedule = () => {
                         <Col span={4} className="mr-20">
                             { classTypeOption(day, index) }
                         </Col>
-                        <Col span={7} className="mr-20">
-                            <TimePicker.RangePicker value={[res.startTime, res.endTime]} onChange={val => onChangeTime(val, index, day)} className="w-100" />
+                        <Col span={4} className="mr-20">
+                            <Input placeholder="Enter Room"
+                            value={res.room} onChange={val => onRoomChange(val.target.value, day, index)} />
                         </Col>
-                        <Col span={2}>
+                        <Col span={7} className="mr-20">
+                            <TimePicker.RangePicker 
+                                value={[res.startTime, res.endTime]} 
+                                onChange={val => onChangeTime(val, index, day)} 
+                                className="w-100" 
+                                disabledHours={() => time}
+                            />
+                        </Col>
+                        <Col span={1}>
                             <MinusCircleOutlined onClick={() => onRemoveTime(index, day)} />
                         </Col>
                     </Row>
@@ -1187,12 +1228,16 @@ const CreateSchedule = () => {
                             </Col>
                             <Col span={14}>
                                 { res.freeTime.monday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    if (result.status === false) {
+                                        return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    } else {
+                                        return <span className="ml-10 c-red">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    }
                                 }) }
                             </Col>
                         </Row>
                     }) }
-                    { inputSchedule(monday) }
+                    { inputSchedule(monday, selectedTimeRange.monday) }
                     <Row className="mt-10 mb-20">
                         <Col span={2} />
                         <Col>
@@ -1214,7 +1259,11 @@ const CreateSchedule = () => {
                             </Col>
                             <Col span={14}>
                                 { res.freeTime.tuesday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    if (result.status === false) {
+                                        return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    } else {
+                                        return <span className="ml-10 c-red">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    }
                                 }) }
                             </Col>
                         </Row>
@@ -1241,7 +1290,11 @@ const CreateSchedule = () => {
                             </Col>
                             <Col span={14}>
                                 { res.freeTime.wednesday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    if (result.status === false) {
+                                        return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    } else {
+                                        return <span className="ml-10 c-red">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    }
                                 }) }
                             </Col>
                         </Row>
@@ -1268,7 +1321,11 @@ const CreateSchedule = () => {
                             </Col>
                             <Col span={14}>
                                 { res.freeTime.thursday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    if (result.status === false) {
+                                        return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    } else {
+                                        return <span className="ml-10 c-red">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    }
                                 }) }
                             </Col>
                         </Row>
@@ -1295,7 +1352,11 @@ const CreateSchedule = () => {
                             </Col>
                             <Col span={14}>
                                 { res.freeTime.friday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    if (result.status === false) {
+                                        return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    } else {
+                                        return <span className="ml-10 c-red">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    }
                                 }) }
                             </Col>
                         </Row>
@@ -1322,7 +1383,11 @@ const CreateSchedule = () => {
                             </Col>
                             <Col span={14}>
                                 { res.freeTime.saturday.map(result => {
-                                    return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    if (result.status === false) {
+                                        return <span className="ml-10">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    } else {
+                                        return <span className="ml-10 c-red">{moment(result.startTime).format('HH:mm')} - {moment(result.endTime).format('HH:mm')} </span>
+                                    }
                                 }) }
                             </Col>
                         </Row>

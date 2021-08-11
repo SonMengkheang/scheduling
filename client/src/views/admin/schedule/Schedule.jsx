@@ -166,7 +166,7 @@ const Schedule = () => {
 
     const buttonTem = () => {
         return <Row>
-            <Button
+            {/* <Button
                 size="large"
                 className="btn-border-primary"
                 onClick={() => { history.push('schedule/generate') }}
@@ -174,7 +174,7 @@ const Schedule = () => {
                 <Row align="middle">
                     <IntlMessage id="generate_schedule" />
                 </Row>
-            </Button>
+            </Button> */}
             <Button
                 size="large"
                 className="btn-border-primary ml-10"

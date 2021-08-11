@@ -59,9 +59,21 @@ const Time = () => {
             render: (_, record) => {
                 if (record.monday.length > 0) {
                     return record.monday.map(res => {
-                        return <Row className="mb-10" justify="center">
-                            <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
-                        </Row>
+                        if (res.startTime === null && res.endTime === null) {
+                            return <Row className="mb-10" justify="center">
+                                <span>N/A</span>
+                            </Row>
+                        } else {
+                            if (res.status === false) {
+                                return <Row className="mb-10" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            } else {
+                                return <Row className="mb-10 c-red" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            }
+                        }
                     })
                 }
             }
@@ -79,9 +91,15 @@ const Time = () => {
                                 <span>N/A</span>
                             </Row>
                         } else {
-                            return <Row className="mb-10" justify="center">
-                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
-                            </Row>
+                            if (res.status === false) {
+                                return <Row className="mb-10" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            } else {
+                                return <Row className="mb-10 c-red" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            }
                         }
                     })
                 }
@@ -100,9 +118,15 @@ const Time = () => {
                                 <span>N/A</span>
                             </Row>
                         } else {
-                            return <Row className="mb-10" justify="center">
-                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
-                            </Row>
+                            if (res.status === false) {
+                                return <Row className="mb-10" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            } else {
+                                return <Row className="mb-10 c-red" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            }
                         }
                     })
                 }
@@ -121,9 +145,15 @@ const Time = () => {
                                 <span>N/A</span>
                             </Row>
                         } else {
-                            return <Row className="mb-10" justify="center">
-                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
-                            </Row>
+                            if (res.status === false) {
+                                return <Row className="mb-10" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            } else {
+                                return <Row className="mb-10 c-red" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            }
                         }
                     })
                 }
@@ -142,9 +172,15 @@ const Time = () => {
                                 <span>N/A</span>
                             </Row>
                         } else {
-                            return <Row className="mb-10" justify="center">
-                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
-                            </Row>
+                            if (res.status === false) {
+                                return <Row className="mb-10" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            } else {
+                                return <Row className="mb-10 c-red" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            }
                         }
                     })
                 }
@@ -163,9 +199,15 @@ const Time = () => {
                                 <span>N/A</span>
                             </Row>
                         } else {
-                            return <Row className="mb-10" justify="center">
-                                <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
-                            </Row>
+                            if (res.status === false) {
+                                return <Row className="mb-10" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            } else {
+                                return <Row className="mb-10 c-red" justify="center">
+                                    <span>{moment(res.startTime).format("HH:mm A")} - {moment(res.endTime).format("HH:mm A")}</span>
+                                </Row>
+                            }
                         }
                     })
                 }

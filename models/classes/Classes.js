@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const classSchema = new Schema({
     classesCode: {
-        type: String,
-        unique: true
+        type: String
     },
     classesName: {
         type: String
@@ -26,10 +25,6 @@ const classSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         }
-    }],
-    user: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
     }],
     shift : {
         type: String

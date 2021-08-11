@@ -48,7 +48,7 @@ const NewSideBar = (props) => {
                         return (
                             <Menu.Item key={item.id}>
                                 <Link to={item.subs[0].to[0]}>
-                                    <Row justify="center">
+                                    <Row justify="center" className="mt-10">
                                         {item.icon}
                                     </Row>
                                     <Row justify="center">

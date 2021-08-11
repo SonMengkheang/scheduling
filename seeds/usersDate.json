@@ -1,0 +1,131 @@
+[
+    {
+        "teacherID" : "FE0000001",
+        "firstName" : "Sovila",
+        "lastName" : "Srun",
+        "username" : "Mr. Sovila Srun",
+        "email" : "mr.sovila.srun@admin.com",
+        "phoneNumber" : "099993960",
+        "role" : "60bf846443e6bc299cc29d60",
+        "password" : "999999",
+        "freeTime": {
+            "monday": [
+                {
+                    "status": false,
+                    "startTime": "2021-08-01T00:00:00.533Z",
+                    "endTime": "2021-08-01T03:00:00.920Z"
+                },
+                {
+                    "status": false,
+                    "startTime": "2021-08-01T06:00:00.319Z",
+                    "endTime": "2021-08-01T10:00:00.240Z"
+                }
+            ],
+            "tuesday": [
+                {
+                    "status": false,
+                    "startTime": "2021-08-01T01:00:00.870Z",
+                    "endTime": "2021-08-01T05:00:00.963Z"
+                }
+            ],
+            "wednesday": [
+                {
+                    "status": false,
+                    "startTime": null,
+                    "endTime": null
+                }
+            ],
+            "thursday": [
+                {
+                    "status": false,
+                    "startTime": null,
+                    "endTime": null
+                }
+            ],
+            "friday": [
+                {
+                    "status": false,
+                    "startTime": null,
+                    "endTime": null
+                }
+            ],
+            "saturday": [
+                {
+                    "status": false,
+                    "startTime": null,
+                    "endTime": null
+                }
+            ]
+        }
+    },
+    {
+        "teacherID" : "FE0000002",
+        "firstName" : "Samnang",
+        "lastName" : "Koung",
+        "username" : "Mr. Samnang Koung",
+        "email" : "mr.samnang.koung@lecturer.com",
+        "phoneNumber" : "099993961",
+        "role" : "60bf846443e6bc299cc29d61",
+        "password" : "999999"
+    },
+    {
+        "teacherID" : "FE0000003",
+        "firstName" : "Sokchea",
+        "lastName" : "Kor",
+        "username" : "Mr. Sokchea Kor",
+        "email" : "mr.sokchea.kor@lecturer.com",
+        "phoneNumber" : "099993962",
+        "role" : "60bf846443e6bc299cc29d60",
+        "password" : "999999"
+    },
+    {
+        "teacherID" : "FE0000004",
+        "firstName" : "Soaphea",
+        "lastName" : "Ra",
+        "username" : "Ms. Soaphea Ra",
+        "email" : "ms.soaphea.ra@lecturer.com",
+        "phoneNumber" : "099993963",
+        "role" : "60bf846443e6bc299cc29d60",
+        "password" : "999999"
+    },
+    {
+        "teacherID" : "FE0000005",
+        "firstName" : "Sotheara",
+        "lastName" : "Veng",
+        "username" : "Mr. Sotheara Veng",
+        "email" : "mr.sotheara.veng@lecturer.com",
+        "phoneNumber" : "099993964",
+        "role" : "60bf846443e6bc299cc29d60",
+        "password" : "999999"
+    },
+    {
+        "teacherID" : "FE0000006",
+        "firstName" : "Dary",
+        "lastName" : "Chea",
+        "username" : "Ms. Dary Chea",
+        "email" : "mr.dary.chea@lecturer.com",
+        "phoneNumber" : "099993965",
+        "role" : "60bf846443e6bc299cc29d60",
+        "password" : "999999"
+    },
+    {
+        "teacherID" : "FE0000007",
+        "firstName" : "Seavlin",
+        "lastName" : "Eoeng",
+        "username" : "Ms. Seavlin Eoeng",
+        "email" : "ms.seavlin.eoeng@lecturer.com",
+        "phoneNumber" : "099993966",
+        "role" : "60bf846443e6bc299cc29d60",
+        "password" : "999999"
+    },
+    {
+        "teacherID" : "FE0000008",
+        "firstName" : "Kheang",
+        "lastName" : "Choun",
+        "username" : "Mr. Kheang Choun",
+        "email" : "mr.kheang.choun@lecturer.com",
+        "phoneNumber" : "099993967",
+        "role" : "60bf846443e6bc299cc29d60",
+        "password" : "999999"
+    }
+]

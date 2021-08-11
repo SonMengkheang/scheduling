@@ -75,52 +75,52 @@
 .z-index-1      {z-index: 1;}
 
 // Font Size
-@for $i from 0 through 40 {
+@for $i from 0 through 100 {
   .fs-#{$i} {
     font-size: #{$i}px !important;
   }
 }
 
 //4. margin && padding
-@for $i from 0 through 20 {
-  .m-#{$i * 5} {
-    margin: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .m-#{$i} {
+    margin: #{$i}px !important;
   }
 }
 
-@for $i from 0 through 20 {
-  .mt-#{$i * 5} {
-    margin-top: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .mt-#{$i} {
+    margin-top: #{$i}px !important;
   }
 }
 
-@for $i from 0 through 20 {
-  .mb-#{$i * 5} {
-    margin-bottom: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .mb-#{$i} {
+    margin-bottom: #{$i}px !important;
   }
 }
 
-@for $i from 0 through 20 {
-  .ml-#{$i * 5} {
-    margin-left: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .ml-#{$i} {
+    margin-left: #{$i}px !important;
   }
 }
 
-@for $i from 0 through 20 {
-  .mr-#{$i * 5} {
-    margin-right: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .mr-#{$i} {
+    margin-right: #{$i}px !important;
   }
 }
 
-@for $i from 0 through 20 {
-  .p-#{$i * 5} {
-    padding: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .p-#{$i} {
+    padding: #{$i}px !important;
   }
 }
 
-@for $i from 0 through 20 {
-  .pt-#{$i * 5} {
-    padding-top: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .pt-#{$i} {
+    padding-top: #{$i}px !important;
   }
 }
 
@@ -130,15 +130,15 @@
   }
 }
 
-@for $i from 0 through 20 {
-  .pl-#{$i * 5} {
-    padding-left: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .pl-#{$i} {
+    padding-left: #{$i}px !important;
   }
 }
 
-@for $i from 0 through 20 {
-  .pr-#{$i * 5} {
-    padding-right: #{$i * 5}px !important;
+@for $i from 0 through 100 {
+  .pr-#{$i} {
+    padding-right: #{$i}px !important;
   }
 }
 

@@ -41,8 +41,11 @@ export const login = (email, password) => dispatch => {
         })
         .catch(err => {
             //if login error, print error message
-            console.log(err)
-            dispatch({type: GET_ERRORS,})
+            // console.log(err.response.data.error)
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data.error
+            })
         })
 
 }

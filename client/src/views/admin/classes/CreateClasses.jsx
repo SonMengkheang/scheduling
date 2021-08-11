@@ -331,13 +331,13 @@ const CreateClasses = () => {
                         </Row> */}
 
                         <Row className="mb-20">
-                            <Col span={11}>
+                            <Col span={24}>
                                 <Form.Item
                                     label={<IntlMessage id="shift" />}
                                     name="shift"
                                     rules={[{ required: true, message: 'Please input shift!' }]}
                                 >
-                                    <Select placeholder="Select Generation">
+                                    <Select placeholder="Select Shift" className="w-100">
                                         <Option key="morning" value="M"><IntlMessage id="morning" /></Option>
                                         <Option key="afternoon" value="A"><IntlMessage id="afternoon" /></Option>
                                     </Select>

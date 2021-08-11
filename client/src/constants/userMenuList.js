@@ -40,7 +40,8 @@ const data = [
         label: <IntlMessage id="time" />,
         subs: [
             {
-                to: ["/user/time"]
+                to: ["/user/time"],
+                to: ["/user/time/edit"],
             }
         ]
     },

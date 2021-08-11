@@ -48,7 +48,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : curDay[k].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                         } else if ((u_end_hour === i_end_hour && u_end_minute === i_end_minute) && ((u_start_hour !== i_start_hour) || (u_start_hour === i_start_hour && u_start_minute !== i_start_minute))) {
@@ -63,7 +68,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                             newFreeTime.push(array2)
@@ -75,7 +85,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array2 = { 
                                 startTime : day[j].endTime,
@@ -101,7 +116,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array3 = { 
                                 startTime : day[j].endTime,
@@ -146,7 +166,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : curDay[k].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                         } else if ((u_end_hour === i_end_hour && u_end_minute === i_end_minute) && ((u_start_hour !== i_start_hour) || (u_start_hour === i_start_hour && u_start_minute !== i_start_minute))) {
@@ -161,7 +186,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                             newFreeTime.push(array2)
@@ -173,7 +203,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array2 = { 
                                 startTime : day[j].endTime,
@@ -199,7 +234,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array3 = { 
                                 startTime : day[j].endTime,
@@ -244,7 +284,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : curDay[k].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                         } else if ((u_end_hour === i_end_hour && u_end_minute === i_end_minute) && ((u_start_hour !== i_start_hour) || (u_start_hour === i_start_hour && u_start_minute !== i_start_minute))) {
@@ -259,7 +304,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                             newFreeTime.push(array2)
@@ -271,7 +321,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array2 = { 
                                 startTime : day[j].endTime,
@@ -297,7 +352,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array3 = { 
                                 startTime : day[j].endTime,
@@ -342,7 +402,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : curDay[k].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                         } else if ((u_end_hour === i_end_hour && u_end_minute === i_end_minute) && ((u_start_hour !== i_start_hour) || (u_start_hour === i_start_hour && u_start_minute !== i_start_minute))) {
@@ -357,7 +422,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                             newFreeTime.push(array2)
@@ -369,7 +439,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array2 = { 
                                 startTime : day[j].endTime,
@@ -395,7 +470,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array3 = { 
                                 startTime : day[j].endTime,
@@ -440,7 +520,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : curDay[k].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                         } else if ((u_end_hour === i_end_hour && u_end_minute === i_end_minute) && ((u_start_hour !== i_start_hour) || (u_start_hour === i_start_hour && u_start_minute !== i_start_minute))) {
@@ -455,7 +540,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                             newFreeTime.push(array2)
@@ -467,7 +557,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array2 = { 
                                 startTime : day[j].endTime,
@@ -493,7 +588,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array3 = { 
                                 startTime : day[j].endTime,
@@ -538,7 +638,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : curDay[k].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                         } else if ((u_end_hour === i_end_hour && u_end_minute === i_end_minute) && ((u_start_hour !== i_start_hour) || (u_start_hour === i_start_hour && u_start_minute !== i_start_minute))) {
@@ -553,7 +658,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             newFreeTime.push(array1)
                             newFreeTime.push(array2)
@@ -565,7 +675,12 @@ module.exports = {
                             let array1 = { 
                                 startTime : curDay[k].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array2 = { 
                                 startTime : day[j].endTime,
@@ -591,7 +706,12 @@ module.exports = {
                             let array2 = { 
                                 startTime : day[j].startTime,
                                 endTime : day[j].endTime,
-                                status : true
+                                status : true,
+                                subject: day[j].subject,
+                                class: newSchedule.classId,
+                                room: day[j].room,
+                                lectureType: day[j].type,
+                                duration: day[j].duration
                             }
                             let array3 = { 
                                 startTime : day[j].endTime,
@@ -668,8 +788,8 @@ module.exports = {
             let findAllUsers = await User.find({})
             let submitSchedule = {
                 monday : [{
-                    startTime: moment('2021-08-05 7:00:00'),
-                    endTime: moment('2021-08-05 13:00:00'),
+                    startTime: findClass.shift === "M" ? moment('2021-08-05 7:00:00') : moment('2021-08-05 13:00:00'),
+                    endTime: findClass.shift === "M" ? moment('2021-08-05 13:00:00') : moment('2021-08-05 18:00:00'),
                     status: false,
                     user: null,
                     subject: null,
@@ -677,8 +797,8 @@ module.exports = {
                     labDuration: null
                 }],
                 tuesday : [{
-                    startTime: moment('2021-08-05 7:00:00'),
-                    endTime: moment('2021-08-05 13:00:00'),
+                    startTime: findClass.shift === "M" ? moment('2021-08-05 7:00:00') : moment('2021-08-05 13:00:00'),
+                    endTime: findClass.shift === "M" ? moment('2021-08-05 13:00:00') : moment('2021-08-05 18:00:00'),
                     status: false,
                     user: null,
                     subject: null,
@@ -686,8 +806,8 @@ module.exports = {
                     labDuration: null
                 }],
                 wednesday : [{
-                    startTime: moment('2021-08-05 7:00:00'),
-                    endTime: moment('2021-08-05 13:00:00'),
+                    startTime: findClass.shift === "M" ? moment('2021-08-05 7:00:00') : moment('2021-08-05 13:00:00'),
+                    endTime: findClass.shift === "M" ? moment('2021-08-05 13:00:00') : moment('2021-08-05 18:00:00'),
                     status: false,
                     user: null,
                     subject: null,
@@ -695,8 +815,8 @@ module.exports = {
                     labDuration: null
                 }],
                 thursday : [{
-                    startTime: moment('2021-08-05 7:00:00'),
-                    endTime: moment('2021-08-05 13:00:00'),
+                    startTime: findClass.shift === "M" ? moment('2021-08-05 7:00:00') : moment('2021-08-05 13:00:00'),
+                    endTime: findClass.shift === "M" ? moment('2021-08-05 13:00:00') : moment('2021-08-05 18:00:00'),
                     status: false,
                     user: null,
                     subject: null,
@@ -704,8 +824,8 @@ module.exports = {
                     labDuration: null
                 }],
                 friday : [{
-                    startTime: moment('2021-08-05 7:00:00'),
-                    endTime: moment('2021-08-05 13:00:00'),
+                    startTime: findClass.shift === "M" ? moment('2021-08-05 7:00:00') : moment('2021-08-05 13:00:00'),
+                    endTime: findClass.shift === "M" ? moment('2021-08-05 13:00:00') : moment('2021-08-05 18:00:00'),
                     status: false,
                     user: null,
                     subject: null,
@@ -713,8 +833,8 @@ module.exports = {
                     labDuration: null
                 }],
                 saturday : [{
-                    startTime: moment('2021-08-05 7:00:00'),
-                    endTime: moment('2021-08-05 13:00:00'),
+                    startTime: findClass.shift === "M" ? moment('2021-08-05 7:00:00') : moment('2021-08-05 13:00:00'),
+                    endTime: findClass.shift === "M" ? moment('2021-08-05 13:00:00') : moment('2021-08-05 18:00:00'),
                     status: false,
                     user: null,
                     subject: null,
@@ -729,61 +849,67 @@ module.exports = {
                 console.log(`Find Teacher ${k}: `, findTeacher)
 
                 findTeacher.freeTime.monday.filter(e =>{
-                    e.status = false
+                    e.status = false,
+                    e.shift = findClass.shift
                 })
                 findTeacher.freeTime.tuesday.filter(e =>{
-                    e.status = false
+                    e.status = false,
+                    e.shift = findClass.shift
                 })
                 findTeacher.freeTime.wednesday.filter(e =>{
-                    e.status = false
+                    e.status = false,
+                    e.shift = findClass.shift
                 })
                 findTeacher.freeTime.thursday.filter(e =>{
-                    e.status = false
+                    e.status = false,
+                    e.shift = findClass.shift
                 })
                 findTeacher.freeTime.friday.filter(e =>{
-                    e.status = false
+                    e.status = false,
+                    e.shift = findClass.shift
                 })
                 findTeacher.freeTime.saturday.filter(e =>{
-                    e.status = false
+                    e.status = false,
+                    e.shift = findClass.shift
                 })
                 
                 if(findClass.shift === "M") {
                     findTeacher.freeTime.monday.filter(e => {
-                        moment(e.endTime)._d.getHours() <= 13
+                        moment(e.startTime)._d.getHours() <= 11
                     })
                     findTeacher.freeTime.tuesday.filter(e => {
-                        moment(e.endTime)._d.getHours() <= 13
+                        moment(e.startTime)._d.getHours() <= 11
                     })
                     findTeacher.freeTime.wednesday.filter(e => {
-                        moment(e.endTime)._d.getHours() <= 13
+                        moment(e.startTime)._d.getHours() <= 11
                     })
                     findTeacher.freeTime.thursday.filter(e => {
-                        moment(e.endTime)._d.getHours() <= 13
+                        moment(e.startTime)._d.getHours() <= 11
                     })
                     findTeacher.freeTime.friday.filter(e => {
-                        moment(e.endTime)._d.getHours() <= 13
+                        moment(e.startTime)._d.getHours() <= 11
                     })
                     findTeacher.freeTime.saturday.filter(e => {
-                        moment(e.endTime)._d.getHours() <= 13
+                        moment(e.startTime)._d.getHours() <= 11
                     })
                 } else if (findClass.shift === "A"){
                     findTeacher.freeTime.monday.filter(e => {
-                        moment(e.startTime)._d.getHours() >= 13
+                        moment(e.endTime)._d.getHours() >= 15 && moment(e.endTime)._d.getHours() <= 18
                     })
                     findTeacher.freeTime.tuesday.filter(e => {
-                        moment(e.startTime)._d.getHours() >= 13
+                        moment(e.endTime)._d.getHours() >= 15 && moment(e.endTime)._d.getHours() <= 18
                     })
                     findTeacher.freeTime.wednesday.filter(e => {
-                        moment(e.startTime)._d.getHours() >= 13
+                        moment(e.endTime)._d.getHours() >= 15 && moment(e.endTime)._d.getHours() <= 18
                     })
                     findTeacher.freeTime.thursday.filter(e => {
-                        moment(e.startTime)._d.getHours() >= 13
+                        moment(e.endTime)._d.getHours() >= 15 && moment(e.endTime)._d.getHours() <= 18
                     })
                     findTeacher.freeTime.friday.filter(e => {
-                        moment(e.startTime)._d.getHours() >= 13
+                        moment(e.endTime)._d.getHours() >= 15 && moment(e.endTime)._d.getHours() <= 18
                     })
                     findTeacher.freeTime.saturday.filter(e => {
-                        moment(e.startTime)._d.getHours() >= 13
+                        moment(e.endTime)._d.getHours() >= 15 && moment(e.endTime)._d.getHours() <= 18
                     })
                 }
 
@@ -804,7 +930,6 @@ module.exports = {
                     submitSchedule.saturday,
                 ]
                 for(let i=0; i<day.length; i++){
-            
                     // check possible assign
                     for(let j=0; j<day[i].length; j++){
                         for (let x = 0; x < finalDay[i].length; x++) {
@@ -820,6 +945,7 @@ module.exports = {
                                 let finalHour = u_end_hour - u_start_hour
                                 let finalMinute = ( u_end_minute - u_start_minute ) / 60
                                 let compareDuration = ( finalHour + finalMinute ) * 60
+                                let newFreeTime = []
                                 
                                 if (schedule.userSubject[k].duration > 0) {
                                     if(compareDuration >= schedule.userSubject[k].duration ){

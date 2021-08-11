@@ -34,18 +34,6 @@ const userSchema = new Schema({
   password: {
     type: String,
   },
-  department: [{
-    type : mongoose.Schema.Types.ObjectId,
-    ref : "Department"
-  }],
-  classes: [{
-    type : mongoose.Schema.Types.ObjectId,
-    ref : "Classes"
-  }],
-  subject : [{
-    type : mongoose.Schema.Types.ObjectId,
-    ref : "Subject"
-  }],
   freeTime: {
     monday : [{
       startTime : {
@@ -57,6 +45,26 @@ const userSchema = new Schema({
       status : {
         type : Boolean,
         default : false
+      },
+      subject : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Subject"
+      },
+      class : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Class"
+      },
+      room: {
+        type : String
+      },
+      lectureType: {
+        type: String
+      },
+      duration: {
+        type: Number
+      },
+      shift: {
+        type: String
       }
     }],
     tuesday : [{
@@ -69,6 +77,26 @@ const userSchema = new Schema({
       status : {
         type : Boolean,
         default : false
+      },
+      subject : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Subject"
+      },
+      class : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Class"
+      },
+      room: {
+        type : String
+      },
+      lectureType: {
+        type: String
+      },
+      duration: {
+        type: Number
+      },
+      shift: {
+        type: String
       }
     }],
     wednesday : [{
@@ -81,6 +109,26 @@ const userSchema = new Schema({
       status : {
         type : Boolean,
         default : false
+      },
+      subject : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Subject"
+      },
+      class : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Class"
+      },
+      room: {
+        type : String
+      },
+      lectureType: {
+        type: String
+      },
+      duration: {
+        type: Number
+      },
+      shift: {
+        type: String
       }
     }],
     thursday : [{
@@ -93,6 +141,26 @@ const userSchema = new Schema({
       status : {
         type : Boolean,
         default : false
+      },
+      subject : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Subject"
+      },
+      class : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Class"
+      },
+      room: {
+        type : String
+      },
+      lectureType: {
+        type: String
+      },
+      duration: {
+        type: Number
+      },
+      shift: {
+        type: String
       }
     }],
     friday : [{
@@ -105,6 +173,26 @@ const userSchema = new Schema({
       status : {
         type : Boolean,
         default : false
+      },
+      subject : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Subject"
+      },
+      class : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Class"
+      },
+      room: {
+        type : String
+      },
+      lectureType: {
+        type: String
+      },
+      duration: {
+        type: Number
+      },
+      shift: {
+        type: String
       }
     }],
     saturday : [{
@@ -117,6 +205,26 @@ const userSchema = new Schema({
       status : {
         type : Boolean,
         default : false
+      },
+      subject : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Subject"
+      },
+      class : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Class"
+      },
+      room: {
+        type : String
+      },
+      lectureType: {
+        type: String
+      },
+      duration: {
+        type: Number
+      },
+      shift: {
+        type: String
       }
     }],
   }

@@ -1,4 +1,4 @@
-import {AUTH_ERROR, LOAD_USER, LOGOUT, SET_CURRENT_PROFILE, SET_CURRENT_USER} from "../actions"
+import {AUTH_ERROR, LOAD_USER, LOGOUT, SET_CURRENT_PROFILE, SET_CURRENT_USER, GET_ERRORS} from "../actions"
 import Cookies from "js-cookie"
 import cookiesConfig from "../../helpers/cookiesConfig"
 
@@ -31,6 +31,10 @@ export const auth = (state = initialState, action) => {
                 user: payload
             }
         case AUTH_ERROR:
+        case GET_ERRORS:
+            return {
+                errorMessage: payload
+            }
         case LOGOUT:
             Cookies.remove("_scheduling_session", cookiesConfig)  //remove token from cookies
             return {

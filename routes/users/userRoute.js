@@ -4,6 +4,10 @@ const upload = require("../../helpers/imageHelpers")
 const UserController = require("../../controllers/users/userController")
 
 router
+  .route("/resetAllUserFreeTime")
+  .patch(UserController.resetAllUserFreeTime)
+
+router
   .route("/")
   .get(UserController.allowIfLoggedin, UserController.index)
   .post(UserController.login)
@@ -14,8 +18,14 @@ router
   .patch(UserController.allowIfLoggedin, UserController.updateUser)
 
 router
+  .route("/getSubject/:userID")
+  .get(UserController.getSubject)
+
+router
   .route("/create")
   .post(UserController.allowIfLoggedin, UserController.createUser)
+
+
 
 router
   .route("/profile")
